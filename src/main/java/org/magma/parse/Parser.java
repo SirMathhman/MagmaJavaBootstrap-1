@@ -1,4 +1,4 @@
-package org.magma;
+package org.magma.parse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

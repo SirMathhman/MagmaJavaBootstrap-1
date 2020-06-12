@@ -1,8 +1,10 @@
-package org.magma;
+package org.magma.parse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.magma.parse.IntParser;
+import org.magma.parse.Parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 

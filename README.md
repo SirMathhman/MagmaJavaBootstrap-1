@@ -1,5 +1,5 @@
 # MagmaJavaBootstrap
-
+---
 Holds the Bootstrap compiler for the Magma programming language. Chances are that this repository will quickly fall out
 of date when the real Magma compiler is complete. As a result, this compiler is to be used as a backup compiler in case
 the standard Magma compiler becomes broken.

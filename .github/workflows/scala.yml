@@ -21,3 +21,6 @@ jobs:
       run: sbt test
     - name: Package
       run: sbt package
+    - uses: actions/upload-artifact@v2
+      with:
+        path: target/scala-2.13/magmajavabootstrap_2.13-0.1.jar

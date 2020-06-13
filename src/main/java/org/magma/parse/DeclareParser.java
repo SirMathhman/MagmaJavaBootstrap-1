@@ -28,25 +28,10 @@ public class DeclareParser extends JSONUnit implements Parser {
 			}
 			String header = -1 == equals ? content : content.substring(0, equals).trim();
 			int colon = header.indexOf(':');
-			JsonNode type;
-			if (-1 == colon) {
-				if (null == initialType) {
-					throw new AssemblyException("Neither a type or an initial value is present.");
-				}
-				type = initialType;
-			} else {
-				String trim = header.substring(colon + 1).trim();
-				type = compiler.resolveName(trim);
-			}
+			JsonNode type = -1 == colon ? passAsInitial(initialType) : extractType(compiler, header, colon);
 			String keyString = header.substring(0, colon).trim();
 			int lastSpace = keyString.lastIndexOf(' ');
-			String flagString = keyString.substring(0, lastSpace).trim();
-			ArrayNode flagNode = createArray();
-			Arrays.stream(flagString.split(" "))
-					.filter(s -> !s.isBlank())
-					.map(String::trim)
-					.map(String::toLowerCase)
-					.forEach(flagNode::add);
+			ArrayNode flagNode = buildFlags(keyString, lastSpace);
 			String nameString = keyString.substring(lastSpace + 1).trim();
 			return Optional.of(createObject()
 					.put("type", "declaration")
@@ -58,11 +43,38 @@ public class DeclareParser extends JSONUnit implements Parser {
 		return Optional.empty();
 	}
 
-	private boolean hasType(String content) {
+	private static boolean hasType(String content) {
 		return content.contains(":");
 	}
 
-	private boolean hasInitialValue(String content) {
+	private static boolean hasInitialValue(String content) {
 		return content.contains("=");
+	}
+
+	private static JsonNode passAsInitial(JsonNode initialType) {
+		JsonNode type;
+		if (null == initialType) {
+			throw new AssemblyException("Neither a type or an initial value is present.");
+		}
+		type = initialType;
+		return type;
+	}
+
+	private static JsonNode extractType(Compiler compiler, String header, int colon) {
+		String trim = header.substring(colon + 1).trim();
+		return compiler.resolveName(trim);
+	}
+
+	private ArrayNode buildFlags(String keyString, int lastSpace) {
+		String flagString = keyString.substring(0, lastSpace).trim();
+
+		//replace with reduce?
+		ArrayNode flagNode = createArray();
+		Arrays.stream(flagString.split(" "))
+				.filter(s -> !s.isBlank())
+				.map(String::trim)
+				.map(String::toLowerCase)
+				.forEach(flagNode::add);
+		return flagNode;
 	}
 }

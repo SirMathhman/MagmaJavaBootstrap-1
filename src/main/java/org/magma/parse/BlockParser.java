@@ -3,13 +3,15 @@ package org.magma.parse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.inject.Inject;
 import org.magma.Compiler;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 public class BlockParser extends JSONUnit implements Parser {
-	protected BlockParser(ObjectMapper mapper) {
+	@Inject
+	public BlockParser(ObjectMapper mapper) {
 		super(mapper);
 	}
 

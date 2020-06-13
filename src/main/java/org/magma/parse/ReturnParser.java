@@ -2,12 +2,14 @@ package org.magma.parse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Inject;
 import org.magma.Compiler;
 
 import java.util.Optional;
 
 public class ReturnParser extends JSONUnit implements Parser {
-	protected ReturnParser(ObjectMapper mapper) {
+	@Inject
+	public ReturnParser(ObjectMapper mapper) {
 		super(mapper);
 	}
 

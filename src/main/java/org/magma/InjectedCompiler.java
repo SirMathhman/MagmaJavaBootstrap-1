@@ -48,7 +48,7 @@ public class InjectedCompiler implements Compiler {
 				.map(parser -> parser.parse(content, this))
 				.flatMap(Optional::stream)
 				.findFirst()
-				.orElseThrow();
+				.orElseThrow(() -> new ParseException("Failed to parse: " + content));
 	}
 
 	@Override

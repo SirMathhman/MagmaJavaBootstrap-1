@@ -3,7 +3,7 @@ package org.magma.name;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.magma.Compiler;
+import org.magma.Extractor;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ public class IntNameResolver extends AbstractNameResolver {
 	}
 
 	@Override
-	public Optional<JsonNode> resolveName(String name, Compiler compiler) {
+	public Optional<JsonNode> resolveName(String name, Extractor extractor) {
 		return Optional.of(name)
 				.filter("Int"::equals)
 				.map(this::wrapInNode);

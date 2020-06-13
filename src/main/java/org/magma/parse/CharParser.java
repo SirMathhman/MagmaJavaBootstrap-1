@@ -2,7 +2,7 @@ package org.magma.parse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.magma.Compiler;
+import org.magma.Extractor;
 import org.magma.JSONUnit;
 
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class CharParser extends JSONUnit implements Parser {
 	}
 
 	@Override
-	public Optional<JsonNode> parse(String content, Compiler compiler) {
+	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		if (content.startsWith("'") && content.endsWith("'") && 3 == content.length()) {
 			char c = content.charAt(1);
 			return Optional.of(createObject()

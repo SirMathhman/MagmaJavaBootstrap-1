@@ -2,7 +2,7 @@ package org.magma;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public interface Compiler {
+public interface Extractor {
 	boolean isInstance(JsonNode parent, JsonNode child);
 
 	JsonNode parse(String content);

@@ -3,7 +3,7 @@ package org.magma.value;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.magma.Compiler;
+import org.magma.Extractor;
 import org.magma.JSONUnit;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class IntValueResolver extends JSONUnit implements ValueResolver {
 	}
 
 	@Override
-	public Optional<JsonNode> resolveValue(String value, Compiler compiler) {
+	public Optional<JsonNode> resolveValue(String value, Extractor extractor) {
 		try {
 			Integer.parseInt(value);
 			return Optional.of(createObject()

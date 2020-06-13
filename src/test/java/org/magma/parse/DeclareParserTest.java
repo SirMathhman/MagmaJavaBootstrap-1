@@ -6,8 +6,8 @@ import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Module;
 import org.junit.jupiter.api.Test;
-import org.magma.Compiler;
-import org.magma.InjectedCompiler;
+import org.magma.Extractor;
+import org.magma.InjectedExtractor;
 import org.magma.name.IntNameResolver;
 import org.magma.value.IntValueResolver;
 
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeclareParserTest {
 	private final ObjectMapper mapper = new ObjectMapper();
-	private final Compiler compiler = InjectedCompiler.create(Guice.createInjector(new TestModule(mapper)),
+	private final Extractor extractor = InjectedExtractor.create(Guice.createInjector(new TestModule(mapper)),
 			IntParser.class,
 			IntNameResolver.class,
 			IntValueResolver.class);
@@ -30,7 +30,7 @@ class DeclareParserTest {
 
 	@Test
 	void parse() {
-		JsonNode node = parser.parse("val x : Int = 10", compiler).orElseThrow();
+		JsonNode node = parser.parse("val x : Int = 10", extractor).orElseThrow();
 		assertEquals("declaration", node.get("type").asText());
 
 		JsonNode flags = node.get("flags");

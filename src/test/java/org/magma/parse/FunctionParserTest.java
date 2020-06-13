@@ -7,8 +7,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import org.junit.jupiter.api.Test;
-import org.magma.Compiler;
-import org.magma.InjectedCompiler;
+import org.magma.Extractor;
+import org.magma.InjectedExtractor;
 import org.magma.name.IntNameResolver;
 import org.magma.util.Scope;
 import org.magma.util.TreeScope;
@@ -23,10 +23,10 @@ class FunctionParserTest {
 		Scope scope = new TreeScope();
 		Parser parser = new FunctionParser(mapper, () -> "test", scope);
 		Injector injector = Guice.createInjector(new TestModule(mapper, scope));
-		Compiler compiler = InjectedCompiler.create(injector,
+		Extractor extractor = InjectedExtractor.create(injector,
 				IntNameResolver.class, BlockParser.class,
 				ReturnParser.class, VariableParser.class);
-		JsonNode node = parser.parse("(x : Int) : Int => {return x;}", compiler).orElseThrow();
+		JsonNode node = parser.parse("(x : Int) : Int => {return x;}", extractor).orElseThrow();
 		assertEquals("test", node.get("name").asText());
 
 		JsonNode parameters = node.get("parameters");

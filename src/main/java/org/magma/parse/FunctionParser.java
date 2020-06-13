@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.magma.Compiler;
+import org.magma.Extractor;
 import org.magma.JSONUnit;
 import org.magma.util.Scope;
 
@@ -21,7 +21,7 @@ public class FunctionParser extends JSONUnit implements Parser {
 	}
 
 	@Override
-	public Optional<JsonNode> parse(String content, Compiler compiler) {
+	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		if (content.startsWith("(")) {
 			int end = content.indexOf(')');
 			int marker = content.indexOf("=>");
@@ -31,15 +31,15 @@ public class FunctionParser extends JSONUnit implements Parser {
 				int split = paramString.indexOf(':');
 				String nameString = paramString.substring(0, split).trim();
 				String typeString = paramString.substring(split + 1).trim();
-				JsonNode type = compiler.resolveName(typeString);
+				JsonNode type = extractor.resolveName(typeString);
 				scope.define(nameString, type);
 				parameters.add(createObject()
 						.put("name", nameString)
 						.set("instance", type));
 			}
 			String returnString = content.substring(end + 1, marker).trim();
-			JsonNode returnType = compiler.resolveName(returnString.substring(1).trim());
-			JsonNode contentNode = compiler.parse(content.substring(marker + 2).trim());
+			JsonNode returnType = extractor.resolveName(returnString.substring(1).trim());
+			JsonNode contentNode = extractor.parse(content.substring(marker + 2).trim());
 			return Optional.ofNullable(createObject()
 					.<ObjectNode>set("parameters", parameters)
 					.<ObjectNode>set("return", returnType)

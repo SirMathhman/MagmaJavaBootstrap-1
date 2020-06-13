@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.inject.Inject;
 import org.magma.Extractor;
 import org.magma.JSONUnit;
 import org.magma.util.NameProvider;
@@ -15,7 +16,8 @@ public class FunctionParser extends JSONUnit implements Parser {
 	private final NameProvider provider;
 	private final Scope scope;
 
-	protected FunctionParser(ObjectMapper mapper, NameProvider provider, Scope scope) {
+	@Inject
+	public FunctionParser(ObjectMapper mapper, NameProvider provider, Scope scope) {
 		super(mapper);
 		this.provider = provider;
 		this.scope = scope;

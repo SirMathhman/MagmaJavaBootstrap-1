@@ -6,9 +6,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.magma.Extractor;
 import org.magma.InjectedExtractor;
-import org.magma.build.Builder;
-import org.magma.build.InjectedBuilder;
-import org.magma.build.IntBuilder;
+import org.magma.build.*;
 import org.magma.exception.AssemblyException;
 import org.magma.parse.*;
 
@@ -18,7 +16,10 @@ public class MagmaCompiler implements Compiler {
 	public static final Compiler INSTANCE = new MagmaCompiler();
 	private final MagmaModule module = new MagmaModule();
 	private final Injector injector = Guice.createInjector(module);
-	private final Builder builder = InjectedBuilder.create(injector, IntBuilder.class);
+	private final Builder builder = InjectedBuilder.create(injector,
+			DoubleBuilder.class,
+			FloatBuilder.class,
+			IntBuilder.class);
 	private final Extractor extractor = InjectedExtractor.create(injector,
 			BlockParser.class,
 			CharParser.class,

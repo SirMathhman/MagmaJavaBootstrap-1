@@ -24,15 +24,16 @@ public class FloatParser extends JSONUnit implements Parser {
 	 * Attempts to parse the content using {@link Float#parseFloat(String)},
 	 * and returns an empty result if a {@link NumberFormatException} was thrown.
 	 *
-	 * @param content <p>The content that is to be parsed.
-	 *                Should already be trimmed using {@link String#trim()}, and
-	 *                should not be null.
-	 *                </p>
+	 * @param content   <p>The content that is to be parsed.
+	 *                  Should already be trimmed using {@link String#trim()}, and
+	 *                  should not be null.
+	 *                  </p>
 	 * @param extractor
 	 * @return The wrapped float.
 	 */
 	@Override
 	public Optional<JsonNode> parse(String content, Extractor extractor) {
+		if (content.endsWith("d")) return Optional.empty();
 		try {
 			String contentToUse = format(content);
 			float result = Float.parseFloat(contentToUse);
@@ -43,7 +44,7 @@ public class FloatParser extends JSONUnit implements Parser {
 	}
 
 	private static String format(String content) {
-		return endsWithIdentifier(content) ? content.substring(0,
+		return content.endsWith("f") ? content.substring(0,
 				content.length() - 1) : content;
 	}
 
@@ -51,9 +52,5 @@ public class FloatParser extends JSONUnit implements Parser {
 		return Optional.of(createObject()
 				.put("type", "float")
 				.put("value", result));
-	}
-
-	private static boolean endsWithIdentifier(String content) {
-		return !content.isEmpty() && 'f' == (int) content.charAt(content.length() - 1);
 	}
 }

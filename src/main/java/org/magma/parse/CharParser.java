@@ -11,7 +11,7 @@ import java.util.Optional;
  * where each value is surrounded by single-quotation marks.
  * The content itself must have a length of three.
  */
-public class CharParser extends JSONParser {
+public class CharParser extends JSONUnit implements Parser {
 	protected CharParser(ObjectMapper mapper) {
 		super(mapper);
 	}

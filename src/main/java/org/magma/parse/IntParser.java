@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Parsers integers using {@link Integer#parseInt(String)}.
  */
-public class IntParser extends JSONParser {
+public class IntParser extends JSONUnit implements Parser {
 	@Inject
 	public IntParser(ObjectMapper mapper) {
 		super(mapper);

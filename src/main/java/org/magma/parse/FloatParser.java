@@ -13,7 +13,7 @@ import java.util.Optional;
  * If content similar to "10.0", "5.2", "3.87" -- doesn't end with an "f",
  * then that content is assumed to be valid as a float and not a double.
  */
-public class FloatParser extends JSONParser {
+public class FloatParser extends JSONUnit implements Parser {
 	@Inject
 	public FloatParser(ObjectMapper mapper) {
 		super(mapper);

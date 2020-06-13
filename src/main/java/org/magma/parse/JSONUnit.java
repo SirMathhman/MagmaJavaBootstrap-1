@@ -1,16 +1,18 @@
 package org.magma.parse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-/**
- * Offers convenience methods for JSON creation in {@link Parser}-related contexts.
- */
-public abstract class JSONParser implements Parser {
+public abstract class JSONUnit {
 	private final ObjectMapper mapper;
 
-	protected JSONParser(ObjectMapper mapper) {
+	protected JSONUnit(ObjectMapper mapper) {
 		this.mapper = mapper;
+	}
+
+	protected ArrayNode createArray() {
+		return mapper.createArrayNode();
 	}
 
 	protected ObjectNode createObject() {

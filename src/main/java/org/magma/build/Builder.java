@@ -11,5 +11,9 @@ public interface Builder {
 		return type.equals(typeNode.asText());
 	}
 
-	Optional<String> build(ObjectNode node);
+	default Optional<String> build(ObjectNode node) {
+		return build(node, null);
+	}
+
+	Optional<String> build(ObjectNode node, Builder parent);
 }

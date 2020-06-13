@@ -9,7 +9,7 @@ import static org.magma.build.Builder.is;
 
 public class IntBuilder implements Builder {
 	@Override
-	public Optional<String> build(ObjectNode node) {
+	public Optional<String> build(ObjectNode node, Builder parent) {
 		return Optional.of(node)
 				.filter(n -> is(n, "integer"))
 				.map(n -> n.get("value"))

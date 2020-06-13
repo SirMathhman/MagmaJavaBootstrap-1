@@ -28,7 +28,7 @@ public interface Parser {
 	 *                Should already be trimmed using {@link String#trim()}, and
 	 *                should not be null.
 	 *                </p>
-	 * @return Returns an Optional containing the valid JSON nodes, or empty if the content was invalid.
+	 * @return <p>Returns an Optional containing the valid JSON nodes, or empty if the content was invalid.</p>
 	 */
 	Optional<JsonNode> parse(String content);
 }

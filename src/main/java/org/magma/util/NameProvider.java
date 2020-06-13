@@ -1,4 +1,4 @@
-package org.magma.parse;
+package org.magma.util;
 
 public interface NameProvider {
 	String nextName();

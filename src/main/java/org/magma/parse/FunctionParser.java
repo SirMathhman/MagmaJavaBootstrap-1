@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.magma.Extractor;
 import org.magma.JSONUnit;
+import org.magma.util.NameProvider;
 import org.magma.util.Scope;
 
 import java.util.Optional;

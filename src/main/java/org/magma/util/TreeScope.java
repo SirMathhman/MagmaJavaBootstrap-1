@@ -11,6 +11,11 @@ public class TreeScope implements Scope {
 	private TreeNode current = root;
 
 	@Override
+	public String currentName() {
+		return current.getName();
+	}
+
+	@Override
 	public void define(String name, JsonNode type) {
 		current.define(name, type);
 	}

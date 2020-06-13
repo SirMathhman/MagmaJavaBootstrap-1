@@ -1,4 +1,4 @@
-package org.magma;
+package org.magma.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Binder;

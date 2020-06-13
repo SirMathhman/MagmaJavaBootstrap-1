@@ -13,7 +13,7 @@ class DoubleParserTest {
 
 	@Test
 	void parseWithIdentifier() {
-		JsonNode node = parser.parse("10.0d")
+		JsonNode node = parser.parse("10.0d", null)
 				.orElseThrow();
 		assertEquals("double", node.get("type").asText());
 		assertEquals(10, node.get("value").asDouble());
@@ -21,6 +21,6 @@ class DoubleParserTest {
 
 	@Test
 	void parseWithoutIdentifier() {
-		assertTrue(parser.parse("10.0").isEmpty());
+		assertTrue(parser.parse("10.0", null).isEmpty());
 	}
 }

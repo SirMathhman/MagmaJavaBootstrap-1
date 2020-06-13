@@ -3,6 +3,7 @@ package org.magma.parse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
+import org.magma.Compiler;
 
 import java.util.Optional;
 
@@ -26,10 +27,11 @@ public class FloatParser extends JSONParser {
 	 *                Should already be trimmed using {@link String#trim()}, and
 	 *                should not be null.
 	 *                </p>
+	 * @param compiler
 	 * @return The wrapped float.
 	 */
 	@Override
-	public Optional<JsonNode> parse(String content) {
+	public Optional<JsonNode> parse(String content, Compiler compiler) {
 		try {
 			String contentToUse = format(content);
 			float result = Float.parseFloat(contentToUse);

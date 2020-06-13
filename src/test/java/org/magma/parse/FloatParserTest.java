@@ -12,7 +12,7 @@ class FloatParserTest {
 
 	@Test
 	void parseWithoutIdentifier() {
-		JsonNode node = parser.parse("10.0").orElseThrow();
+		JsonNode node = parser.parse("10.0", null).orElseThrow();
 		assertEquals("float", node.get("type").asText());
 
 		//JsonNode doesn't have a .asFloat() method. :(
@@ -21,7 +21,7 @@ class FloatParserTest {
 
 	@Test
 	void parseWithIdentifier() {
-		JsonNode node = parser.parse("10.0f").orElseThrow();
+		JsonNode node = parser.parse("10.0f", null).orElseThrow();
 		assertEquals("float", node.get("type").asText());
 
 		//JsonNode doesn't have a .asFloat() method. :(

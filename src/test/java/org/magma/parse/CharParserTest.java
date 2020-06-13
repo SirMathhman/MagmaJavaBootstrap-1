@@ -12,7 +12,7 @@ class CharParserTest {
 
 	@Test
 	void parse() {
-		JsonNode result = parser.parse("'x'").orElseThrow();
+		JsonNode result = parser.parse("'x'", null).orElseThrow();
 		assertEquals("character", result.get("type").asText());
 
 		/*
@@ -25,11 +25,11 @@ class CharParserTest {
 
 	@Test
 	void parseInvalidFormat(){
-		assertTrue(parser.parse("x").isEmpty());
+		assertTrue(parser.parse("x", null).isEmpty());
 	}
 
 	@Test
 	void parseInvalidLength(){
-		assertTrue(parser.parse("'length'").isEmpty());
+		assertTrue(parser.parse("'length'", null).isEmpty());
 	}
 }

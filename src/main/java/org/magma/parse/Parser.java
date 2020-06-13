@@ -1,6 +1,7 @@
 package org.magma.parse;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.magma.Compiler;
 
 import java.util.Optional;
 
@@ -28,7 +29,8 @@ public interface Parser {
 	 *                Should already be trimmed using {@link String#trim()}, and
 	 *                should not be null.
 	 *                </p>
+	 * @param compiler
 	 * @return <p>Returns an Optional containing the valid JSON nodes, or empty if the content was invalid.</p>
 	 */
-	Optional<JsonNode> parse(String content);
+	Optional<JsonNode> parse(String content, Compiler compiler);
 }

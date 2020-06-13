@@ -26,7 +26,7 @@ public class FloatParser extends JSONParser {
 	 *                Should already be trimmed using {@link String#trim()}, and
 	 *                should not be null.
 	 *                </p>
-	 * @return The wrapped integer.
+	 * @return The wrapped float.
 	 */
 	@Override
 	public Optional<JsonNode> parse(String content) {

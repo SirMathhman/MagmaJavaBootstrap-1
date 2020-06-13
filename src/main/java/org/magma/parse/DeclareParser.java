@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.magma.Compiler;
+import org.magma.JSONUnit;
 import org.magma.exception.AssemblyException;
 
 import java.util.Arrays;

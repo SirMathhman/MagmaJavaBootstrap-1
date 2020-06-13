@@ -3,6 +3,7 @@ package org.magma.parse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.magma.Compiler;
+import org.magma.JSONUnit;
 
 import java.util.Optional;
 

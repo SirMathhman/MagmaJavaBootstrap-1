@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import org.magma.Compiler;
-import org.magma.parse.JSONUnit;
+import org.magma.JSONUnit;
 
 import java.util.Optional;
 

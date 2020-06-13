@@ -2,7 +2,9 @@ package org.magma.parse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.magma.Compiler;
+import com.google.inject.Inject;
+import org.magma.Extractor;
+import org.magma.JSONUnit;
 
 import java.util.Optional;
 
@@ -12,12 +14,13 @@ import java.util.Optional;
  * The content itself must have a length of three.
  */
 public class CharParser extends JSONUnit implements Parser {
-	protected CharParser(ObjectMapper mapper) {
+	@Inject
+	public CharParser(ObjectMapper mapper) {
 		super(mapper);
 	}
 
 	@Override
-	public Optional<JsonNode> parse(String content, Compiler compiler) {
+	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		if (content.startsWith("'") && content.endsWith("'") && 3 == content.length()) {
 			char c = content.charAt(1);
 			return Optional.of(createObject()

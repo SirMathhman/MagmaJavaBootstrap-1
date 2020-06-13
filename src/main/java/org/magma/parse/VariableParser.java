@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
-import org.magma.Compiler;
+import org.magma.Extractor;
+import org.magma.JSONUnit;
 import org.magma.util.Scope;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class VariableParser extends JSONUnit implements Parser {
 	}
 
 	@Override
-	public Optional<JsonNode> parse(String content, Compiler compiler) {
+	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		return Optional.of(content)
 				.filter(scope::isDefined)
 				.map(this::buildNode);

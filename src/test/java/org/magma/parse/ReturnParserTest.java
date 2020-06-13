@@ -6,8 +6,8 @@ import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Module;
 import org.junit.jupiter.api.Test;
-import org.magma.Compiler;
-import org.magma.InjectedCompiler;
+import org.magma.Extractor;
+import org.magma.InjectedExtractor;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,8 +17,8 @@ class ReturnParserTest {
 	void parse() {
 		ObjectMapper mapper = new ObjectMapper();
 		Parser parser = new ReturnParser(mapper);
-		Compiler compiler = InjectedCompiler.create(Guice.createInjector(new TestModule(mapper)), IntParser.class);
-		JsonNode node = parser.parse("return 10", compiler).orElseThrow();
+		Extractor extractor = InjectedExtractor.create(Guice.createInjector(new TestModule(mapper)), IntParser.class);
+		JsonNode node = parser.parse("return 10", extractor).orElseThrow();
 		assertEquals("return", node.get("type").asText());
 
 		JsonNode value = node.get("value");

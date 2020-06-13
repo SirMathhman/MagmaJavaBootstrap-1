@@ -3,8 +3,6 @@ package org.magma.build;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
-import org.magma.build.Builder;
-import org.magma.build.IntBuilder;
 
 import java.util.Optional;
 
@@ -20,7 +18,7 @@ public class IntBuilderTest {
 		ObjectNode node = mapper.createObjectNode()
 				.put("type", "integer")
 				.put("value", 10);
-		Optional<String> result = builder.build(node);
+		Optional<String> result = builder.build(node, null);
 		assertTrue(result.isPresent());
 		assertEquals("10", result.get());
 	}

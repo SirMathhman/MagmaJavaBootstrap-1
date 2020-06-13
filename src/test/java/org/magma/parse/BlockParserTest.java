@@ -6,10 +6,9 @@ import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.magma.Compiler;
-import org.magma.InjectedCompiler;
+import org.magma.Extractor;
+import org.magma.InjectedExtractor;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,9 +18,9 @@ class BlockParserTest {
 	void parse() {
 		ObjectMapper mapper = new ObjectMapper();
 		Injector injector = Guice.createInjector(new TestModule(mapper));
-		Compiler compiler = InjectedCompiler.create(injector, IntParser.class);
+		Extractor extractor = InjectedExtractor.create(injector, IntParser.class);
 		Parser parser = new BlockParser(mapper);
-		JsonNode result = parser.parse("{10;20;}", compiler).orElseThrow();
+		JsonNode result = parser.parse("{10;20;}", extractor).orElseThrow();
 
 		JsonNode children = result.get("children");
 		assertEquals(2, children.size());

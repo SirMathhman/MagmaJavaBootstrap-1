@@ -1,4 +1,4 @@
-package org.magma.parse;
+package org.magma;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;

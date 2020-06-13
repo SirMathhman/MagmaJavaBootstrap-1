@@ -14,12 +14,12 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class InjectedCompiler implements Compiler {
+public class InjectedExtractor implements Extractor {
 	private final Collection<NameResolver> nameResolvers = new ArrayList<>();
 	private final Collection<Parser> parsers = new ArrayList<>();
 	private final Collection<ValueResolver> valueResolvers = new ArrayList<>();
 
-	public InjectedCompiler(Iterable<Object> instances) {
+	public InjectedExtractor(Iterable<Object> instances) {
 		for (Object instance : instances) {
 			if (instance instanceof Parser) parsers.add((Parser) instance);
 			if (instance instanceof NameResolver) nameResolvers.add((NameResolver) instance);
@@ -27,12 +27,12 @@ public class InjectedCompiler implements Compiler {
 		}
 	}
 
-	public static Compiler create(Class<?>... classes) {
+	public static Extractor create(Class<?>... classes) {
 		return create(Guice.createInjector(), classes);
 	}
 
-	public static Compiler create(Injector injector, Class<?>... classes) {
-		return new InjectedCompiler(Arrays.stream(classes)
+	public static Extractor create(Injector injector, Class<?>... classes) {
+		return new InjectedExtractor(Arrays.stream(classes)
 				.map(injector::getInstance)
 				.collect(Collectors.toList()));
 	}

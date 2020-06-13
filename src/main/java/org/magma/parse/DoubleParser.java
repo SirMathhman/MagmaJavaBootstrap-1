@@ -3,7 +3,8 @@ package org.magma.parse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.magma.Compiler;
+import org.magma.Extractor;
+import org.magma.JSONUnit;
 
 import java.util.Optional;
 
@@ -27,11 +28,11 @@ public class DoubleParser extends JSONUnit implements Parser {
 	 *                Should already be trimmed using {@link String#trim()}, and
 	 *                should not be null.
 	 *                </p>
-	 * @param compiler
+	 * @param extractor
 	 * @return The wrapped double.
 	 */
 	@Override
-	public Optional<JsonNode> parse(String content, Compiler compiler) {
+	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		if (isLackingIdentifier(content)) return Optional.empty();
 		try {
 			String formatted = content.substring(0, content.length() - 1);

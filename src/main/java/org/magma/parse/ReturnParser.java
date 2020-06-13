@@ -3,7 +3,8 @@ package org.magma.parse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.magma.Compiler;
+import org.magma.Extractor;
+import org.magma.JSONUnit;
 
 import java.util.Optional;
 
@@ -14,10 +15,10 @@ public class ReturnParser extends JSONUnit implements Parser {
 	}
 
 	@Override
-	public Optional<JsonNode> parse(String content, Compiler compiler) {
+	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		if (content.startsWith("return ")) {
 			String value = content.substring(7).trim();
-			JsonNode node = compiler.parse(value);
+			JsonNode node = extractor.parse(value);
 			return Optional.of(createObject()
 					.put("type", "return")
 					.set("value", node));

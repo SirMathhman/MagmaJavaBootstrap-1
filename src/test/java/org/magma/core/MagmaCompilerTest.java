@@ -23,6 +23,11 @@ class MagmaCompilerTest {
 	}
 
 	@Test
+	void functionWithParameter(){
+		assertEquals("int root(int x){}", INSTANCE.compile("(x : Int) : Int => {}"));
+	}
+
+	@Test
 	void integers() {
 		assertEquals("10", INSTANCE.compile("10"));
 	}

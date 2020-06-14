@@ -27,6 +27,7 @@ public class BlockParser extends JSONUnit implements Parser {
 					.map(extractor::parse)
 					.forEach(items::add);
 			return Optional.of(createObject()
+					.put("type", "block")
 					.set("children", items));
 		}
 		return Optional.empty();

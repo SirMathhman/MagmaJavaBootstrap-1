@@ -19,7 +19,7 @@ class MagmaCompilerTest {
 
 	@Test
 	void function() {
-		assertEquals("int main(){}", INSTANCE.compile("() : Int => {}"));
+		assertEquals("int root(){}", INSTANCE.compile("() : Int => {}"));
 	}
 
 	@Test

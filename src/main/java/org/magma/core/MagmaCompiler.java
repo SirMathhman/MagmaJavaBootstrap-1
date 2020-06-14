@@ -19,9 +19,12 @@ public class MagmaCompiler implements Compiler {
 	private final MagmaModule module = new MagmaModule();
 	private final Injector injector = Guice.createInjector(module);
 	private final Builder builder = InjectedBuilder.create(injector,
+			BlockBuilder.class,
+			FunctionBuilder.class,
 			DoubleBuilder.class,
 			FloatBuilder.class,
-			IntBuilder.class);
+			IntBuilder.class,
+			IntTypeBuilder.class);
 	private final Extractor extractor = InjectedExtractor.create(injector,
 			IntNameResolver.class,
 			VoidNameResolver.class,

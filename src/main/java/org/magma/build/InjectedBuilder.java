@@ -1,6 +1,6 @@
 package org.magma.build;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Injector;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class InjectedBuilder implements Builder {
 	}
 
 	@Override
-	public Optional<String> build(ObjectNode node, Builder parent) {
+	public Optional<String> build(JsonNode node, Builder parent) {
 		return children.stream()
 				.map(child -> child.build(node, this))
 				.flatMap(Optional::stream)

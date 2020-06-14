@@ -19,6 +19,8 @@ public class MagmaCompiler implements Compiler {
 	private final MagmaModule module = new MagmaModule();
 	private final Injector injector = Guice.createInjector(module);
 	private final Builder builder = InjectedBuilder.create(injector,
+			VariableBuilder.class,
+			ReturnBuilder.class,
 			BlockBuilder.class,
 			FunctionBuilder.class,
 			DoubleBuilder.class,

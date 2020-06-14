@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.magma.core.MagmaCompiler.INSTANCE;
 
 class MagmaCompilerTest {
-
 	@Test
 	void doubles() {
 		assertEquals("10.0d", INSTANCE.compile("10d"));
@@ -16,6 +15,11 @@ class MagmaCompilerTest {
 	void floats() {
 		assertEquals("10.0f", INSTANCE.compile("10.0"));
 		assertEquals("10.0f", INSTANCE.compile("10f"));
+	}
+
+	@Test
+	void function() {
+		assertEquals("int main(){}", INSTANCE.compile("() : Int => {}"));
 	}
 
 	@Test

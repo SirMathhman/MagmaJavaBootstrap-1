@@ -12,6 +12,7 @@ import org.magma.name.IntNameResolver;
 import org.magma.value.IntValueResolver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DeclareParserTest {
 	private final ObjectMapper mapper = new ObjectMapper();
@@ -44,6 +45,11 @@ class DeclareParserTest {
 		JsonNode initial = node.get("initial");
 		assertEquals("integer", initial.get("type").asText());
 		assertEquals(10, initial.get("value").asInt());
+	}
+
+	@Test
+	void invalidFunction(){
+		assertTrue(parser.parse("() : Int => {}", extractor).isEmpty());
 	}
 
 	private static final class TestModule implements Module {

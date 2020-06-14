@@ -49,6 +49,7 @@ public class FunctionParser extends JSONUnit implements Parser {
 					.<ObjectNode>set("parameters", parameters)
 					.<ObjectNode>set("return", returnType)
 					.<ObjectNode>set("content", contentNode)
+					.put("type", "function")
 					.put("name", provider.nextName()));
 		}
 		return Optional.empty();

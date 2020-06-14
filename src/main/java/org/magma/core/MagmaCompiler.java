@@ -11,6 +11,7 @@ import org.magma.exception.AssemblyException;
 import org.magma.name.IntNameResolver;
 import org.magma.name.VoidNameResolver;
 import org.magma.parse.*;
+import org.magma.value.FunctionValueResolver;
 
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class MagmaCompiler implements Compiler {
 			IntBuilder.class,
 			IntTypeBuilder.class);
 	private final Extractor extractor = InjectedExtractor.create(injector,
+			FunctionValueResolver.class,
 			IntNameResolver.class,
 			VoidNameResolver.class,
 			BlockParser.class,

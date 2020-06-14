@@ -33,6 +33,11 @@ class MagmaCompilerTest {
 	}
 
 	@Test
+	void main(){
+		assertEquals("int main(){return 0;}", INSTANCE.compile("val main = () : Int => {return 0;}"));
+	}
+
+	@Test
 	void integers() {
 		assertEquals("10", INSTANCE.compile("10"));
 	}

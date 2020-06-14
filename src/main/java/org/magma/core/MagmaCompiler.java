@@ -8,6 +8,8 @@ import org.magma.Extractor;
 import org.magma.InjectedExtractor;
 import org.magma.build.*;
 import org.magma.exception.AssemblyException;
+import org.magma.name.IntNameResolver;
+import org.magma.name.VoidNameResolver;
 import org.magma.parse.*;
 
 import java.util.Map;
@@ -21,6 +23,8 @@ public class MagmaCompiler implements Compiler {
 			FloatBuilder.class,
 			IntBuilder.class);
 	private final Extractor extractor = InjectedExtractor.create(injector,
+			IntNameResolver.class,
+			VoidNameResolver.class,
 			BlockParser.class,
 			CharParser.class,
 			DeclareParser.class,

@@ -31,14 +31,16 @@ public class FunctionParser extends JSONUnit implements Parser {
 			String paramsString = content.substring(1, end);
 			ArrayNode parameters = createArray();
 			for (String paramString : paramsString.split(",")) {
-				int split = paramString.indexOf(':');
-				String nameString = paramString.substring(0, split).trim();
-				String typeString = paramString.substring(split + 1).trim();
-				JsonNode type = extractor.resolveName(typeString);
-				scope.define(nameString, type);
-				parameters.add(createObject()
-						.put("name", nameString)
-						.set("instance", type));
+				if (!paramString.isBlank()) {
+					int split = paramString.indexOf(':');
+					String nameString = paramString.substring(0, split).trim();
+					String typeString = paramString.substring(split + 1).trim();
+					JsonNode type = extractor.resolveName(typeString);
+					scope.define(nameString, type);
+					parameters.add(createObject()
+							.put("name", nameString)
+							.set("instance", type));
+				}
 			}
 			String returnString = content.substring(end + 1, marker).trim();
 			JsonNode returnType = extractor.resolveName(returnString.substring(1).trim());

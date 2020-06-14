@@ -1,6 +1,8 @@
 # MagmaJavaBootstrap
 ---
-
+Holds the Bootstrap extractor for the Magma programming language. Chances are that this repository will quickly fall out
+of date when the real Magma extractor is complete. As a result, this extractor is to be used as a backup extractor in case
+the standard Magma extractor becomes broken.
 ---
 ## Installation
 Using SBT run the following command:

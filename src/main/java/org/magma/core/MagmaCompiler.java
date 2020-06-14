@@ -8,7 +8,10 @@ import org.magma.Extractor;
 import org.magma.InjectedExtractor;
 import org.magma.build.*;
 import org.magma.exception.AssemblyException;
+import org.magma.name.IntNameResolver;
+import org.magma.name.VoidNameResolver;
 import org.magma.parse.*;
+import org.magma.value.FunctionValueResolver;
 
 import java.util.Map;
 
@@ -17,10 +20,18 @@ public class MagmaCompiler implements Compiler {
 	private final MagmaModule module = new MagmaModule();
 	private final Injector injector = Guice.createInjector(module);
 	private final Builder builder = InjectedBuilder.create(injector,
+			VariableBuilder.class,
+			ReturnBuilder.class,
+			BlockBuilder.class,
+			FunctionBuilder.class,
 			DoubleBuilder.class,
 			FloatBuilder.class,
-			IntBuilder.class);
+			IntBuilder.class,
+			IntTypeBuilder.class);
 	private final Extractor extractor = InjectedExtractor.create(injector,
+			FunctionValueResolver.class,
+			IntNameResolver.class,
+			VoidNameResolver.class,
 			BlockParser.class,
 			CharParser.class,
 			DeclareParser.class,

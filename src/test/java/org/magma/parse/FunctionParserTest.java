@@ -27,6 +27,7 @@ class FunctionParserTest {
 				IntNameResolver.class, BlockParser.class,
 				ReturnParser.class, VariableParser.class);
 		JsonNode node = parser.parse("(x : Int) : Int => {return x;}", extractor).orElseThrow();
+		assertEquals("function", node.get("type").asText());
 		assertEquals("test", node.get("name").asText());
 
 		JsonNode parameters = node.get("parameters");

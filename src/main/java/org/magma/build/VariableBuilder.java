@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.Optional;
 
-public class FloatBuilder implements Builder {
+public class VariableBuilder implements Builder {
 	@Override
 	public Optional<String> build(JsonNode node, Builder parent) {
-		if (Builder.is(node, "float")) {
-			return Optional.of(node.get("value").asDouble() + "f");
+		if(Builder.is(node, "variable")) {
+			return Optional.ofNullable(node.get("value").asText());
 		}
 		return Optional.empty();
 	}

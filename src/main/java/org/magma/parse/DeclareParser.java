@@ -10,7 +10,9 @@ import org.magma.JSONUnit;
 import org.magma.exception.AssemblyException;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DeclareParser extends JSONUnit implements Parser {
 	@Inject
@@ -21,7 +23,16 @@ public class DeclareParser extends JSONUnit implements Parser {
 	@Override
 	public Optional<JsonNode> parse(String content, Extractor extractor) {
 		if (hasType(content) || hasInitialValue(content)) {
-			int equals = content.indexOf('=');
+			int equals = -1;
+			for (int i = 0; i < content.toCharArray().length; i++) {
+				if ('=' == content.charAt(i)) {
+					String returnString = content.substring(i, i + 2);
+					if (!"=>".equals(returnString)) {
+						equals = i;
+						break;
+					}
+				}
+			}
 			JsonNode initial = null;
 			JsonNode initialType = null;
 			if (-1 != equals) {
@@ -31,17 +42,20 @@ public class DeclareParser extends JSONUnit implements Parser {
 			}
 			String header = -1 == equals ? content : content.substring(0, equals).trim();
 			int colon = header.indexOf(':');
-			JsonNode type = -1 == colon ? passAsInitial(initialType) : extractType(extractor, header, colon);
-			String keyString = header.substring(0, colon).trim();
+			String keyString = -1 == colon ? header : header.substring(0, colon).trim();
 			int lastSpace = keyString.lastIndexOf(' ');
-			ArrayNode flagNode = buildFlags(keyString, lastSpace);
-			String nameString = keyString.substring(lastSpace + 1).trim();
-			return Optional.of(createObject()
-					.put("type", "declaration")
-					.put("name", nameString)
-					.<ObjectNode>set("instance", type)
-					.<ObjectNode>set("initial", initial)
-					.set("flags", flagNode));
+			List<String> flags = parseFlags(keyString, lastSpace);
+			if (flags.contains("val") || flags.contains("var")) {
+				ArrayNode flagNode = wrapFlagsInNode(flags);
+				String nameString = keyString.substring(lastSpace + 1).trim();
+				JsonNode type = -1 == colon ? passAsInitial(initialType) : extractType(extractor, header, colon);
+				return Optional.of(createObject()
+						.put("type", "declaration")
+						.put("name", nameString)
+						.<ObjectNode>set("instance", type)
+						.<ObjectNode>set("initial", initial)
+						.set("flags", flagNode));
+			}
 		}
 		return Optional.empty();
 	}
@@ -52,6 +66,22 @@ public class DeclareParser extends JSONUnit implements Parser {
 
 	private static boolean hasInitialValue(String content) {
 		return content.contains("=");
+	}
+
+	private static List<String> parseFlags(String keyString, int lastSpace) {
+		String flagString = -1 == lastSpace ? keyString : keyString.substring(0, lastSpace).trim();
+		return Arrays.stream(flagString.split(" "))
+				.filter(s -> !s.isBlank())
+				.map(String::trim)
+				.map(String::toLowerCase)
+				.collect(Collectors.toList());
+	}
+
+	private ArrayNode wrapFlagsInNode(Iterable<String> keys) {
+		//replace with reduce?
+		ArrayNode flagNode = createArray();
+		keys.forEach(flagNode::add);
+		return flagNode;
 	}
 
 	private static JsonNode passAsInitial(JsonNode initialType) {
@@ -66,18 +96,5 @@ public class DeclareParser extends JSONUnit implements Parser {
 	private static JsonNode extractType(Extractor extractor, String header, int colon) {
 		String trim = header.substring(colon + 1).trim();
 		return extractor.resolveName(trim);
-	}
-
-	private ArrayNode buildFlags(String keyString, int lastSpace) {
-		String flagString = keyString.substring(0, lastSpace).trim();
-
-		//replace with reduce?
-		ArrayNode flagNode = createArray();
-		Arrays.stream(flagString.split(" "))
-				.filter(s -> !s.isBlank())
-				.map(String::trim)
-				.map(String::toLowerCase)
-				.forEach(flagNode::add);
-		return flagNode;
 	}
 }

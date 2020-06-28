@@ -1,0 +1,49 @@
+struct Node {
+	value : string;
+	render : (any*) => string;
+}
+
+string render_Node(any* ref) {
+	return (*(Node*) ref).value;
+}
+
+struct Node Node_(){
+	struct Node node;
+	return node;
+}
+
+struct Type {
+	renderWithName : (string) => string;
+	render : () => string;
+}
+
+struct Compiler {
+	parse : (string) => Node;
+	resolveName : (string) => Type;
+}
+
+struct Loader {
+	load : (string) => string;
+}
+
+struct LoaderFactory {
+	create : () => Loader;
+}
+
+struct NameResolver {
+	canResolve : (string) => bool;
+	resolveName : (string, Compiler) => bool;
+}
+
+struct Parser {
+	canParse : (string) => bool;
+	parse : (string, Compiler) => bool;
+}
+
+int test(){
+	return 0;
+}
+
+int main() {
+	return test();
+}

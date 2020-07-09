@@ -1,4 +1,7 @@
 /project/project/target
 /project/target
 /target
+/out
 /.idea
+MagmaJavaBootstrap-1.iml
+/output.c

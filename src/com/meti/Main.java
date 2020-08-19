@@ -12,7 +12,7 @@ public final class Main {
 
 	public static void main(String[] args) {
 		try {
-			CONFIG.init();
+			CONFIG.load();
 		} catch (LoggedException e) {
 			LOGGER.log(Level.SEVERE, "Failed to create non-existent config file.", e);
 		}

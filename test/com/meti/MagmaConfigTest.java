@@ -12,21 +12,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class MagmaConfigTest {
 
 	@Test
-	void init() throws Exception {
+	void load() throws Exception {
 		Path path = Paths.get(".", "temp.config");
 		Files.deleteIfExists(path);
 		Config config = new MagmaConfig(path);
-		config.init();
+		config.load();
 		assertTrue(Files.exists(path));
 		Files.deleteIfExists(path);
 	}
 
 	@Test
-	void initFailure() {
+	void loadFailure() {
 		Path path = Paths.get(".", "temp", "temp.config");
 		assertThrows(LoggedException.class, () -> {
 			Config config = new MagmaConfig(path);
-			config.init();
+			config.load();
 		});
 	}
 }

@@ -1,1 +1,1 @@
-com.meti.Main.magma
+com.meti.Main

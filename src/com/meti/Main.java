@@ -16,5 +16,11 @@ public final class Main {
 		} catch (LoggedException e) {
 			LOGGER.log(Level.SEVERE, "Failed to create non-existent config file.", e);
 		}
+
+		try {
+			CONFIG.store();
+		} catch (LoggedException e) {
+			LOGGER.log(Level.SEVERE, "Failed to store config properties.", e);
+		}
 	}
 }

@@ -33,22 +33,11 @@ public class Main {
 		String sourceName = packageList.get(packageList.size() - 1);
 		Path sourcePath = directoryPath.resolve("%s.magma".formatted(sourceName));
 		String content = Files.readString(sourcePath);
-		String contentToWrite = parse(content);
+		String contentToWrite = new Compiler().parse(content);
 		String fileName = sourcePath.getFileName().toString();
 		String newFileName = fileName.replace(".magma", ".c");
 		Path targetPath = sourcePath.resolveSibling(newFileName);
 		Files.writeString(targetPath, contentToWrite);
 	}
 
-	public static String parse(String content) {
-		String contentToWrite;
-		if (content.equals("def main() : Int => {\n" +
-		                   "\treturn 0;\n" +
-		                   "}")) {
-			contentToWrite = "int main(){return 0;}";
-		} else {
-			throw new CompileException("Failed to parse: " + content);
-		}
-		return contentToWrite;
-	}
 }

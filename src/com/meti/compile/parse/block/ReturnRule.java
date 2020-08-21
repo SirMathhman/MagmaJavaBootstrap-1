@@ -5,7 +5,7 @@ import com.meti.compile.node.Node;
 import com.meti.compile.node.block.ReturnNode;
 import com.meti.compile.parse.FilteredParseRule;
 
-public class ReturnRule implements FilteredParseRule {
+public class ReturnRule extends FilteredParseRule {
 	@Override
 	public boolean canQualify(String content) {
 		return content.startsWith("return ");

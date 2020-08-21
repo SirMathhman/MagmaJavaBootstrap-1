@@ -3,7 +3,9 @@ package com.meti.compile.type.primitive;
 import com.meti.compile.type.Type;
 
 public enum PrimitiveType implements Type {
-	Int("int");
+	Int("int"),
+	Unknown("?");
+
 	private final String name;
 
 	PrimitiveType(String name) {

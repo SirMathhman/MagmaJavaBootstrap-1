@@ -8,7 +8,7 @@ import com.meti.compile.parse.FilteredParseRule;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlockRule implements FilteredParseRule {
+public class BlockRule extends FilteredParseRule {
 	@Override
 	public boolean canQualify(String content) {
 		return content.startsWith("{") &&

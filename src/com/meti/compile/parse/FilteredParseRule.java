@@ -5,15 +5,15 @@ import com.meti.compile.node.Node;
 
 import java.util.Optional;
 
-public interface FilteredParseRule extends ParseRule {
+public abstract class FilteredParseRule implements ParseRule {
 	@Override
-	default Optional<Node> parse(String content, Compiler compiler) {
+	public Optional<Node> parse(String content, Compiler compiler) {
 		return Optional.of(content)
 				.filter(this::canQualify)
 				.map(value -> parseQualified(value, compiler));
 	}
 
-	boolean canQualify(String content);
+	public abstract boolean canQualify(String content);
 
-	Node parseQualified(String content, Compiler compiler);
+	public abstract Node parseQualified(String content, Compiler compiler);
 }

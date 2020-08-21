@@ -1,5 +1,9 @@
 package com.meti;
 
+import com.meti.compile.RootCompiler;
+import com.meti.compile.parse.MagmaParseRule;
+import com.meti.compile.resolve.primitive.IntNameRule;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

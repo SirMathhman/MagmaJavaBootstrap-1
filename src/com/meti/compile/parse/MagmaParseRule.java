@@ -1,8 +1,9 @@
-package com.meti;
+package com.meti.compile.parse;
 
-import com.meti.block.BlockRule;
-import com.meti.block.FunctionParseRule;
-import com.meti.block.ReturnRule;
+import com.meti.compile.parse.block.BlockRule;
+import com.meti.compile.parse.block.FunctionParseRule;
+import com.meti.compile.parse.block.ReturnRule;
+import com.meti.compile.parse.primitive.IntParseRule;
 
 import java.util.Collection;
 import java.util.List;

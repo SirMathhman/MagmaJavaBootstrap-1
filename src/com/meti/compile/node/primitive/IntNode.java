@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.compile.node.primitive;
+
+import com.meti.compile.node.Node;
 
 public class IntNode implements Node {
 	private final int value;

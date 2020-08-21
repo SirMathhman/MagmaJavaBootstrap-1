@@ -1,8 +1,9 @@
-package com.meti.block;
+package com.meti.compile.parse.block;
 
-import com.meti.Compiler;
-import com.meti.FilteredParseRule;
-import com.meti.Node;
+import com.meti.compile.Compiler;
+import com.meti.compile.node.Node;
+import com.meti.compile.node.block.ReturnNode;
+import com.meti.compile.parse.FilteredParseRule;
 
 public class ReturnRule implements FilteredParseRule {
 	@Override

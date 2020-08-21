@@ -1,6 +1,6 @@
-package com.meti.block;
+package com.meti.compile.node.block;
 
-import com.meti.Node;
+import com.meti.compile.node.Node;
 
 public class ReturnNode implements Node {
 	private final Node value;

@@ -1,4 +1,11 @@
-package com.meti;
+package com.meti.compile;
+
+import com.meti.compile.node.Node;
+import com.meti.compile.parse.ParseException;
+import com.meti.compile.parse.ParseRule;
+import com.meti.compile.resolve.NameRule;
+import com.meti.compile.resolve.ResolveException;
+import com.meti.compile.type.Type;
 
 public class RootCompiler implements Compiler {
 	private final NameRule rootNameRule;

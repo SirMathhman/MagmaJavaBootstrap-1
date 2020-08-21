@@ -6,11 +6,11 @@ public interface FilteredParseRule extends ParseRule {
 	@Override
 	default Optional<Node> parse(String content, Compiler compiler) {
 		return Optional.of(content)
-				.filter(this::canParse)
-				.map(value -> parseImpl(value, compiler));
+				.filter(this::canQualify)
+				.map(value -> parseQualified(value, compiler));
 	}
 
-	boolean canParse(String content);
+	boolean canQualify(String content);
 
-	Node parseImpl(String content, Compiler compiler);
+	Node parseQualified(String content, Compiler compiler);
 }

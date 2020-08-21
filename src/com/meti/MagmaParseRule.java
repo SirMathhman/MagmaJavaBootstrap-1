@@ -8,6 +8,7 @@ public class MagmaParseRule extends CompoundParseRule {
 	public Collection<ParseRule> supplyRules() {
 		return List.of(
 				new ReturnRule(),
+				new BlockRule(),
 				new FunctionParseRule()
 		);
 	}

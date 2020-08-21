@@ -2,12 +2,12 @@ package com.meti;
 
 public class FunctionParseRule implements FilteredParseRule {
 	@Override
-	public boolean canParse(String content) {
+	public boolean canQualify(String content) {
 		return content.startsWith("def");
 	}
 
 	@Override
-	public Node parseImpl(String content, Compiler compiler) {
+	public Node parseQualified(String content, Compiler compiler) {
 		int paramStart = content.indexOf('(');
 		String name = content.substring(4, paramStart).trim();
 		int returnSeparator = content.indexOf(':');

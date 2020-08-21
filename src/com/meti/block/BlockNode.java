@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.block;
+
+import com.meti.Node;
 
 import java.util.Collection;
 import java.util.Collections;

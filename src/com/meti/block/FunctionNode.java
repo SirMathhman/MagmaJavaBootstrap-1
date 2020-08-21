@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.block;
+
+import com.meti.Node;
+import com.meti.Type;
 
 public class FunctionNode implements Node {
 	private final String name;

@@ -5,7 +5,7 @@ import com.meti.FilteredParseRule;
 import com.meti.Node;
 import com.meti.Type;
 
-public class FuAnctionParseRule implements FilteredParseRule {
+public class FunctionParseRule implements FilteredParseRule {
 	@Override
 	public boolean canQualify(String content) {
 		return content.startsWith("def");

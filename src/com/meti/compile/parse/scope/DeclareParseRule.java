@@ -14,16 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeclareParseRule extends FilteredParseRule {
-	@Override
-	public boolean canQualify(String content) {
-		String header = extractHeader(content);
-		int separator = header.lastIndexOf(' ');
-		if (separator == -1) return false;
-		List<String> flags = Arrays.stream(header.substring(0, separator).split(" "))
-				.filter(s -> !s.isBlank())
-				.map(String::trim)
-				.collect(Collectors.toList());
-		return hasFeatures(content) && hasFlags(flags);
+	public static DeclareNode buildDeclare(String name, Type type) {
+		return new DeclareNode(name, type);
 	}
 
 	@Override
@@ -35,32 +27,6 @@ public class DeclareParseRule extends FilteredParseRule {
 				: buildInitial(content, compiler, name, type);
 	}
 
-	public String parseName(String content) {
-		String header = extractHeader(content);
-		int separator = header.lastIndexOf(' ');
-		String name = header.substring(separator + 1).trim();
-		return name;
-	}
-
-	public Type parseType(String content, Compiler compiler) {
-		Type type;
-		//const x = 10;
-		if (-1 == content.indexOf(':')) {
-			type = PrimitiveType.Unknown;
-		} else {
-			String typeString = -1 == content.indexOf('=')
-					? content.substring(content.indexOf(':'))
-					: content.substring(content.indexOf(':'), content.indexOf('='));
-			String formattedTypeString = typeString.trim();
-			type = compiler.resolve(formattedTypeString);
-		}
-		return type;
-	}
-
-	public static DeclareNode buildDeclare(String name, Type type) {
-		return new DeclareNode(name, type);
-	}
-
 	public static InitialNode buildInitial(String content, Compiler compiler, String name, Type type) {
 		int equals = content.indexOf('=');
 		String valueString = content.substring(equals + 1).trim();
@@ -68,12 +34,48 @@ public class DeclareParseRule extends FilteredParseRule {
 		return new InitialNode(name, type, value);
 	}
 
-	public String extractHeader(String content) {
+	public static String parseName(String content) {
+		String header = extractHeader(content);
+		int separator = header.lastIndexOf(' ');
+		return header.substring(separator + 1).trim();
+	}
+
+	public static Type parseType(String content, Compiler compiler) {
+		//const x = 10;
+		return -1 == content.indexOf(':') ?
+				PrimitiveType.Unknown :
+				parseTypePresent(content, compiler);
+	}
+
+	public static Type parseTypePresent(String content, Compiler compiler) {
+		String typeString = -1 == content.indexOf('=')
+				? content.substring(content.indexOf(':'))
+				: content.substring(content.indexOf(':'), content.indexOf('='));
+		String formattedTypeString = typeString.trim();
+		return compiler.resolve(formattedTypeString);
+	}
+
+	@Override
+	public boolean canQualify(String content) {
+		String header = extractHeader(content);
+		int separator = header.lastIndexOf(' ');
+		if (-1 == separator) return false;
+		List<String> flags = parseFlags(header, separator);
+		return hasFeatures(content) && hasFlags(flags);
+	}
+
+	public static String extractHeader(String content) {
 		int headerEnd = -1 == content.indexOf(':') ?
 				content.indexOf('=') :
 				content.indexOf(':');
-		String header = content.substring(0, headerEnd);
-		return header;
+		return content.substring(0, headerEnd);
+	}
+
+	public static List<String> parseFlags(String header, int separator) {
+		return Arrays.stream(header.substring(0, separator).split(" "))
+				.filter(s -> !s.isBlank())
+				.map(String::trim)
+				.collect(Collectors.toList());
 	}
 
 	public static boolean hasFeatures(String content) {

@@ -1,18 +1,15 @@
 package com.meti;
 
 public class ReturnNode implements Node {
-	private final String value;
+	private final Node value;
 
-	public ReturnNode(String value) {
+	public ReturnNode(Node value) {
 		this.value = value;
 	}
 
 	@Override
 	public String render() {
-		return "return " + getValue();
-	}
-
-	public String getValue() {
-		return value;
+		String renderedValue = value.render();
+		return "return " + renderedValue;
 	}
 }

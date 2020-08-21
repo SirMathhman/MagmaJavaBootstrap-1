@@ -33,7 +33,9 @@ public class Main {
 		String sourceName = packageList.get(packageList.size() - 1);
 		Path sourcePath = directoryPath.resolve("%s.magma".formatted(sourceName));
 		String content = Files.readString(sourcePath);
-		String contentToWrite = new Compiler().parse(content);
+		String contentToWrite = new RootCompiler(new MagmaParseRule(), new IntNameRule())
+				.parse(content)
+				.render();
 		String fileName = sourcePath.getFileName().toString();
 		String newFileName = fileName.replace(".magma", ".c");
 		Path targetPath = sourcePath.resolveSibling(newFileName);

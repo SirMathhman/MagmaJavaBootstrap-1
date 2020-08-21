@@ -1,7 +1,7 @@
 package com.meti;
 
-public interface ParseRule {
-	boolean canQualify(String content);
+import java.util.Optional;
 
-	Node parse(String content, Compiler compiler);
+public interface ParseRule {
+	Optional<Node> parse(String content, Compiler compiler);
 }

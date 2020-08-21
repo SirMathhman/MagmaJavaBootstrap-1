@@ -1,26 +1,21 @@
 package com.meti;
 
-public class FunctionParseRule implements ParseRule {
+public class FunctionParseRule implements FilteredParseRule {
 	@Override
-	public boolean canQualify(String content) {
+	public boolean canParse(String content) {
 		return content.startsWith("def");
 	}
 
 	@Override
-	public Node parse(String content, Compiler compiler) {
+	public Node parseImpl(String content, Compiler compiler) {
 		int paramStart = content.indexOf('(');
 		String name = content.substring(4, paramStart).trim();
 		int returnSeparator = content.indexOf(':');
 		int valueSeparator = content.indexOf("=>");
 		String returnString = content.substring(returnSeparator + 1, valueSeparator)
 				.trim();
-		Type returnType;
-		if ("Int".equals(returnString)) {
-			returnType = PrimitiveType.Int;
-		} else {
-			throw new ResolveException("Failed to resolve: " + returnString);
-		}
-		String value = content.substring(valueSeparator + 1)
+		Type returnType = compiler.resolve(returnString);
+		Node value = content.substring(valueSeparator + 1)
 				.trim()
 				.transform(compiler::parse);
 		return new FunctionNode(name, returnType, value);

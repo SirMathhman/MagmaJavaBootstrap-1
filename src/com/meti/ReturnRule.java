@@ -1,15 +1,15 @@
 package com.meti;
 
-public class ReturnRule implements ParseRule {
+public class ReturnRule implements FilteredParseRule {
 	@Override
-	public boolean canQualify(String content) {
+	public boolean canParse(String content) {
 		return content.startsWith("return ");
 	}
 
 	@Override
-	public Node parse(String content, Compiler compiler) {
+	public Node parseImpl(String content, Compiler compiler) {
 		String valueString = content.substring(7).trim();
-		String value = compiler.parse(valueString);
+		Node value = compiler.parse(valueString);
 		return new ReturnNode(value);
 	}
 }

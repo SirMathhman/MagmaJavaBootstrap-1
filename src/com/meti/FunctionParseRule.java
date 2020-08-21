@@ -15,7 +15,7 @@ public class FunctionParseRule implements FilteredParseRule {
 		String returnString = content.substring(returnSeparator + 1, valueSeparator)
 				.trim();
 		Type returnType = compiler.resolve(returnString);
-		Node value = content.substring(valueSeparator + 1)
+		Node value = content.substring(valueSeparator + 2)
 				.trim()
 				.transform(compiler::parse);
 		return new FunctionNode(name, returnType, value);

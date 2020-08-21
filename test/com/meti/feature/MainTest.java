@@ -1,9 +1,14 @@
-package com.meti.feature.core;
+package com.meti.feature;
 
 public class MainTest extends FeatureTest {
 
 	@Override
-	protected String output() {
+	protected int expectedExit() {
+		return 0;
+	}
+
+	@Override
+	protected String expectedOutput() {
 		return "";
 	}
 
@@ -13,7 +18,7 @@ public class MainTest extends FeatureTest {
 	}
 
 	@Override
-	protected String compiled() {
+	protected String compile() {
 		return "int main(){return 0;}";
 	}
 }

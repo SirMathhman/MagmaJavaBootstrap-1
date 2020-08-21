@@ -1,4 +1,4 @@
-package com.meti.feature.core;
+package com.meti.feature;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.RootCompiler;
@@ -20,7 +20,21 @@ public abstract class FeatureTest {
 	private static final Path EXECUTABLE_PATH = Paths.get(".", "test.exe");
 	private static final Path SOURCE_PATH = Paths.get(".", "test.c");
 
-	protected abstract String output();
+	private static String compileNative() throws IOException, InterruptedException {
+		return execute("gcc", "-o", "test", "test.c").value();
+	}
+
+	private static ProcessResult execute(String... strings) throws IOException, InterruptedException {
+		Process process = new ProcessBuilder(strings).start();
+		int exit = process.waitFor();
+		try (InputStream stream = process.getErrorStream()) {
+			String errorString = read(stream);
+			assertEquals("", errorString);
+		}
+		try (InputStream stream = process.getInputStream()) {
+			return new ProcessResult(read(stream), exit);
+		}
+	}
 
 	@AfterEach
 	void tearDown() throws IOException {
@@ -42,23 +56,11 @@ public abstract class FeatureTest {
 		Files.writeString(SOURCE_PATH, actual);
 	}
 
-	private static String compileNative() throws IOException, InterruptedException {
-		return execute("gcc", "-o", "test", "test.c");
-	}
+	protected abstract int expectedExit();
 
 	protected abstract String source();
 
-	private static String execute(String... strings) throws IOException, InterruptedException {
-		Process process = new ProcessBuilder(strings).start();
-		process.waitFor();
-		try (InputStream stream = process.getErrorStream()) {
-			String errorString = read(stream);
-			assertEquals("", errorString);
-		}
-		try (InputStream stream = process.getInputStream()) {
-			return read(stream);
-		}
-	}
+	protected abstract String expectedOutput();
 
 	private static String read(InputStream stream) throws IOException {
 		ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
@@ -70,16 +72,17 @@ public abstract class FeatureTest {
 	void testContent() {
 		Compiler compiler = new RootCompiler(new MagmaParseRule(), new IntNameRule());
 		String actual = compiler.parse(source()).render();
-		assertEquals(compiled(), actual);
+		assertEquals(compile(), actual);
 	}
 
-	protected abstract String compiled();
+	protected abstract String compile();
 
 	@Test
 	void testExecutable() throws Exception {
 		compileInternal();
 		compileNative();
-		String output = execute("test");
-		assertEquals(output(), output);
+		ProcessResult result = execute("test");
+		assertEquals(expectedOutput(), result.value());
+		assertEquals(expectedExit(), result.exit());
 	}
 }

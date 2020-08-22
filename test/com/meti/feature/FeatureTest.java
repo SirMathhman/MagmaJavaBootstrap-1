@@ -3,7 +3,9 @@ package com.meti.feature;
 import com.meti.compile.Compiler;
 import com.meti.compile.RootCompiler;
 import com.meti.compile.parse.MagmaParseRule;
-import com.meti.compile.resolve.primitive.IntNameRule;
+import com.meti.compile.parse.ParseRule;
+import com.meti.compile.resolve.MagmaResolveRule;
+import com.meti.compile.resolve.ResolveRule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +53,7 @@ public abstract class FeatureTest {
 
 	private void compileInternal() throws IOException {
 		if (!Files.exists(SOURCE_PATH)) Files.createFile(SOURCE_PATH);
-		Compiler compiler = new RootCompiler(new MagmaParseRule(), new IntNameRule());
+		Compiler compiler = createCompiler();
 		String actual = compiler.parse(source()).render();
 		Files.writeString(SOURCE_PATH, actual);
 	}
@@ -68,9 +70,15 @@ public abstract class FeatureTest {
 		return errorStream.toString();
 	}
 
+	private static Compiler createCompiler() {
+		ParseRule rootParserRule = new MagmaParseRule();
+		ResolveRule rootResolveRule = new MagmaResolveRule();
+		return new RootCompiler(rootParserRule, rootResolveRule);
+	}
+
 	@Test
 	void testContent() {
-		Compiler compiler = new RootCompiler(new MagmaParseRule(), new IntNameRule());
+		Compiler compiler = createCompiler();
 		String actual = compiler.parse(source()).render();
 		assertEquals(compile(), actual);
 	}

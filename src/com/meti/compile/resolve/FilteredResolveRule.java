@@ -4,7 +4,7 @@ import com.meti.compile.type.Type;
 
 import java.util.Optional;
 
-public interface FilteredNameRule extends NameRule {
+public interface FilteredResolveRule extends ResolveRule {
 	@Override
 	default Optional<Type> resolve(String name) {
 		return Optional.of(name)

@@ -4,7 +4,8 @@ import com.meti.compile.type.Type;
 
 public enum PrimitiveType implements Type {
 	Int("int"),
-	Unknown("?");
+	Unknown("?"),
+	Char("char");
 
 	private final String name;
 

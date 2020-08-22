@@ -3,6 +3,7 @@ package com.meti.compile.parse;
 import com.meti.compile.parse.block.BlockRule;
 import com.meti.compile.parse.block.FunctionParseRule;
 import com.meti.compile.parse.block.ReturnRule;
+import com.meti.compile.parse.primitive.CharParseRule;
 import com.meti.compile.parse.primitive.IntParseRule;
 import com.meti.compile.parse.scope.DeclareParseRule;
 import com.meti.compile.parse.scope.VariableParseRule;
@@ -21,6 +22,7 @@ public class MagmaParseRule extends CompoundParseRule {
 				new ReturnRule(),
 				new DeclareParseRule(stack),
 				new FunctionParseRule(),
+				new CharParseRule(),
 				new IntParseRule(),
 				new VariableParseRule(stack)
 		);

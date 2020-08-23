@@ -1,11 +1,5 @@
 package com.meti.feature;
 
-import com.meti.compile.Lexer;
-import com.meti.compile.RootLexer;
-import com.meti.compile.parse.LexRule;
-import com.meti.compile.parse.MagmaLexRule;
-import com.meti.compile.resolve.MagmaResolveRule;
-import com.meti.compile.resolve.ResolveRule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public abstract class FeatureTest {
 	private static final Path EXECUTABLE_PATH = Paths.get(".", "test.exe");
 	private static final Path SOURCE_PATH = Paths.get(".", "test.c");
+	private final Compiler compiler = new MagmaCompiler();
 
 	private static String compileNative() throws IOException, InterruptedException {
 		return execute("gcc", "-o", "test", "test.c").value();
@@ -53,8 +48,7 @@ public abstract class FeatureTest {
 
 	private void compileInternal() throws IOException {
 		if (!Files.exists(SOURCE_PATH)) Files.createFile(SOURCE_PATH);
-		Lexer lexer = createCompiler();
-		String actual = lexer.parse(source()).render();
+		String actual = compiler.compileImpl(source());
 		Files.writeString(SOURCE_PATH, actual);
 	}
 
@@ -70,16 +64,9 @@ public abstract class FeatureTest {
 		return errorStream.toString();
 	}
 
-	private static Lexer createCompiler() {
-		LexRule rootParserRule = new MagmaLexRule();
-		ResolveRule rootResolveRule = new MagmaResolveRule();
-		return new RootLexer(rootParserRule, rootResolveRule);
-	}
-
 	@Test
 	void testContent() {
-		Lexer lexer = createCompiler();
-		String actual = lexer.parse(source()).render();
+		String actual = compiler.compileImpl(source());
 		assertEquals(compile(), actual);
 	}
 

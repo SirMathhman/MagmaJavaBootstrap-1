@@ -17,10 +17,7 @@ public class AliasTest extends FeatureTest {
 				""";
 	}
 
-	A
-
 	@Override
-
 	protected String expectedOutput() {
 		return "";
 	}

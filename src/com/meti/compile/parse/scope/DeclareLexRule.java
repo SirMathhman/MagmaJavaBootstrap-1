@@ -4,7 +4,7 @@ import com.meti.compile.Compiler;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.scope.DeclareNode;
 import com.meti.compile.node.scope.InitialNode;
-import com.meti.compile.parse.FilteredParseRule;
+import com.meti.compile.parse.FilteredLexRule;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DeclareParseRule extends FilteredParseRule {
+public class DeclareLexRule extends FilteredLexRule {
 	public static Type parseTypePresent(String content, Compiler compiler) {
 		String typeString = -1 == content.indexOf('=')
 				? content.substring(content.indexOf(':') + 1)

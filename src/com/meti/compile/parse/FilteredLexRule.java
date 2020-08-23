@@ -5,7 +5,7 @@ import com.meti.compile.node.Node;
 
 import java.util.Optional;
 
-public abstract class FilteredParseRule implements ParseRule {
+public abstract class FilteredLexRule implements LexRule {
 	@Override
 	public Optional<Node> parse(String content, Compiler compiler) {
 		return Optional.of(content)

@@ -3,12 +3,12 @@ package com.meti.compile.parse.block;
 import com.meti.compile.Compiler;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.block.BlockNode;
-import com.meti.compile.parse.FilteredParseRule;
+import com.meti.compile.parse.FilteredLexRule;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlockRule extends FilteredParseRule {
+public class BlockRule extends FilteredLexRule {
 	@Override
 	public boolean canQualify(String content) {
 		return content.startsWith("{") &&

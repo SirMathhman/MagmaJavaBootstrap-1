@@ -3,9 +3,9 @@ package com.meti.compile.parse.primitive;
 import com.meti.compile.Compiler;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.primitive.CharNode;
-import com.meti.compile.parse.FilteredParseRule;
+import com.meti.compile.parse.FilteredLexRule;
 
-public class CharParseRule extends FilteredParseRule {
+public class CharLexRule extends FilteredLexRule {
 	@Override
 	public boolean canQualify(String content) {
 		return content.startsWith("'")

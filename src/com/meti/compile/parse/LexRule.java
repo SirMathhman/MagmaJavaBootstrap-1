@@ -5,6 +5,6 @@ import com.meti.compile.node.Node;
 
 import java.util.Optional;
 
-public interface ParseRule {
+public interface LexRule {
 	Optional<Node> parse(String content, Compiler compiler);
 }

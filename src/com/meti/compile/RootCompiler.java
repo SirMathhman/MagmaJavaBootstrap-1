@@ -1,24 +1,24 @@
 package com.meti.compile;
 
 import com.meti.compile.node.Node;
+import com.meti.compile.parse.LexRule;
 import com.meti.compile.parse.ParseException;
-import com.meti.compile.parse.ParseRule;
 import com.meti.compile.resolve.ResolveException;
 import com.meti.compile.resolve.ResolveRule;
 import com.meti.compile.type.Type;
 
 public class RootCompiler implements Compiler {
 	private final ResolveRule rootResolveRule;
-	private final ParseRule rootParseRule;
+	private final LexRule rootLexRule;
 
-	public RootCompiler(ParseRule rootParseRule, ResolveRule rootResolveRule) {
+	public RootCompiler(LexRule rootLexRule, ResolveRule rootResolveRule) {
 		this.rootResolveRule = rootResolveRule;
-		this.rootParseRule = rootParseRule;
+		this.rootLexRule = rootLexRule;
 	}
 
 	@Override
 	public Node parse(String content) {
-		return rootParseRule.parse(content, this)
+		return rootLexRule.parse(content, this)
 				.orElseThrow(() -> createInvalidParse(content));
 	}
 

@@ -6,7 +6,7 @@ import com.meti.compile.node.Node;
 import java.util.Collection;
 import java.util.Optional;
 
-public abstract class CompoundParseRule implements ParseRule {
+public abstract class CompoundLexRule implements LexRule {
 	@Override
 	public Optional<Node> parse(String content, Compiler compiler) {
 		return supplyRules().stream()
@@ -15,5 +15,5 @@ public abstract class CompoundParseRule implements ParseRule {
 				.findFirst();
 	}
 
-	public abstract Collection<ParseRule> supplyRules();
+	public abstract Collection<LexRule> supplyRules();
 }

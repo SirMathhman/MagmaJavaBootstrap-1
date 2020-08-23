@@ -2,8 +2,8 @@ package com.meti.feature;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.RootCompiler;
-import com.meti.compile.parse.MagmaParseRule;
-import com.meti.compile.parse.ParseRule;
+import com.meti.compile.parse.LexRule;
+import com.meti.compile.parse.MagmaLexRule;
 import com.meti.compile.resolve.MagmaResolveRule;
 import com.meti.compile.resolve.ResolveRule;
 import org.junit.jupiter.api.AfterEach;
@@ -71,7 +71,7 @@ public abstract class FeatureTest {
 	}
 
 	private static Compiler createCompiler() {
-		ParseRule rootParserRule = new MagmaParseRule();
+		LexRule rootParserRule = new MagmaLexRule();
 		ResolveRule rootResolveRule = new MagmaResolveRule();
 		return new RootCompiler(rootParserRule, rootResolveRule);
 	}

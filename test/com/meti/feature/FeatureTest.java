@@ -1,7 +1,7 @@
 package com.meti.feature;
 
-import com.meti.compile.Compiler;
-import com.meti.compile.RootCompiler;
+import com.meti.compile.Lexer;
+import com.meti.compile.RootLexer;
 import com.meti.compile.parse.LexRule;
 import com.meti.compile.parse.MagmaLexRule;
 import com.meti.compile.resolve.MagmaResolveRule;
@@ -53,8 +53,8 @@ public abstract class FeatureTest {
 
 	private void compileInternal() throws IOException {
 		if (!Files.exists(SOURCE_PATH)) Files.createFile(SOURCE_PATH);
-		Compiler compiler = createCompiler();
-		String actual = compiler.parse(source()).render();
+		Lexer lexer = createCompiler();
+		String actual = lexer.parse(source()).render();
 		Files.writeString(SOURCE_PATH, actual);
 	}
 
@@ -70,16 +70,16 @@ public abstract class FeatureTest {
 		return errorStream.toString();
 	}
 
-	private static Compiler createCompiler() {
+	private static Lexer createCompiler() {
 		LexRule rootParserRule = new MagmaLexRule();
 		ResolveRule rootResolveRule = new MagmaResolveRule();
-		return new RootCompiler(rootParserRule, rootResolveRule);
+		return new RootLexer(rootParserRule, rootResolveRule);
 	}
 
 	@Test
 	void testContent() {
-		Compiler compiler = createCompiler();
-		String actual = compiler.parse(source()).render();
+		Lexer lexer = createCompiler();
+		String actual = lexer.parse(source()).render();
 		assertEquals(compile(), actual);
 	}
 

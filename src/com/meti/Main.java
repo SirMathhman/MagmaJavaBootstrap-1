@@ -1,6 +1,6 @@
 package com.meti;
 
-import com.meti.compile.RootCompiler;
+import com.meti.compile.RootLexer;
 import com.meti.compile.parse.MagmaLexRule;
 import com.meti.compile.resolve.primitive.IntResolveRule;
 
@@ -37,7 +37,7 @@ public class Main {
 		String sourceName = packageList.get(packageList.size() - 1);
 		Path sourcePath = directoryPath.resolve("%s.magma".formatted(sourceName));
 		String content = Files.readString(sourcePath);
-		String contentToWrite = new RootCompiler(new MagmaLexRule(), new IntResolveRule())
+		String contentToWrite = new RootLexer(new MagmaLexRule(), new IntResolveRule())
 				.parse(content)
 				.render();
 		String fileName = sourcePath.getFileName().toString();

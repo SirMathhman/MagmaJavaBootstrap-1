@@ -1,6 +1,6 @@
 package com.meti.compile.parse.block;
 
-import com.meti.compile.Compiler;
+import com.meti.compile.Lexer;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.block.BlockNode;
 import com.meti.compile.parse.FilteredLexRule;
@@ -16,13 +16,13 @@ public class BlockRule extends FilteredLexRule {
 	}
 
 	@Override
-	public Node parseQualified(String content, Compiler compiler) {
+	public Node parseQualified(String content, Lexer lexer) {
 		List<String> childContent = extractChildren(content);
 		List<Node> collect = childContent
 				.stream()
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
-				.map(compiler::parse)
+				.map(lexer::parse)
 				.collect(Collectors.toList());
 		return new BlockNode(collect);
 	}

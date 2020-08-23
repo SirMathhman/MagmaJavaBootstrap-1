@@ -1,6 +1,6 @@
 package com.meti.compile.parse;
 
-import com.meti.compile.Compiler;
+import com.meti.compile.Lexer;
 import com.meti.compile.node.Node;
 
 import java.util.Collection;
@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public abstract class CompoundLexRule implements LexRule {
 	@Override
-	public Optional<Node> parse(String content, Compiler compiler) {
+	public Optional<Node> parse(String content, Lexer lexer) {
 		return supplyRules().stream()
-				.map(rule -> rule.parse(content, compiler))
+				.map(rule -> rule.parse(content, lexer))
 				.flatMap(Optional::stream)
 				.findFirst();
 	}

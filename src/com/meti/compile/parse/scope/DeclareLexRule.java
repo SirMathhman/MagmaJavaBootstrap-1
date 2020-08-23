@@ -1,6 +1,6 @@
 package com.meti.compile.parse.scope;
 
-import com.meti.compile.Compiler;
+import com.meti.compile.Lexer;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.scope.DeclareNode;
 import com.meti.compile.node.scope.InitialNode;
@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeclareLexRule extends FilteredLexRule {
-	public static Type parseTypePresent(String content, Compiler compiler) {
-		String typeString = -1 == content.indexOf('=')
-				? content.substring(content.indexOf(':') + 1)
-				: content.substring(content.indexOf(':') + 1, content.indexOf('='));
-		String formattedTypeString = typeString.trim();
-		return compiler.resolve(formattedTypeString);
+	@Override
+	public Node parseQualified(String content, Lexer lexer) {
+		String name = parseName(content);
+		Type type = parseType(content, lexer);
+		return -1 == content.indexOf('=')
+				? buildDeclare(name, type)
+				: buildInitial(content, lexer, name, type);
 	}
 
 	@Override
@@ -38,31 +39,30 @@ public class DeclareLexRule extends FilteredLexRule {
 		return header.substring(separator + 1).trim();
 	}
 
-	public static Type parseType(String content, Compiler compiler) {
+	public static Type parseType(String content, Lexer lexer) {
 		//const x = 10;
 		return -1 == content.indexOf(':') ?
 				PrimitiveType.Unknown :
-				parseTypePresent(content, compiler);
+				parseTypePresent(content, lexer);
 	}
 
-	@Override
-	public Node parseQualified(String content, Compiler compiler) {
-		String name = parseName(content);
-		Type type = parseType(content, compiler);
-		return -1 == content.indexOf('=')
-				? buildDeclare(name, type)
-				: buildInitial(content, compiler, name, type);
+	public static InitialNode buildInitial(String content, Lexer lexer, String name, Type type) {
+		int equals = content.indexOf('=');
+		String valueString = content.substring(equals + 1).trim();
+		Node value = lexer.parse(valueString);
+		return new InitialNode(name, type, value);
 	}
 
 	public static DeclareNode buildDeclare(String name, Type type) {
 		return new DeclareNode(name, type);
 	}
 
-	public static InitialNode buildInitial(String content, Compiler compiler, String name, Type type) {
-		int equals = content.indexOf('=');
-		String valueString = content.substring(equals + 1).trim();
-		Node value = compiler.parse(valueString);
-		return new InitialNode(name, type, value);
+	public static Type parseTypePresent(String content, Lexer lexer) {
+		String typeString = -1 == content.indexOf('=')
+				? content.substring(content.indexOf(':') + 1)
+				: content.substring(content.indexOf(':') + 1, content.indexOf('='));
+		String formattedTypeString = typeString.trim();
+		return lexer.resolve(formattedTypeString);
 	}
 
 	public static boolean hasFeatures(String content) {

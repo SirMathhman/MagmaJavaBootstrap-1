@@ -7,11 +7,11 @@ import com.meti.compile.resolve.ResolveException;
 import com.meti.compile.resolve.ResolveRule;
 import com.meti.compile.type.Type;
 
-public class RootCompiler implements Compiler {
+public class RootLexer implements Lexer {
 	private final ResolveRule rootResolveRule;
 	private final LexRule rootLexRule;
 
-	public RootCompiler(LexRule rootLexRule, ResolveRule rootResolveRule) {
+	public RootLexer(LexRule rootLexRule, ResolveRule rootResolveRule) {
 		this.rootResolveRule = rootResolveRule;
 		this.rootLexRule = rootLexRule;
 	}

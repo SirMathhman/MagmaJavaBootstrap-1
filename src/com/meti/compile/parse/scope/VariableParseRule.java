@@ -3,23 +3,13 @@ package com.meti.compile.parse.scope;
 import com.meti.compile.Compiler;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.scope.VariableNode;
-import com.meti.compile.parse.FilteredParseRule;
-import com.meti.compile.util.CallStack;
+import com.meti.compile.parse.ParseRule;
 
-public class VariableParseRule extends FilteredParseRule {
-	private final CallStack stack;
+import java.util.Optional;
 
-	public VariableParseRule(CallStack stack) {
-		this.stack = stack;
-	}
-
+public class VariableParseRule implements ParseRule {
 	@Override
-	public boolean canQualify(String content) {
-		return stack.isDefined(content);
-	}
-
-	@Override
-	public Node parseQualified(String content, Compiler compiler) {
-		return new VariableNode(content);
+	public Optional<Node> parse(String content, Compiler compiler) {
+		return Optional.of(new VariableNode(content));
 	}
 }

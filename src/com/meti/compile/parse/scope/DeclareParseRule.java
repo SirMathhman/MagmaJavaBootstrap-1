@@ -7,7 +7,6 @@ import com.meti.compile.node.scope.InitialNode;
 import com.meti.compile.parse.FilteredParseRule;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
-import com.meti.compile.util.CallStack;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,12 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeclareParseRule extends FilteredParseRule {
-	private final CallStack stack;
-
-	public DeclareParseRule(CallStack stack) {
-		this.stack = stack;
-	}
-
 	public static Type parseTypePresent(String content, Compiler compiler) {
 		String typeString = -1 == content.indexOf('=')
 				? content.substring(content.indexOf(':') + 1)
@@ -56,10 +49,9 @@ public class DeclareParseRule extends FilteredParseRule {
 	public Node parseQualified(String content, Compiler compiler) {
 		String name = parseName(content);
 		Type type = parseType(content, compiler);
-		String alias = stack.define(name, type);
 		return -1 == content.indexOf('=')
-				? buildDeclare(alias, type)
-				: buildInitial(content, compiler, alias, type);
+				? buildDeclare(name, type)
+				: buildInitial(content, compiler, name, type);
 	}
 
 	public static DeclareNode buildDeclare(String name, Type type) {

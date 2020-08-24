@@ -27,7 +27,7 @@ public class DeclareModifer implements Modifier {
 		return copy.applyToDependents(dependents1 -> dependents1.applyToFields(Collection::stream))
 				.findFirst()
 				.orElseThrow()
-				.map(this::defineInStack);
+				.apply(this::defineInStack);
 	}
 
 	public Node defineInStack(String s, Type type) {

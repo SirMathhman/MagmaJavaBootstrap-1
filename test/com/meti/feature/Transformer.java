@@ -24,7 +24,7 @@ public class Transformer {
 	}
 
 	private Dependents transformDependents(Dependents dependents) {
-		List<Node> children = dependents.mapChildren(Collection::stream)
+		List<Node> children = dependents.applyToChildren(Collection::stream)
 				.map(this::transform)
 				.collect(Collectors.toList());
 		return dependents.copyChildren(children);

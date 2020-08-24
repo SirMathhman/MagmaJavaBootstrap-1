@@ -2,9 +2,12 @@ package com.meti.compile.parse.block;
 
 import com.meti.compile.Lexer;
 import com.meti.compile.node.Node;
-import com.meti.compile.node.block.FunctionNode;
+import com.meti.compile.node.block.FunctionNodeBuilder;
 import com.meti.compile.parse.FilteredLexRule;
 import com.meti.compile.type.Type;
+import com.meti.compile.type.TypePair;
+
+import java.util.ArrayList;
 
 public class FunctionLexRule extends FilteredLexRule {
 	@Override
@@ -24,6 +27,6 @@ public class FunctionLexRule extends FilteredLexRule {
 		Node value = content.substring(valueSeparator + 2)
 				.trim()
 				.transform(lexer::parse);
-		return new FunctionNode(name, returnType, value);
+		return new FunctionNodeBuilder().setName(name).setReturnType(returnType).withValue(value).withParameters(new ArrayList<TypePair>()).build();
 	}
 }

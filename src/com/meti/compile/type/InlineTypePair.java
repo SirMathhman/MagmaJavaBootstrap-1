@@ -1,6 +1,7 @@
 package com.meti.compile.type;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class InlineTypePair implements TypePair {
 	private final Type type;
@@ -12,8 +13,13 @@ public class InlineTypePair implements TypePair {
 	}
 
 	@Override
-	public <T> T map(BiFunction<String, Type, T> function) {
+	public <T> T apply(BiFunction<String, Type, T> function) {
 		return function.apply(value, type);
+	}
+
+	@Override
+	public <T> T applyToType(Function<Type, T> function) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

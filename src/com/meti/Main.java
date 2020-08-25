@@ -1,8 +1,8 @@
 package com.meti;
 
-import com.meti.compile.RootLexer;
-import com.meti.compile.parse.MagmaLexRule;
-import com.meti.compile.resolve.primitive.IntResolveRule;
+import com.meti.compile.lex.RootLexer;
+import com.meti.compile.lex.parse.MagmaLexRule;
+import com.meti.compile.lex.resolve.primitive.IntResolveRule;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,4 +1,4 @@
-package com.meti.feature;
+package com.meti.compile;
 
 import com.meti.compile.type.Type;
 

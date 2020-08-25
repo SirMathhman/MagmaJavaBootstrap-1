@@ -1,7 +1,5 @@
-package com.meti.feature;
+package com.meti.compile;
 
-import com.meti.compile.Lexer;
-import com.meti.compile.RootLexer;
 import com.meti.compile.node.Node;
 import com.meti.compile.parse.LexRule;
 import com.meti.compile.parse.MagmaLexRule;

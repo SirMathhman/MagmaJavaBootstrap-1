@@ -1,4 +1,4 @@
-package com.meti.feature;
+package com.meti.compile;
 
 public interface Compiler {
 	String compileImpl(String value);

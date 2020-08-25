@@ -1,5 +1,7 @@
 package com.meti.feature;
 
+import com.meti.compile.Compiler;
+import com.meti.compile.MagmaCompiler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

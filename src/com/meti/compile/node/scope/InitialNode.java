@@ -42,7 +42,7 @@ public class InitialNode implements Node {
 	public static Node copyImpl(List<TypePair> typePairs, List<Node> nodes) {
 		TypePair field = typePairs.get(0);
 		Node value = nodes.get(0);
-		return field.apply((name, type) -> new InitialNode(name, type, value));
+		return field.apply((name, type) -> new InitialNodeBuilder().withName(name).withType(type).withValue(value).build());
 	}
 
 	@Override

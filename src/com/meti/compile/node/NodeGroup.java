@@ -1,5 +1,16 @@
 package com.meti.compile.node;
 
 public enum NodeGroup {
-	Function, Block, Return, Int, Initial, Variable, Char, Declare
+	Function,
+	Variable,
+	Declare,
+	Initial,
+	Return,
+	Block,
+	Char,
+	Int;
+
+	public boolean matches(NodeGroup other) {
+		return this == other;
+	}
 }

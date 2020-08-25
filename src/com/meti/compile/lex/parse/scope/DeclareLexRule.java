@@ -5,6 +5,7 @@ import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.scope.DeclareNode;
 import com.meti.compile.node.scope.InitialNode;
+import com.meti.compile.node.scope.InitialNodeBuilder;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
@@ -39,18 +40,18 @@ public class DeclareLexRule extends FilteredLexRule {
 		return header.substring(separator + 1).trim();
 	}
 
-	public static Type parseType(String content, Lexer lexer) {
-		//const x = 10;
-		return -1 == content.indexOf(':') ?
-				PrimitiveType.Unknown :
-				parseTypePresent(content, lexer);
-	}
-
 	public static InitialNode buildInitial(String content, Lexer lexer, String name, Type type) {
 		int equals = content.indexOf('=');
 		String valueString = content.substring(equals + 1).trim();
 		Node value = lexer.parse(valueString);
-		return new InitialNode(name, type, value);
+		return new InitialNodeBuilder().withName(name).withType(type).withValue(value).build();
+	}
+
+	public static Type parseType(String content, Lexer lexer) {
+		//const x = 10;
+		return -1 == content.indexOf(':') ?
+				PrimitiveType.Implicit :
+				parseTypePresent(content, lexer);
 	}
 
 	public static DeclareNode buildDeclare(String name, Type type) {

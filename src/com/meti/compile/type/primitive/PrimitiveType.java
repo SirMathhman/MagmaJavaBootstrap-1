@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public enum PrimitiveType implements Type {
 	Int("int"),
-	Unknown("?"),
+	Implicit("?"),
 	Char("char");
 
 	private final String name;

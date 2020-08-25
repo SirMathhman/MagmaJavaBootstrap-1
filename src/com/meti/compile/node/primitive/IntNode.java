@@ -1,6 +1,7 @@
 package com.meti.compile.node.primitive;
 
 import com.meti.compile.node.Dependents;
+import com.meti.compile.node.EmptyDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
@@ -15,7 +16,7 @@ public class IntNode implements Node {
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(new EmptyDependents());
+		return mapper.apply(EmptyDependents.EmptyDependents());
 	}
 
 	@Override

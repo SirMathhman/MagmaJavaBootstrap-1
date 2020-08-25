@@ -1,6 +1,7 @@
 package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
+import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
@@ -18,7 +19,7 @@ public class BlockNode implements Node {
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(InlineDependents.of(children));
+		return mapper.apply(InlineDependents.ofChildren(children));
 	}
 
 	@Override

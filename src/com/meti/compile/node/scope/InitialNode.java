@@ -1,10 +1,14 @@
 package com.meti.compile.node.scope;
 
 import com.meti.compile.node.Dependents;
+import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
+import com.meti.compile.type.InlineTypePair;
 import com.meti.compile.type.Type;
+import com.meti.compile.type.TypePair;
 
+import java.util.List;
 import java.util.function.Function;
 
 public class InitialNode implements Node {
@@ -19,18 +23,26 @@ public class InitialNode implements Node {
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
-		throw new UnsupportedOperationException();
+	public <T> T applyToDependents(Function<Dependents, T> mapper) {
+		TypePair field = new InlineTypePair(name, type);
+		Dependents dependents = InlineDependents.ofSingleton(field, value);
+		return mapper.apply(dependents);
 	}
 
 	@Override
 	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(NodeGroup.Initial);
 	}
 
 	@Override
-	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(null);
+	public Node copy(Dependents dependents) {
+		return dependents.apply(InitialNode::copyImpl);
+	}
+
+	public static Node copyImpl(List<TypePair> typePairs, List<Node> nodes) {
+		TypePair field = typePairs.get(0);
+		Node value = nodes.get(0);
+		return field.apply((name, type) -> new InitialNode(name, type, value));
 	}
 
 	@Override

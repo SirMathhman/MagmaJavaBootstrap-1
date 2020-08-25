@@ -6,6 +6,8 @@ import com.meti.compile.node.NodeGroup;
 
 import java.util.function.Function;
 
+import static com.meti.compile.node.EmptyDependents.EmptyDependents;
+
 public class VariableNode implements Node {
 	private final String content;
 
@@ -15,17 +17,17 @@ public class VariableNode implements Node {
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(null);
+		return mapper.apply(EmptyDependents());
 	}
 
 	@Override
 	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(NodeGroup.Variable);
 	}
 
 	@Override
 	public Node copy(Dependents dependents) {
-		throw new UnsupportedOperationException();
+		return new VariableNode(content);
 	}
 
 	@Override

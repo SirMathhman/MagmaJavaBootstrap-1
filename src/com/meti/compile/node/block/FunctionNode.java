@@ -1,6 +1,7 @@
 package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
+import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.type.InlineTypePair;

@@ -1,6 +1,7 @@
 package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
+import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
@@ -11,7 +12,7 @@ public class ReturnNode implements Node {
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(InlineDependents.of(value));
+		return mapper.apply(InlineDependents.ofChild(value));
 	}
 
 	@Override

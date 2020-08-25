@@ -1,7 +1,5 @@
-package com.meti.compile.node.block;
+package com.meti.compile.node;
 
-import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
 import com.meti.compile.type.TypePair;
 
 import java.util.Collection;
@@ -11,7 +9,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-final class InlineDependents implements Dependents {
+public final class InlineDependents implements Dependents {
 	private final List<Node> children;
 	private final List<TypePair> fields;
 
@@ -20,16 +18,20 @@ final class InlineDependents implements Dependents {
 		this.children = Collections.unmodifiableList(children);
 	}
 
-	static InlineDependents of(Node value) {
-		return of(Collections.singletonList(value));
+	public static InlineDependents ofChild(Node value) {
+		return ofChildren(Collections.singletonList(value));
 	}
 
-	static InlineDependents of(List<Node> children) {
+	public static InlineDependents ofChildren(List<Node> children) {
 		return of(Collections.emptyList(), children);
 	}
 
-	static InlineDependents of(List<TypePair> fields, List<Node> children) {
+	public static InlineDependents of(List<TypePair> fields, List<Node> children) {
 		return new InlineDependents(fields, children);
+	}
+
+	public static InlineDependents ofSingleton(TypePair pair, Node node) {
+		return of(Collections.singletonList(pair), Collections.singletonList(node));
 	}
 
 	@Override

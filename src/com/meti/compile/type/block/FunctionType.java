@@ -27,6 +27,9 @@ public class FunctionType implements Type {
 
 	@Override
 	public Stream<Type> streamChildren() {
-		return Stream.empty();
+		return Stream.concat(
+				Stream.of(returnType),
+				parameterTypes.stream()
+		);
 	}
 }

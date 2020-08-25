@@ -1,12 +1,11 @@
 package com.meti.feature;
 
+import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.node.scope.DeclareNode;
 import com.meti.compile.type.Type;
 import com.meti.compile.util.CallStack;
-
-import java.util.Collection;
 
 public class DeclareModifer implements Modifier {
 	private final CallStack stack;
@@ -24,7 +23,7 @@ public class DeclareModifer implements Modifier {
 
 	@Override
 	public Node modify(Node copy) {
-		return copy.applyToDependents(dependents1 -> dependents1.applyToFields(Collection::stream))
+		return copy.applyToDependents(Dependents::streamFields)
 				.findFirst()
 				.orElseThrow()
 				.apply(this::defineInStack);

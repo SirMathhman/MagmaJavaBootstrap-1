@@ -4,10 +4,12 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.type.TypePair;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 final class InlineDependents implements Dependents {
 	private final List<Node> children;
@@ -16,6 +18,10 @@ final class InlineDependents implements Dependents {
 	private InlineDependents(List<TypePair> fields, List<Node> children) {
 		this.fields = Collections.unmodifiableList(fields);
 		this.children = Collections.unmodifiableList(children);
+	}
+
+	static InlineDependents of(Node value) {
+		return of(Collections.singletonList(value));
 	}
 
 	static InlineDependents of(List<Node> children) {
@@ -28,21 +34,25 @@ final class InlineDependents implements Dependents {
 
 	@Override
 	public <T> T apply(BiFunction<List<TypePair>, List<Node>, T> function) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public <T> T applyToChildren(Function<List<Node>, T> mapper) {
-		return mapper.apply(children);
-	}
-
-	@Override
-	public <T> T applyToFields(Function<List<TypePair>, T> pairs) {
-		return pairs.apply(fields);
+		return function.apply(fields, children);
 	}
 
 	@Override
 	public Dependents copyChildren(List<Node> children) {
 		return of(fields, children);
+	}
+
+	@Override
+	public Stream<Node> streamChildren() {
+		return children.stream();
+	}
+
+	@Override
+	public Stream<TypePair> streamFields() {
+		return applyToFields(Collection::stream);
+	}
+
+	private <T> T applyToFields(Function<List<TypePair>, T> mapper) {
+		return mapper.apply(fields);
 	}
 }

@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 public class BlockNode implements Node {
 	private final List<Node> children;
 
+	public BlockNode(List<Node> children) {
+		this.children = Collections.unmodifiableList(children);
+	}
+
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		return mapper.apply(InlineDependents.of(children));
@@ -24,11 +28,11 @@ public class BlockNode implements Node {
 
 	@Override
 	public Node copy(Dependents dependents) {
-		return dependents.applyToChildren(BlockNode::new);
-	}
-
-	public BlockNode(List<Node> children) {
-		this.children = Collections.unmodifiableList(children);
+		return dependents.streamChildren()
+				.reduce(new BlockNodeBuilder(),
+						BlockNodeBuilder::append,
+						(oldBuilder, newBuilder) -> newBuilder)
+				.build();
 	}
 
 	@Override

@@ -14,18 +14,18 @@ public class IntNode implements Node {
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
-		throw new UnsupportedOperationException();
+	public <T> T applyToDependents(Function<Dependents, T> mapper) {
+		return mapper.apply(new EmptyDependents());
 	}
 
 	@Override
 	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(NodeGroup.Int);
 	}
 
 	@Override
-	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(null);
+	public Node copy(Dependents dependents) {
+		return new IntNode(value);
 	}
 
 	@Override

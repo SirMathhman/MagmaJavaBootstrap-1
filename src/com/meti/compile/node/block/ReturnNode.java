@@ -9,23 +9,25 @@ import java.util.function.Function;
 public class ReturnNode implements Node {
 	private final Node value;
 
-	public ReturnNode(Node value) {
-		this.value = value;
-	}
-
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(null);
+		return mapper.apply(InlineDependents.of(value));
 	}
 
 	@Override
 	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(NodeGroup.Return);
 	}
 
 	@Override
 	public Node copy(Dependents dependents) {
-		throw new UnsupportedOperationException();
+		return dependents.streamChildren()
+				.findFirst().map(ReturnNode::new)
+				.orElseThrow();
+	}
+
+	public ReturnNode(Node value) {
+		this.value = value;
 	}
 
 	@Override

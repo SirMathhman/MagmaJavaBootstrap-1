@@ -1,5 +1,5 @@
 package com.meti.compile.node;
 
 public enum NodeGroup {
-	Function, Block, Declare
+	Function, Block, Return, Int, Declare
 }

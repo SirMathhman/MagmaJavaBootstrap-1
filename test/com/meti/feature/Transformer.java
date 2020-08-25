@@ -4,7 +4,6 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.util.CallStack;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ public class Transformer {
 	}
 
 	private Dependents transformDependents(Dependents dependents) {
-		List<Node> children = dependents.applyToChildren(Collection::stream)
+		List<Node> children = dependents.streamChildren()
 				.map(this::transform)
 				.collect(Collectors.toList());
 		return dependents.copyChildren(children);

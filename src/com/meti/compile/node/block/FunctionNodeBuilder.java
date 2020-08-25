@@ -16,12 +16,12 @@ public class FunctionNodeBuilder {
 		return new FunctionNode(name, returnType, value, parameters);
 	}
 
-	public FunctionNodeBuilder setName(String name) {
+	public FunctionNodeBuilder withName(String name) {
 		this.name = name;
 		return this;
 	}
 
-	public FunctionNodeBuilder setReturnType(Type returnType) {
+	public FunctionNodeBuilder withReturnType(Type returnType) {
 		this.returnType = returnType;
 		return this;
 	}

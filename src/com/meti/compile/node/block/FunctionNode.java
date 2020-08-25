@@ -77,8 +77,8 @@ public class FunctionNode implements Node {
 	public static FunctionNodeBuilder createBuilder(String name, Type type) {
 		Type returnType = findReturnType(type);
 		return new FunctionNodeBuilder()
-				.setName(name)
-				.setReturnType(returnType);
+				.withName(name)
+				.withReturnType(returnType);
 	}
 
 	public static Type findReturnType(Type type) {

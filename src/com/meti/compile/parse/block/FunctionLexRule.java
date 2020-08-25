@@ -27,6 +27,6 @@ public class FunctionLexRule extends FilteredLexRule {
 		Node value = content.substring(valueSeparator + 2)
 				.trim()
 				.transform(lexer::parse);
-		return new FunctionNodeBuilder().setName(name).setReturnType(returnType).withValue(value).withParameters(new ArrayList<TypePair>()).build();
+		return new FunctionNodeBuilder().withName(name).withReturnType(returnType).withValue(value).withParameters(new ArrayList<TypePair>()).build();
 	}
 }

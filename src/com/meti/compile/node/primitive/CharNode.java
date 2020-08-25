@@ -6,6 +6,8 @@ import com.meti.compile.node.NodeGroup;
 
 import java.util.function.Function;
 
+import static com.meti.compile.node.EmptyDependents.EmptyDependents;
+
 public class CharNode implements Node {
 	private final char value;
 
@@ -14,18 +16,18 @@ public class CharNode implements Node {
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
-		throw new UnsupportedOperationException();
+	public <T> T applyToDependents(Function<Dependents, T> mapper) {
+		return mapper.apply(EmptyDependents());
 	}
 
 	@Override
 	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(NodeGroup.Char);
 	}
 
 	@Override
-	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(null);
+	public Node copy(Dependents dependents) {
+		return new CharNode(value);
 	}
 
 	@Override

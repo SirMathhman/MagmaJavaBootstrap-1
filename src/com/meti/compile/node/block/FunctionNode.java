@@ -31,7 +31,7 @@ public class FunctionNode implements Node {
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		List<TypePair> fields = buildFields();
 		List<Node> children = Collections.singletonList(value);
-		Dependents dependents = new InlineDependents(fields, children);
+		Dependents dependents = InlineDependents.of(fields, children);
 		return mapper.apply(dependents);
 	}
 

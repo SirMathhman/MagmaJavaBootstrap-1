@@ -13,9 +13,17 @@ final class InlineDependents implements Dependents {
 	private final List<Node> children;
 	private final List<TypePair> fields;
 
-	InlineDependents(List<TypePair> fields, List<Node> children) {
+	private InlineDependents(List<TypePair> fields, List<Node> children) {
 		this.fields = Collections.unmodifiableList(fields);
 		this.children = Collections.unmodifiableList(children);
+	}
+
+	static InlineDependents of(List<Node> children) {
+		return of(Collections.emptyList(), children);
+	}
+
+	static InlineDependents of(List<TypePair> fields, List<Node> children) {
+		return new InlineDependents(fields, children);
 	}
 
 	@Override
@@ -35,6 +43,6 @@ final class InlineDependents implements Dependents {
 
 	@Override
 	public Dependents copyChildren(List<Node> children) {
-		return new InlineDependents(fields, children);
+		return of(fields, children);
 	}
 }

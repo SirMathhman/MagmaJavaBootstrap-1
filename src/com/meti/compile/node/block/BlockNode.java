@@ -7,6 +7,7 @@ import com.meti.compile.node.NodeGroup;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,15 @@ public class BlockNode implements Node {
 
 	public BlockNode(List<Node> children) {
 		this.children = Collections.unmodifiableList(children);
+	}
+
+	@Override
+	public Node acceptDependents(Consumer<Dependents> consumer) {
+		applyToDependents((Function<Dependents, Void>) dependents -> {
+			consumer.accept(dependents);
+			return null;
+		});
+		return this;
 	}
 
 	@Override

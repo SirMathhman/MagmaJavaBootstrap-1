@@ -21,19 +21,20 @@ public class InitialModifier implements Modifier {
 	}
 
 	@Override
-	public boolean canModify(NodeGroup nodeGroup) {
-		return NodeGroup.Initial == nodeGroup;
+	public boolean canModify(NodeGroup group) {
+		return NodeGroup.Initial == group;
 	}
 
 	@Override
-	public Node modify(Node copy) {
-		return copy.applyToDependents(dependents -> dependents.apply(this::construct));
+	public Node modify(Node node) {
+		return node.applyToDependents(dependents -> dependents.apply(this::construct));
 	}
 
 	public Node construct(List<TypePair> typePairs, List<Node> nodes) {
 		TypePair pair = typePairs.get(0);
 		Node child = nodes.get(0);
 		if (pair.applyToType(type -> PrimitiveType.Implicit == type)) {
+			//TODO: implicit types
 			throw new UnsupportedOperationException();
 		} else {
 			return pair.apply(this::define)

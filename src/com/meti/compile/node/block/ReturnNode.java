@@ -5,10 +5,20 @@ import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ReturnNode implements Node {
 	private final Node value;
+
+	@Override
+	public Node acceptDependents(Consumer<Dependents> consumer) {
+		applyToDependents((Function<Dependents, Void>) dependents -> {
+			consumer.accept(dependents);
+			return null;
+		});
+		return this;
+	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {

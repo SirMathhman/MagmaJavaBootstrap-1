@@ -18,13 +18,13 @@ public class DeclareModifer implements Modifier {
 	}
 
 	@Override
-	public boolean canModify(NodeGroup nodeGroup) {
-		return NodeGroup.Declare == nodeGroup;
+	public boolean canModify(NodeGroup group) {
+		return NodeGroup.Declare == group;
 	}
 
 	@Override
-	public Node modify(Node copy) {
-		return copy.applyToDependents(Dependents::streamFields)
+	public Node modify(Node node) {
+		return node.applyToDependents(Dependents::streamFields)
 				.findFirst()
 				.orElseThrow()
 				.apply(this::defineInStack);

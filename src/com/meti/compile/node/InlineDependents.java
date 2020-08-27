@@ -18,6 +18,14 @@ public final class InlineDependents implements Dependents {
 		this.children = Collections.unmodifiableList(children);
 	}
 
+	public static InlineDependents of(TypePair pair) {
+		return of(List.of(pair));
+	}
+
+	public static InlineDependents of(List<TypePair> fields) {
+		return of(fields, Collections.emptyList());
+	}
+
 	public static InlineDependents ofChild(Node value) {
 		return ofChildren(Collections.singletonList(value));
 	}

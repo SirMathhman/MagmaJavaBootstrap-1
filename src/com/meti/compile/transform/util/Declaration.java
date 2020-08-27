@@ -4,6 +4,7 @@ import com.meti.compile.type.Type;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class Declaration {
 	private final Map<Type, String> aliases = new HashMap<>();
@@ -12,6 +13,14 @@ public class Declaration {
 
 	public Declaration(String value) {
 		this.value = value;
+	}
+
+	public <T> T applyFirst(Function<Type, T> function) {
+		return aliases.keySet()
+				.stream()
+				.findFirst()
+				.map(function)
+				.orElseThrow();
 	}
 
 	public String define(Type type) {
@@ -27,5 +36,15 @@ public class Declaration {
 		counter++;
 		if (-1 == counter) return value;
 		else return "%s%d_".formatted(value, counter);
+	}
+
+	public String lookup(Type type) {
+		if (aliases.containsKey(type)) {
+			return aliases.get(type);
+		} else {
+			String message = ("An alias for type %s " +
+			                  "doesn't exist in the registered aliases of %s").formatted(type, aliases);
+			throw new IllegalArgumentException(message);
+		}
 	}
 }

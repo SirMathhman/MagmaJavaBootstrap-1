@@ -9,4 +9,6 @@ public interface TypePair extends Renderable {
 	<T> T apply(BiFunction<String, Type, T> function);
 
 	<T> T applyToType(Function<Type, T> function);
+
+	<T> T applyToName(Function<String, T> function);
 }

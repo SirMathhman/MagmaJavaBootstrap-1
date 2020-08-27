@@ -4,7 +4,7 @@ import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
 public interface Modifier {
-	boolean canModify(NodeGroup nodeGroup);
+	boolean canModify(NodeGroup group);
 
-	Node modify(Node copy);
+	Node modify(Node node);
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FunctionNode implements Node {
@@ -26,6 +27,15 @@ public class FunctionNode implements Node {
 		this.returnType = returnType;
 		this.value = value;
 		this.name = name;
+	}
+
+	@Override
+	public Node acceptDependents(Consumer<Dependents> consumer) {
+		applyToDependents((Function<Dependents, Void>) dependents -> {
+			consumer.accept(dependents);
+			return null;
+		});
+		return this;
 	}
 
 	@Override

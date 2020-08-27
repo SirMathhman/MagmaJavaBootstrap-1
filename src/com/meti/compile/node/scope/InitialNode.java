@@ -9,6 +9,7 @@ import com.meti.compile.type.Type;
 import com.meti.compile.type.TypePair;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class InitialNode implements Node {
@@ -20,6 +21,15 @@ public class InitialNode implements Node {
 		this.name = name;
 		this.type = type;
 		this.value = value;
+	}
+
+	@Override
+	public Node acceptDependents(Consumer<Dependents> consumer) {
+		applyToDependents((Function<Dependents, Void>) dependents -> {
+			consumer.accept(dependents);
+			return null;
+		});
+		return this;
 	}
 
 	@Override

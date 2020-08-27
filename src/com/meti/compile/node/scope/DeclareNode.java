@@ -5,6 +5,7 @@ import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.type.Type;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class DeclareNode implements Node {
@@ -14,6 +15,15 @@ public class DeclareNode implements Node {
 	public DeclareNode(String name, Type type) {
 		this.name = name;
 		this.type = type;
+	}
+
+	@Override
+	public Node acceptDependents(Consumer<Dependents> consumer) {
+		applyToDependents((Function<Dependents, Void>) dependents -> {
+			consumer.accept(dependents);
+			return null;
+		});
+		return this;
 	}
 
 	@Override

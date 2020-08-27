@@ -6,6 +6,7 @@ import com.meti.compile.node.NodeGroup;
 import com.meti.compile.node.scope.VariableNode;
 import com.meti.compile.transform.util.CallStack;
 import com.meti.compile.type.Type;
+import com.meti.compile.type.primitive.PrimitiveType;
 
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ public class Resolver {
 		if (node.applyToGroup(NodeGroup.Variable::matches)) {
 			return node.applyToDependents(dependents -> mapToVariable(dependents, type))
 					.orElseThrow(() -> createNoContent(node));
+		} else if (node.applyToGroup(NodeGroup.Int::matches) && PrimitiveType.Int == type) {
+			return node;
 		} else {
 			throw new IllegalArgumentException("Cannot force " + node + " to type of " + type);
 		}

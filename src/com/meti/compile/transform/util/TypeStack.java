@@ -22,4 +22,11 @@ public class TypeStack {
 	public void push(Type type) {
 		expectedTypes.push(type);
 	}
+
+	@Override
+	public String toString() {
+		return "TypeStack{" +
+		       "expectedTypes=" + expectedTypes +
+		       '}';
+	}
 }

@@ -27,7 +27,12 @@ public class ReturnModifier implements Modifier {
 				.filter(type -> PrimitiveType.Implicit != type)
 				.map(type -> findNewValue(node, type))
 				.map(ReturnNode::new)
-				.orElseThrow();
+				.orElseThrow(this::createEmptyError);
+	}
+
+	public IllegalStateException createEmptyError() {
+		String message = "%s doesn't seem to have any types in the queue.".formatted(typeStack);
+		return new IllegalStateException(message);
 	}
 
 	public Node findNewValue(Node node, Type type) {

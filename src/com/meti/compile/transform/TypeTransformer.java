@@ -11,11 +11,15 @@ public class TypeTransformer extends CollectiveTransformer {
 	private final TypeStack typeStack = new TypeStack();
 
 	@Override
+	public Stream<Loader> streamLoaders() {
+		return Stream.of(new FunctionLoader(typeStack));
+	}
+
+	@Override
 	public Stream<Modifier> streamModifiers() {
 		return Stream.of(
 				new DeclareModifer(callStack, typeStack),
 				new InitialModifier(callStack, typeStack),
-				new FunctionLoader(typeStack),
 				new ReturnModifier(typeStack, resolver)
 		);
 	}

@@ -19,7 +19,7 @@ public class InlineTypePair implements TypePair {
 
 	@Override
 	public <T> T applyToType(Function<Type, T> function) {
-		throw new UnsupportedOperationException();
+		return function.apply(type);
 	}
 
 	@Override

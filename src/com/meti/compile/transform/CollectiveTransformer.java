@@ -2,26 +2,23 @@ package com.meti.compile.transform;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
-import com.meti.compile.transform.util.CallStack;
-import com.meti.compile.transform.util.TypeStack;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class MagmaTransformer implements Transformer {
-	private final CallStack callStack = new CallStack();
-	private final TypeStack typeStack = new TypeStack();
-	private final Modifier modifier = new DeclareModifer(callStack, typeStack);
+public abstract class CollectiveTransformer implements Transformer {
+	public abstract Stream<Modifier> streamModifiers();
 
 	@Override
 	public Node transform(Node node) {
 		Dependents dependents = node.applyToDependents(this::transformDependents);
 		Node copy = node.copy(dependents);
-		if (copy.applyToGroup(modifier::canModify)) {
-			return modifier.modify(copy);
-		} else {
-			return copy;
-		}
+		return streamModifiers()
+				.filter(modifier1 -> copy.applyToGroup(modifier1::canModify))
+				.map(modifier1 -> modifier1.modify(copy))
+				.findFirst()
+				.orElse(node);
 	}
 
 	private Dependents transformDependents(Dependents dependents) {

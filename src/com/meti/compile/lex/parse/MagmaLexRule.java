@@ -3,6 +3,7 @@ package com.meti.compile.lex.parse;
 import com.meti.compile.lex.parse.block.BlockRule;
 import com.meti.compile.lex.parse.block.FunctionLexRule;
 import com.meti.compile.lex.parse.block.ReturnRule;
+import com.meti.compile.lex.parse.external.ImportRule;
 import com.meti.compile.lex.parse.primitive.CharLexRule;
 import com.meti.compile.lex.parse.primitive.IntLexRule;
 import com.meti.compile.lex.parse.scope.DeclareLexRule;
@@ -15,6 +16,7 @@ public class MagmaLexRule extends CompoundLexRule {
 	@Override
 	public Collection<LexRule> supplyRules() {
 		return List.of(
+				new ImportRule(),
 				new BlockRule(),
 				new ReturnRule(),
 				new DeclareLexRule(),

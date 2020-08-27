@@ -15,12 +15,10 @@ public class VariableNode implements Node {
 	private final String content;
 
 	@Override
-	public Node acceptDependents(Consumer<Dependents> consumer) {
-		applyToDependents((Function<Dependents, Void>) dependents -> {
-			consumer.accept(dependents);
-			return null;
-		});
-		return this;
+	public void acceptDependents(Consumer<Dependents> consumer) {
+		TypePair pair = new InlineTypePair(content, PrimitiveType.Unknown);
+		InlineDependents dependents = InlineDependents.of(pair);
+		consumer.accept(dependents);
 	}
 
 	@Override

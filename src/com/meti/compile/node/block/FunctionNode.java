@@ -30,12 +30,11 @@ public class FunctionNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependents(Consumer<Dependents> consumer) {
-		applyToDependents((Function<Dependents, Void>) dependents -> {
-			consumer.accept(dependents);
-			return null;
-		});
-		return this;
+	public void acceptDependents(Consumer<Dependents> consumer) {
+		List<TypePair> fields = buildFields();
+		List<Node> children = Collections.singletonList(value);
+		Dependents dependents = InlineDependents.of(fields, children);
+		consumer.accept(dependents);
 	}
 
 	@Override
@@ -44,26 +43,6 @@ public class FunctionNode implements Node {
 		List<Node> children = Collections.singletonList(value);
 		Dependents dependents = InlineDependents.of(fields, children);
 		return mapper.apply(dependents);
-	}
-
-	public List<TypePair> buildFields() {
-		List<TypePair> fields = new ArrayList<>(createNamePair());
-		fields.addAll(parameters);
-		return fields;
-	}
-
-	public List<TypePair> createNamePair() {
-		Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionNode::append,
-				(oldList, newList) -> newList);
-		Type type = new FunctionType(returnType, paramTypes);
-		TypePair pair = new InlineTypePair(name, type);
-		return List.of(pair);
-	}
-
-	public static List<Type> append(List<Type> oldList, TypePair typePair) {
-		List<Type> newList = new ArrayList<>(oldList);
-		typePair.applyToType(newList::add);
-		return newList;
 	}
 
 	@Override
@@ -96,6 +75,26 @@ public class FunctionNode implements Node {
 		return type.streamChildren()
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("No return type was found in: " + type));
+	}
+
+	public List<TypePair> buildFields() {
+		List<TypePair> fields = new ArrayList<>(createNamePair());
+		fields.addAll(parameters);
+		return fields;
+	}
+
+	public List<TypePair> createNamePair() {
+		Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionNode::append,
+				(oldList, newList) -> newList);
+		Type type = new FunctionType(returnType, paramTypes);
+		TypePair pair = new InlineTypePair(name, type);
+		return List.of(pair);
+	}
+
+	public static List<Type> append(List<Type> oldList, TypePair typePair) {
+		List<Type> newList = new ArrayList<>(oldList);
+		typePair.applyToType(newList::add);
+		return newList;
 	}
 
 	@Override

@@ -18,17 +18,13 @@ public class DeclareNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependents(Consumer<Dependents> consumer) {
-		applyToDependents((Function<Dependents, Void>) dependents -> {
-			consumer.accept(dependents);
-			return null;
-		});
-		return this;
+	public void acceptDependents(Consumer<Dependents> consumer) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
-		throw new UnsupportedOperationException();
+	public <T> T applyToDependents(Function<Dependents, T> mapper) {
+		return mapper.apply(null);
 	}
 
 	@Override
@@ -37,8 +33,8 @@ public class DeclareNode implements Node {
 	}
 
 	@Override
-	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(null);
+	public Node copy(Dependents dependents) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

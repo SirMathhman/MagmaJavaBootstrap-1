@@ -17,12 +17,8 @@ public class CharNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependents(Consumer<Dependents> consumer) {
-		applyToDependents((Function<Dependents, Void>) dependents -> {
-			consumer.accept(dependents);
-			return null;
-		});
-		return this;
+	public void acceptDependents(Consumer<Dependents> consumer) {
+		consumer.accept(EmptyDependents());
 	}
 
 	@Override

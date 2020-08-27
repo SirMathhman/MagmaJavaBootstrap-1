@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Node extends Renderable {
-	Node acceptDependents(Consumer<Dependents> consumer);
+	void acceptDependents(Consumer<Dependents> consumer);
 
 	<T> T applyToDependents(Function<Dependents, T> mapper);
 

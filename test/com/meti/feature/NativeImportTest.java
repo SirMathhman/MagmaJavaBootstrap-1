@@ -1,6 +1,6 @@
 package com.meti.feature;
 
-public class HeaderTest extends FeatureTest {
+public class NativeImportTest extends FeatureTest {
 	@Override
 	protected int expectedExit() {
 		return 0;

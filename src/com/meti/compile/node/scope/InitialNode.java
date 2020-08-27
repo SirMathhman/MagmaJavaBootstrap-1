@@ -24,12 +24,10 @@ public class InitialNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependents(Consumer<Dependents> consumer) {
-		applyToDependents((Function<Dependents, Void>) dependents -> {
-			consumer.accept(dependents);
-			return null;
-		});
-		return this;
+	public void acceptDependents(Consumer<Dependents> consumer) {
+		TypePair field = new InlineTypePair(name, type);
+		Dependents dependents = InlineDependents.ofSingleton(field, value);
+		consumer.accept(dependents);
 	}
 
 	@Override

@@ -18,8 +18,10 @@ public class MagmaCompiler implements Compiler {
 
 	@Override
 	public String compileImpl(String value) {
-		Node root = lexer.parse(value);
+		String wrapped = "{" + value + "}";
+		Node root = lexer.parse(wrapped);
 		Node transform = transformer.transform(root);
-		return transform.render();
+		String result = transform.render();
+		return result.substring(1, result.length() - 1);
 	}
 }

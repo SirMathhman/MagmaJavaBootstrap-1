@@ -2,7 +2,6 @@ package com.meti.compile.transform;
 
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
-import com.meti.compile.node.scope.InitialNode;
 import com.meti.compile.node.scope.InitialNodeBuilder;
 import com.meti.compile.transform.util.CallStack;
 import com.meti.compile.transform.util.TypeStack;
@@ -28,10 +27,10 @@ public class InitialModifier implements Modifier {
 
 	@Override
 	public Node modify(Node copy) {
-		return copy.applyToDependents(dependents -> dependents.apply(this::getInitialNode));
+		return copy.applyToDependents(dependents -> dependents.apply(this::construct));
 	}
 
-	public InitialNode getInitialNode(List<TypePair> typePairs, List<Node> nodes) {
+	public Node construct(List<TypePair> typePairs, List<Node> nodes) {
 		TypePair pair = typePairs.get(0);
 		Node child = nodes.get(0);
 		if (pair.applyToType(type -> PrimitiveType.Implicit == type)) {

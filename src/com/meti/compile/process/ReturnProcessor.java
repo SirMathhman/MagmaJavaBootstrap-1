@@ -1,17 +1,17 @@
-package com.meti.compile.transform;
+package com.meti.compile.process;
 
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.node.block.ReturnNode;
-import com.meti.compile.transform.util.TypeStack;
+import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
-public class ReturnModifier implements Modifier {
+public class ReturnProcessor implements Processor {
 	private final Resolver resolver;
 	private final TypeStack typeStack;
 
-	public ReturnModifier(TypeStack typeStack, Resolver resolver) {
+	public ReturnProcessor(TypeStack typeStack, Resolver resolver) {
 		this.typeStack = typeStack;
 		this.resolver = resolver;
 	}

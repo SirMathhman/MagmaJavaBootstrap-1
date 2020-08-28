@@ -1,21 +1,21 @@
-package com.meti.compile.transform;
+package com.meti.compile.process;
 
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.node.scope.InitialNodeBuilder;
-import com.meti.compile.transform.util.CallStack;
-import com.meti.compile.transform.util.TypeStack;
+import com.meti.compile.process.util.CallStack;
+import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypePair;
 import com.meti.compile.type.primitive.PrimitiveType;
 
 import java.util.List;
 
-public class InitialModifier implements Modifier {
+public class InitialProcessor implements Processor {
 	private final CallStack stack;
 	private final TypeStack typeStack;
 
-	public InitialModifier(CallStack stack, TypeStack typeStack) {
+	public InitialProcessor(CallStack stack, TypeStack typeStack) {
 		this.stack = stack;
 		this.typeStack = typeStack;
 	}

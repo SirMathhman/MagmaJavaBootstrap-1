@@ -1,4 +1,4 @@
-package com.meti.compile.transform.util;
+package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
 

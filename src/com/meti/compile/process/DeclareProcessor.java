@@ -1,18 +1,18 @@
-package com.meti.compile.transform;
+package com.meti.compile.process;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.node.scope.DeclareNode;
-import com.meti.compile.transform.util.CallStack;
-import com.meti.compile.transform.util.TypeStack;
+import com.meti.compile.process.util.CallStack;
+import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
 
-public class DeclareModifer implements Modifier {
+public class DeclareProcessor implements Processor {
 	private final CallStack stack;
 	private final TypeStack typeStack;
 
-	public DeclareModifer(CallStack stack, TypeStack typeStack) {
+	public DeclareProcessor(CallStack stack, TypeStack typeStack) {
 		this.stack = stack;
 		this.typeStack = typeStack;
 	}

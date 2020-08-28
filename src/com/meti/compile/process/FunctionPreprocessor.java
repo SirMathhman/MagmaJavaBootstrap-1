@@ -1,32 +1,32 @@
-package com.meti.compile.transform;
+package com.meti.compile.process;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
-import com.meti.compile.transform.util.TypeStack;
+import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
 
-public class FunctionLoader implements Loader {
+public class FunctionPreprocessor implements Preprocessor {
 	private final TypeStack stack;
 
-	public FunctionLoader(TypeStack stack) {
+	public FunctionPreprocessor(TypeStack stack) {
 		this.stack = stack;
 	}
 
 	@Override
-	public boolean canLoad(NodeGroup group) {
+	public boolean canPreprocess(NodeGroup group) {
 		return group.matches(NodeGroup.Function);
 	}
 
 	@Override
-	public void load(Node node) {
+	public void preprocess(Node node) {
 		node.acceptDependents(this::process);
 	}
 
 	public void process(Dependents dependents) {
 		dependents.streamFields()
 				.findFirst()
-				.map(typePair -> typePair.applyToType(FunctionLoader::findReturnType))
+				.map(typePair -> typePair.applyToType(FunctionPreprocessor::findReturnType))
 				.ifPresent(stack::push);
 	}
 

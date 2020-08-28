@@ -18,6 +18,7 @@ public class TypeProcessStage extends CollectiveProcessStage {
 	@Override
 	public Stream<Processor> streamModifiers() {
 		return Stream.of(
+				new FunctionProcessor(callStack),
 				new DeclareProcessor(callStack, typeStack),
 				new InitialProcessor(callStack, typeStack),
 				new ReturnProcessor(typeStack, resolver)

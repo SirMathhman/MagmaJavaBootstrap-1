@@ -46,7 +46,7 @@ public class Resolver {
 	}
 
 	public IllegalArgumentException createUndefinedError(String s) {
-		String message = "%s is not defined in %s".formatted(s, callStack);
+		String message = "Variable with name \"%s\" is not defined in scope: %s".formatted(s, callStack);
 		return new IllegalArgumentException(message);
 	}
 }

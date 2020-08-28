@@ -28,6 +28,11 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
+	public Dependents copyFields(List<TypePair> fields) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Stream<Node> streamChildren() {
 		return Stream.empty();
 	}

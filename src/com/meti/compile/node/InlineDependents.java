@@ -53,6 +53,11 @@ public final class InlineDependents implements Dependents {
 	}
 
 	@Override
+	public Dependents copyFields(List<TypePair> fields) {
+		return new InlineDependents(fields, children);
+	}
+
+	@Override
 	public Stream<Node> streamChildren() {
 		return children.stream();
 	}

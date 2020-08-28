@@ -11,6 +11,8 @@ public interface Dependents {
 
 	Dependents copyChildren(List<Node> children);
 
+	Dependents copyFields(List<TypePair> fields);
+
 	Stream<Node> streamChildren();
 
 	Stream<TypePair> streamFields();

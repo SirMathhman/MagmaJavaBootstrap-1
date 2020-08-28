@@ -22,6 +22,12 @@ public class VariableNode implements Node {
 	}
 
 	@Override
+	public Node acceptDependentsChained(Consumer<Dependents> consumer) {
+		acceptDependents(consumer);
+		return this;
+	}
+
+	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		TypePair pair = new InlineTypePair(content, PrimitiveType.Unknown);
 		InlineDependents dependents = InlineDependents.of(pair);

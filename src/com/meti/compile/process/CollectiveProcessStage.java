@@ -28,8 +28,8 @@ public abstract class CollectiveProcessStage implements ProcessStage {
 
 	public Optional<Node> transformOptionally(Node copy) {
 		return streamModifiers()
-				.filter(modifier1 -> copy.applyToGroup(modifier1::canModify))
-				.map(modifier1 -> modifier1.modify(copy))
+				.filter(modifier1 -> copy.applyToGroup(modifier1::canProcess))
+				.map(modifier1 -> modifier1.process(copy))
 				.findFirst();
 	}
 

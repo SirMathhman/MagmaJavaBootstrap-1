@@ -4,7 +4,7 @@ import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
 public interface Processor {
-	boolean canModify(NodeGroup group);
+	boolean canProcess(NodeGroup group);
 
-	Node modify(Node node);
+	Node process(Node node);
 }

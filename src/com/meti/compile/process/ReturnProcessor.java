@@ -17,12 +17,12 @@ public class ReturnProcessor implements Processor {
 	}
 
 	@Override
-	public boolean canModify(NodeGroup group) {
+	public boolean canProcess(NodeGroup group) {
 		return group.matches(NodeGroup.Return);
 	}
 
 	@Override
-	public Node modify(Node node) {
+	public Node process(Node node) {
 		return typeStack.peek()
 				.filter(type -> PrimitiveType.Implicit != type)
 				.map(type -> findNewValue(node, type))

@@ -18,12 +18,12 @@ public class DeclareProcessor implements Processor {
 	}
 
 	@Override
-	public boolean canModify(NodeGroup group) {
+	public boolean canProcess(NodeGroup group) {
 		return NodeGroup.Declare == group;
 	}
 
 	@Override
-	public Node modify(Node node) {
+	public Node process(Node node) {
 		return node.applyToDependents(Dependents::streamFields)
 				.findFirst()
 				.orElseThrow()

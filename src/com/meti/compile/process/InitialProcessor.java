@@ -21,12 +21,12 @@ public class InitialProcessor implements Processor {
 	}
 
 	@Override
-	public boolean canModify(NodeGroup group) {
+	public boolean canProcess(NodeGroup group) {
 		return NodeGroup.Initial == group;
 	}
 
 	@Override
-	public Node modify(Node node) {
+	public Node process(Node node) {
 		return node.applyToDependents(dependents -> dependents.apply(this::construct));
 	}
 

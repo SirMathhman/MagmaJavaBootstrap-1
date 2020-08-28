@@ -20,6 +20,10 @@ public class StackFrame {
 		return definitions.containsKey(name);
 	}
 
+	public List<Type> lookup(String name) {
+		return definitions.get(name).listTypes();
+	}
+
 	@Override
 	public String toString() {
 		return definitions.keySet().toString();

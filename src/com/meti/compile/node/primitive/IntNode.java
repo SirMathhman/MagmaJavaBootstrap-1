@@ -21,12 +21,6 @@ public class IntNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependentsChained(Consumer<Dependents> consumer) {
-		acceptDependents(consumer);
-		return this;
-	}
-
-	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		return mapper.apply(EmptyDependents.EmptyDependents());
 	}

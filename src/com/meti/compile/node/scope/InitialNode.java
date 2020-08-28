@@ -31,12 +31,6 @@ public class InitialNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependentsChained(Consumer<Dependents> consumer) {
-		acceptDependents(consumer);
-		return this;
-	}
-
-	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		TypePair field = new InlineTypePair(name, type);
 		Dependents dependents = InlineDependents.ofSingleton(field, value);

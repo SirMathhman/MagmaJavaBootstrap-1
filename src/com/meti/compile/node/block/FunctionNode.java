@@ -38,12 +38,6 @@ public class FunctionNode implements Node {
 	}
 
 	@Override
-	public Node acceptDependentsChained(Consumer<Dependents> consumer) {
-		acceptDependents(consumer);
-		return this;
-	}
-
-	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		List<TypePair> fields = buildFields();
 		List<Node> children = Collections.singletonList(value);

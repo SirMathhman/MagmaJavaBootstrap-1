@@ -1,9 +1,11 @@
 package com.meti.compile.type.block;
 
 import com.meti.compile.type.Type;
+import com.meti.compile.type.TypeGroup;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,6 +16,16 @@ public class FunctionType implements Type {
 	public FunctionType(Type returnType, Collection<Type> parameterTypes) {
 		this.returnType = returnType;
 		this.parameterTypes = Collections.unmodifiableCollection(parameterTypes);
+	}
+
+	@Override
+	public <T> T applyToGroup(Function<TypeGroup, T> function) {
+		return function.apply(TypeGroup.Function);
+	}
+
+	@Override
+	public boolean matches(Type other) {
+		return this == other;
 	}
 
 	@Override
@@ -31,5 +43,13 @@ public class FunctionType implements Type {
 				Stream.of(returnType),
 				parameterTypes.stream()
 		);
+	}
+
+	@Override
+	public String toString() {
+		return "FunctionType{" +
+		       "parameterTypes=" + parameterTypes +
+		       ", returnType=" + returnType +
+		       '}';
 	}
 }

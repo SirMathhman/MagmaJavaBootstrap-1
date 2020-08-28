@@ -2,7 +2,9 @@ package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -32,6 +34,10 @@ public class Declaration {
 		return alias;
 	}
 
+	public List<Type> listTypes() {
+		return new ArrayList<>(aliases.keySet());
+	}
+
 	private String next() {
 		counter++;
 		if (-1 == counter) return value;
@@ -42,7 +48,7 @@ public class Declaration {
 		if (aliases.containsKey(type)) {
 			return aliases.get(type);
 		} else {
-			String message = ("An alias for type %s " +
+			String message = ("An alias of type \"%s\" " +
 			                  "doesn't exist in the registered aliases of %s").formatted(type, aliases);
 			throw new IllegalArgumentException(message);
 		}

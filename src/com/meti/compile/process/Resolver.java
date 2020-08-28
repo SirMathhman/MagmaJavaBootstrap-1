@@ -8,23 +8,32 @@ import com.meti.compile.process.util.CallStack;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
+import java.util.List;
 import java.util.Optional;
+
+import static com.meti.compile.node.NodeGroup.Variable;
 
 public class Resolver {
 	private final CallStack callStack;
+	private final NodeResolveRule nodeResolveRule = new InvocationResolveRule();
 
 	public Resolver(CallStack callStack) {
 		this.callStack = callStack;
 	}
 
-	public Node force(Node node, Type type) {
-		if (node.applyToGroup(NodeGroup.Variable::matches)) {
-			return node.applyToDependents(dependents -> mapToVariable(dependents, type))
+	public Node force(Node node, Type expectedType) {
+		if (node.applyToGroup(NodeGroup.Invocation::matches)) {
+			Dependents dependents1 = node.applyToDependents(dependents -> nodeResolveRule.resolve(
+					dependents, expectedType,
+					this));
+			return node.copy(dependents1);
+		} else if (node.applyToGroup(Variable::matches)) {
+			return node.applyToDependents(dependents -> mapToVariable(dependents, expectedType))
 					.orElseThrow(() -> createNoContent(node));
-		} else if (node.applyToGroup(NodeGroup.Int::matches) && PrimitiveType.Int == type) {
+		} else if (node.applyToGroup(NodeGroup.Int::matches) && PrimitiveType.Int == expectedType) {
 			return node;
 		} else {
-			throw new IllegalArgumentException("Cannot force " + node + " to type of " + type);
+			throw new IllegalArgumentException("Cannot force " + node + " to expectedType of " + expectedType);
 		}
 	}
 
@@ -48,5 +57,19 @@ public class Resolver {
 	public IllegalArgumentException createUndefinedError(String s) {
 		String message = "Variable with name \"%s\" is not defined in scope: %s".formatted(s, callStack);
 		return new IllegalArgumentException(message);
+	}
+
+	public List<Type> search(Node node) {
+		if (node.applyToGroup(Variable::matches)) {
+			return node.applyToDependents(this::searchVariable);
+		}
+		throw new IllegalArgumentException("Failed to search for valid types of: " + node);
+	}
+
+	public List<Type> searchVariable(Dependents dependents) {
+		return dependents.streamFields()
+				.findFirst()
+				.orElseThrow()
+				.applyToName(callStack::lookup);
 	}
 }

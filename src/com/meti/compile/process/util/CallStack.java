@@ -2,10 +2,7 @@ package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 public final class CallStack {
@@ -24,11 +21,6 @@ public final class CallStack {
 		definitions.forEach(this::define);
 	}
 
-	@Override
-	public String toString() {
-		return frames.toString();
-	}
-
 	public String define(String name, Type type) {
 		return frames.peek().define(name, type);
 	}
@@ -39,6 +31,14 @@ public final class CallStack {
 
 	public boolean isDefined(String name) {
 		return frames.stream().anyMatch(frame -> frame.isDefined(name));
+	}
+
+	public List<Type> lookup(String name) {
+		return frames.stream()
+				.filter(frame -> frame.isDefined(name))
+				.map(frame -> frame.lookup(name))
+				.findFirst()
+				.orElseThrow();
 	}
 
 	public <T> Optional<T> lookup(String name, Function<Type, T> function) {
@@ -55,5 +55,10 @@ public final class CallStack {
 				.map(frame -> frame.lookup(name, type))
 				.flatMap(Optional::stream)
 				.findFirst();
+	}
+
+	@Override
+	public String toString() {
+		return frames.toString();
 	}
 }

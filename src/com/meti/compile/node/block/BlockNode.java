@@ -7,11 +7,10 @@ import com.meti.compile.node.NodeGroup;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class BlockNode implements Node {
+public class BlockNode extends ParentNode {
 	private final List<Node> children;
 
 	public BlockNode(List<Node> children) {
@@ -19,24 +18,13 @@ public class BlockNode implements Node {
 	}
 
 	@Override
-	public void acceptDependents(Consumer<Dependents> consumer) {
-		consumer.accept(InlineDependents.ofChildren(children));
-	}
-
-	@Override
-	public Node acceptDependentsChained(Consumer<Dependents> consumer) {
-		acceptDependents(consumer);
-		return this;
-	}
-
-	@Override
-	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		return mapper.apply(InlineDependents.ofChildren(children));
-	}
-
-	@Override
 	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
 		return mapper.apply(NodeGroup.Block);
+	}
+
+	@Override
+	public Dependents createDependents() {
+		return InlineDependents.ofChildren(children);
 	}
 
 	@Override

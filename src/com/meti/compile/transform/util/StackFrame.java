@@ -20,6 +20,11 @@ public class StackFrame {
 		return definitions.containsKey(name);
 	}
 
+	@Override
+	public String toString() {
+		return definitions.keySet().toString();
+	}
+
 	public <T> Optional<T> lookup(String name, Function<Type, T> function) {
 		return Optional.of(name)
 				.filter(definitions::containsKey)

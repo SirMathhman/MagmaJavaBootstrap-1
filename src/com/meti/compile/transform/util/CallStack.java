@@ -24,6 +24,11 @@ public final class CallStack {
 		definitions.forEach(this::define);
 	}
 
+	@Override
+	public String toString() {
+		return frames.toString();
+	}
+
 	public String define(String name, Type type) {
 		return frames.peek().define(name, type);
 	}

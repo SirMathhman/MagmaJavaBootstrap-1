@@ -42,6 +42,11 @@ public class Resolver {
 	public Node mapToAlias(String s, Type type) {
 		return callStack.lookup(s, type)
 				.map(VariableNode::new)
-				.orElseThrow();
+				.orElseThrow(() -> createUndefinedError(s));
+	}
+
+	public IllegalArgumentException createUndefinedError(String s) {
+		String message = "%s is not defined in %s".formatted(s, callStack);
+		return new IllegalArgumentException(message);
 	}
 }

@@ -8,7 +8,7 @@ public enum NodeGroup {
 	Return,
 	Block,
 	Char,
-	Int, Import, Invocation;
+	Int, Import, Invocation, Line;
 
 	public boolean matches(NodeGroup other) {
 		return this == other;

@@ -3,10 +3,7 @@ package com.meti.compile.process.util;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypePair;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -53,7 +50,7 @@ public final class CallStack {
                 .filter(frame -> frame.isDefined(name))
                 .map(frame -> frame.lookup(name))
                 .findFirst()
-                .orElseThrow();
+                .orElse(Collections.emptyList());
     }
 
     public <T> Optional<T> lookup(String name, Function<Type, T> function) {

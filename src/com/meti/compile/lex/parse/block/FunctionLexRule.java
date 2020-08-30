@@ -41,7 +41,9 @@ public class FunctionLexRule extends FilteredLexRule {
                 .map(String::trim)
                 .map(paramString -> parseParameter(paramString, lexer)).
                         collect(Collectors.toList());
-        String name = content.substring(4, paramStart).trim();
+        String keyString = content.substring(0, paramStart).trim();
+        int lastSpace = keyString.lastIndexOf(' ');
+        String name = keyString.substring(lastSpace + 1, paramStart).trim();
         int returnStart = content.indexOf(':', paramEnd);
         int valueSeparator = content.indexOf("=>");
         int returnEnd = valueSeparator == -1 ? content.length() : valueSeparator;

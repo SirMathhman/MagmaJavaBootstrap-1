@@ -8,9 +8,11 @@ import com.meti.compile.process.util.CallStack;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.meti.compile.node.NodeGroup.Int;
 import static com.meti.compile.node.NodeGroup.Variable;
 
 public class Resolver {
@@ -62,6 +64,8 @@ public class Resolver {
 	public List<Type> search(Node node) {
 		if (node.applyToGroup(Variable::matches)) {
 			return node.applyToDependents(this::searchVariable);
+		} else if(node.applyToGroup(Int::matches)) {
+			return Collections.singletonList(PrimitiveType.Int);
 		}
 		throw new IllegalArgumentException("Failed to search for valid types of: " + node);
 	}

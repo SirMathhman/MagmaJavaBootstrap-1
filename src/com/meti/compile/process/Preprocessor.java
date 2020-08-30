@@ -6,5 +6,5 @@ import com.meti.compile.node.NodeGroup;
 public interface Preprocessor {
 	boolean canPreprocess(NodeGroup group);
 
-	void preprocess(Node node);
+	Node preprocess(Node node);
 }

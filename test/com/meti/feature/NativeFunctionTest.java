@@ -12,7 +12,7 @@ public class NativeFunctionTest extends FeatureTest {
         return """
                 import native stdio;
                 
-                native def printf(format : String, value : Any) => Void;
+                native def printf(format : String, value : Any) : Void;
                 
                 def main() : Int => {
                     printf("%s", "Hello World!");

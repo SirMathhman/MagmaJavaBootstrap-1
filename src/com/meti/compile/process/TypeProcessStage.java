@@ -12,7 +12,7 @@ public class TypeProcessStage extends CollectiveProcessStage {
 
 	@Override
 	public Stream<Preprocessor> streamLoaders() {
-		return Stream.of(new FunctionPreprocessor(typeStack));
+		return Stream.of(new FunctionPreprocessor(typeStack, callStack));
 	}
 
 	@Override

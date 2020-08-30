@@ -31,4 +31,9 @@ public class InlineTypePair implements TypePair {
 	public String render() {
 		return type.render(name);
 	}
+
+	@Override
+	public TypePair copy(String name) {
+		return new InlineTypePair(name, type);
+	}
 }

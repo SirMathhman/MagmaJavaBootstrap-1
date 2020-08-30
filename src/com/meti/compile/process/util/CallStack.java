@@ -1,64 +1,79 @@
 package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
+import com.meti.compile.type.TypePair;
 
-import java.util.*;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class CallStack {
-	private final Deque<StackFrame> frames = new LinkedList<>();
+    private final Deque<StackFrame> frames = new LinkedList<>();
 
-	public CallStack() {
-		enter();
-	}
 
-	public void enter() {
-		this.frames.add(new StackFrame());
-	}
+    public CallStack() {
+        enter();
+    }
 
-	public void enter(Map<String, Type> definitions) {
-		enter();
-		definitions.forEach(this::define);
-	}
+    public void enter() {
+        this.frames.add(new StackFrame());
+    }
 
-	public String define(String name, Type type) {
-		return frames.peek().define(name, type);
-	}
+    public List<TypePair> enter(List<TypePair> scope) {
+        enter();
+        return scope.stream()
+                .map(this::defineAsPair)
+                .collect(Collectors.toList());
+    }
 
-	public void exit() {
-		this.frames.pop();
-	}
+    public TypePair defineAsPair(TypePair pair) {
+        String newName = pair.apply(this::define);
+        return pair.copy(newName);
+    }
 
-	public boolean isDefined(String name) {
-		return frames.stream().anyMatch(frame -> frame.isDefined(name));
-	}
+    @Deprecated
+    public String define(String name, Type type) {
+        assert frames.peek() != null;
+        return frames.peek().define(name, type);
+    }
 
-	public List<Type> lookup(String name) {
-		return frames.stream()
-				.filter(frame -> frame.isDefined(name))
-				.map(frame -> frame.lookup(name))
-				.findFirst()
-				.orElseThrow();
-	}
+    public void exit() {
+        this.frames.pop();
+    }
 
-	public <T> Optional<T> lookup(String name, Function<Type, T> function) {
-		return frames.stream()
-				.filter(frame -> frame.isDefined(name))
-				.map(frame -> frame.lookup(name, function))
-				.flatMap(Optional::stream)
-				.findFirst();
-	}
+    public boolean isDefined(String name) {
+        return frames.stream().anyMatch(frame -> frame.isDefined(name));
+    }
 
-	public Optional<String> lookup(String name, Type type) {
-		return frames.stream()
-				.filter(frame -> frame.isDefined(name))
-				.map(frame -> frame.lookup(name, type))
-				.flatMap(Optional::stream)
-				.findFirst();
-	}
+    public List<Type> lookup(String name) {
+        return frames.stream()
+                .filter(frame -> frame.isDefined(name))
+                .map(frame -> frame.lookup(name))
+                .findFirst()
+                .orElseThrow();
+    }
 
-	@Override
-	public String toString() {
-		return frames.toString();
-	}
+    public <T> Optional<T> lookup(String name, Function<Type, T> function) {
+        return frames.stream()
+                .filter(frame -> frame.isDefined(name))
+                .map(frame -> frame.lookup(name, function))
+                .flatMap(Optional::stream)
+                .findFirst();
+    }
+
+    public Optional<String> lookup(String name, Type type) {
+        return frames.stream()
+                .filter(frame -> frame.isDefined(name))
+                .map(frame -> frame.lookup(name, type))
+                .flatMap(Optional::stream)
+                .findFirst();
+    }
+
+    @Override
+    public String toString() {
+        return frames.toString();
+    }
 }

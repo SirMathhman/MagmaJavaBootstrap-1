@@ -34,7 +34,7 @@ public class RootLexer implements Lexer {
 	}
 
 	public static ResolveException createInvalidResolve(String name) {
-		String message = "Failed to force: %s".formatted(name);
+		String message = "Failed to resolve name: %s".formatted(name);
 		return new ResolveException(message);
 	}
 }

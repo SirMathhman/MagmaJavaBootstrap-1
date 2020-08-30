@@ -9,17 +9,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class CollectiveProcessStage implements ProcessStage {
-	public void load(Node node) {
-		streamLoaders()
+	public Node load(Node node) {
+		return streamLoaders()
 				.filter(preprocessor -> node.applyToGroup(preprocessor::canPreprocess))
-				.forEach(preprocessor -> preprocessor.preprocess(node));
+				.map(preprocessor -> preprocessor.preprocess(node))
+				.findFirst()
+				.orElse(node);
 	}
 
 	@Override
 	public Node process(Node node) {
-		load(node);
-		Dependents dependents = node.applyToDependents(this::transformDependents);
-		Node copy = node.copy(dependents);
+		Node loaded = load(node);
+		Dependents dependents = loaded.applyToDependents(this::transformDependents);
+		Node copy = loaded.copy(dependents);
 		Optional<Node> transformOptional = transformOptionally(copy);
 		return transformOptional.orElse(copy);
 	}

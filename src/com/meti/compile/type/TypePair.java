@@ -11,4 +11,6 @@ public interface TypePair extends Renderable {
 	<T> T applyToType(Function<Type, T> function);
 
 	<T> T applyToName(Function<String, T> function);
+
+	TypePair copy(String name);
 }

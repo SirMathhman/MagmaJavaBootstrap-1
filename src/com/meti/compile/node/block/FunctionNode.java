@@ -41,7 +41,12 @@ public class FunctionNode implements Node {
     @Override
     public <T> T applyToDependents(Function<Dependents, T> mapper) {
         List<TypePair> fields = buildFields();
-        List<Node> children = Collections.singletonList(value);
+        List<Node> children;
+        if (value == null) {
+            children = Collections.emptyList();
+        } else {
+            children = Collections.singletonList(value);
+        }
         Dependents dependents = InlineDependents.of(fields, children);
         return mapper.apply(dependents);
     }
@@ -59,10 +64,10 @@ public class FunctionNode implements Node {
     public static Node copyImpl(List<TypePair> typePairs, List<Node> nodes) {
         TypePair pair = typePairs.get(0);
         List<TypePair> newParameters = typePairs.subList(1, typePairs.size());
-        return pair.apply(FunctionNode::createBuilder)
-                .withParameters(newParameters)
-                .withValue(nodes.get(0))
-                .build();
+        FunctionNodeBuilder builder = pair.apply(FunctionNode::createBuilder)
+                .withParameters(newParameters);
+        if(!nodes.isEmpty()) builder = builder.withValue(nodes.get(0));
+        return builder.build();
     }
 
     public static FunctionNodeBuilder createBuilder(String name, Type type) {
@@ -100,10 +105,14 @@ public class FunctionNode implements Node {
 
     @Override
     public String render() {
-        String paramString = parameters.stream()
-                .map(TypePair::render)
-                .collect(Collectors.joining(",", "(", ")"));
-        String renderedValue = value.render();
-        return returnType.render(name + paramString + renderedValue);
+        if (value != null) {
+            String paramString = parameters.stream()
+                    .map(TypePair::render)
+                    .collect(Collectors.joining(",", "(", ")"));
+            String renderedValue = value.render();
+            return returnType.render(name + paramString + renderedValue);
+        } else {
+            return "";
+        }
     }
 }

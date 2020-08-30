@@ -4,7 +4,7 @@ import com.meti.compile.lex.resolve.FilteredResolveRule;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
-public class IntResolveRule implements FilteredResolveRule {
+public class IntResolveRule extends FilteredResolveRule {
 	@Override
 	public boolean canResolve(String name) {
 		return "Int".equals(name);

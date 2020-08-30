@@ -4,15 +4,15 @@ import com.meti.compile.type.Type;
 
 import java.util.Optional;
 
-public interface FilteredResolveRule extends ResolveRule {
+public abstract class FilteredResolveRule implements ResolveRule {
 	@Override
-	default Optional<Type> resolve(String name) {
+	public Optional<Type> resolve(String name) {
 		return Optional.of(name)
 				.filter(this::canResolve)
 				.map(this::resolveImpl);
 	}
 
-	boolean canResolve(String name);
+	public abstract boolean canResolve(String name);
 
-	Type resolveImpl(String name);
+	public abstract Type resolveImpl(String name);
 }

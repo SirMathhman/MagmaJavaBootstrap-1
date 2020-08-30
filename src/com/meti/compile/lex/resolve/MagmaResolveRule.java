@@ -1,7 +1,6 @@
 package com.meti.compile.lex.resolve;
 
-import com.meti.compile.lex.resolve.primitive.CharResolveRule;
-import com.meti.compile.lex.resolve.primitive.IntResolveRule;
+import com.meti.compile.lex.resolve.primitive.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +10,10 @@ public class MagmaResolveRule extends CompoundResolveRule {
 	public Collection<ResolveRule> supplyRules() {
 		return List.of(
 				new CharResolveRule(),
-				new IntResolveRule()
+				new IntResolveRule(),
+				new StringResolveRule(),
+				new AnyResolveRule(),
+				new VoidResolveRule()
 		);
 	}
 }

@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class FeatureTest {
 	private static final Path EXECUTABLE_PATH = Paths.get(".", "test.exe");
@@ -24,7 +25,16 @@ public abstract class FeatureTest {
 	}
 
 	private static ProcessResult execute(String... strings) throws IOException, InterruptedException {
-		Process process = new ProcessBuilder(strings).start();
+		ProcessBuilder builder = new ProcessBuilder(strings);
+		Process process = null;
+		try {
+			process = builder.start();
+		} catch (IOException e) {
+			String message = e.getMessage();
+			if(message.equals("Cannot run program \"gcc\": CreateProcess error=2, The system cannot find the file specified")){
+				fail("Cannot execute command \"gcc\". Make sure that gcc is installed before running these tests.");
+			}
+		}
 		int exit = process.waitFor();
 		try (InputStream stream = process.getErrorStream()) {
 			String errorString = read(stream);

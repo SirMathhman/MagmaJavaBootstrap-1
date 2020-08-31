@@ -1,6 +1,7 @@
 package com.meti.compile.type;
 
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class InlineTypePair implements TypePair {
@@ -33,7 +34,17 @@ public class InlineTypePair implements TypePair {
 	}
 
 	@Override
-	public TypePair copy(String name) {
+	public TypePair withName(String name) {
 		return new InlineTypePair(name, type);
+	}
+
+    @Override
+    public <T> T apply(Function<TypePair, T> function) {
+        return function.apply(this);
+    }
+
+	@Override
+	public TypePair acceptType(Consumer<Type> consumer) {
+		throw new UnsupportedOperationException();
 	}
 }

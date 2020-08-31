@@ -37,6 +37,7 @@ public final class CallStack {
         return frames.peek().define(name, type);
     }
 
+    //TODO: add usage for exit()
     public void exit() {
         this.frames.pop();
     }

@@ -13,8 +13,9 @@ public class ReturnRule extends FilteredLexRule {
 
 	@Override
 	public Node parseQualified(String content, Lexer lexer) {
-		String valueString = content.substring(7).trim();
-		Node value = lexer.parse(valueString);
-		return new ReturnNode(value);
+		String value = content.substring(7);
+		String formatted = value.trim();
+		Node node = lexer.parse(formatted);
+		return new ReturnNode(node);
 	}
 }

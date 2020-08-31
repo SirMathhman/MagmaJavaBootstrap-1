@@ -45,6 +45,7 @@ public class InlineTypePair implements TypePair {
 
 	@Override
 	public TypePair acceptType(Consumer<Type> consumer) {
-		throw new UnsupportedOperationException();
+		consumer.accept(type);
+		return this;
 	}
 }

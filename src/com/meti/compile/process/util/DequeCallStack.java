@@ -16,7 +16,7 @@ public final class DequeCallStack implements CallStack {
 
     @Override
     public void enter() {
-        this.frames.add(new StackFrame());
+        this.frames.add(new MapStackFrame());
     }
 
     @Override
@@ -33,13 +33,13 @@ public final class DequeCallStack implements CallStack {
                 .transform(pair::withName);
     }
 
-    private String defineDeconstructed(String name, Type type) {
+    private String defineDeconstructed(TypePair pair) {
         StackFrame frame = frames.peek();
         if (frame == null) {
-            frame = new StackFrame();
+            frame = new MapStackFrame();
             frames.push(frame);
         }
-        return frame.define(name, type);
+        return frame.define(pair);
     }
 
     @Override

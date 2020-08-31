@@ -1,4 +1,4 @@
-package com.meti.compile.lex.parse.block;
+package com.meti.compile.lex.parse.block.function;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;

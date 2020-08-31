@@ -1,6 +1,8 @@
 package com.meti.compile.lex.parse;
 
 import com.meti.compile.lex.parse.block.*;
+import com.meti.compile.lex.parse.block.function.AbstractLexRule;
+import com.meti.compile.lex.parse.block.function.ConcreteLexRule;
 import com.meti.compile.lex.parse.external.ImportRule;
 import com.meti.compile.lex.parse.primitive.CharLexRule;
 import com.meti.compile.lex.parse.primitive.IntLexRule;

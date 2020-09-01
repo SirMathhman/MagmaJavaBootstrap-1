@@ -18,11 +18,11 @@ public final class InlineDependents implements Dependents {
         this.children = Collections.unmodifiableList(children);
     }
 
-    public static InlineDependents of(Field pair) {
-        return of(List.of(pair));
+    public static InlineDependents toFields(Field pair) {
+        return toFields(List.of(pair));
     }
 
-    public static InlineDependents of(List<Field> fields) {
+    public static InlineDependents toFields(List<Field> fields) {
         return of(fields, Collections.emptyList());
     }
 

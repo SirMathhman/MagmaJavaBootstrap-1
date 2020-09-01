@@ -20,14 +20,14 @@ public class VariableNode implements Node {
 	public void acceptDependents(Consumer<Dependents> consumer) {
 		//TODO: deprecate VariableNode.acceptDependents() in exchange of applyToContent
 		Field pair = new InlineField(content, PrimitiveType.Unknown, Collections.emptyList());
-		InlineDependents dependents = InlineDependents.of(pair);
+		InlineDependents dependents = InlineDependents.toFields(pair);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
 		Field pair = new InlineField(content, PrimitiveType.Unknown, Collections.emptyList());
-		InlineDependents dependents = InlineDependents.of(pair);
+		InlineDependents dependents = InlineDependents.toFields(pair);
 		return mapper.apply(dependents);
 	}
 

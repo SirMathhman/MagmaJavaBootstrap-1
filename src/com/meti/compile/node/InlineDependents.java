@@ -1,6 +1,6 @@
 package com.meti.compile.node;
 
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -10,64 +10,68 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public final class InlineDependents implements Dependents {
-	private final List<Node> children;
-	private final List<TypePair> fields;
+    private final List<Node> children;
+    private final List<Field> fields;
 
-	private InlineDependents(List<TypePair> fields, List<Node> children) {
-		this.fields = Collections.unmodifiableList(fields);
-		this.children = Collections.unmodifiableList(children);
-	}
+    private InlineDependents(List<Field> fields, List<Node> children) {
+        this.fields = Collections.unmodifiableList(fields);
+        this.children = Collections.unmodifiableList(children);
+    }
 
-	public static InlineDependents of(TypePair pair) {
-		return of(List.of(pair));
-	}
+    public static InlineDependents of(Field pair) {
+        return of(List.of(pair));
+    }
 
-	public static InlineDependents of(List<TypePair> fields) {
-		return of(fields, Collections.emptyList());
-	}
+    public static InlineDependents of(List<Field> fields) {
+        return of(fields, Collections.emptyList());
+    }
 
-	public static InlineDependents ofChild(Node value) {
-		return ofChildren(Collections.singletonList(value));
-	}
+    public static InlineDependents ofChild(Node value) {
+        return ofChildren(Collections.singletonList(value));
+    }
 
-	public static InlineDependents ofChildren(List<Node> children) {
-		return of(Collections.emptyList(), children);
-	}
+    public static InlineDependents ofChildren(List<Node> children) {
+        return of(Collections.emptyList(), children);
+    }
 
-	public static InlineDependents of(List<TypePair> fields, List<Node> children) {
-		return new InlineDependents(fields, children);
-	}
+    public static InlineDependents of(List<Field> fields, List<Node> children) {
+        return new InlineDependents(fields, children);
+    }
 
-	public static InlineDependents ofSingleton(TypePair pair, Node node) {
-		return of(Collections.singletonList(pair), Collections.singletonList(node));
-	}
+    public static InlineDependents ofSingleton(Field pair, Node node) {
+        return of(Collections.singletonList(pair), Collections.singletonList(node));
+    }
 
-	@Override
-	public <T> T apply(BiFunction<List<TypePair>, List<Node>, T> function) {
-		return function.apply(fields, children);
-	}
+    public static Dependents ofChildren(Node... children) {
+        return ofChildren(List.of(children));
+    }
 
-	@Override
-	public Dependents copyChildren(List<Node> children) {
-		return of(fields, children);
-	}
+    @Override
+    public <T> T apply(BiFunction<List<Field>, List<Node>, T> function) {
+        return function.apply(fields, children);
+    }
 
-	@Override
-	public Dependents copyFields(List<TypePair> fields) {
-		return new InlineDependents(fields, children);
-	}
+    @Override
+    public Dependents copyChildren(List<Node> children) {
+        return of(fields, children);
+    }
 
-	@Override
-	public Stream<Node> streamChildren() {
-		return children.stream();
-	}
+    @Override
+    public Dependents copyFields(List<Field> fields) {
+        return new InlineDependents(fields, children);
+    }
 
-	@Override
-	public Stream<TypePair> streamFields() {
-		return applyToFields(Collection::stream);
-	}
+    @Override
+    public Stream<Node> streamChildren() {
+        return children.stream();
+    }
 
-	private <T> T applyToFields(Function<List<TypePair>, T> mapper) {
-		return mapper.apply(fields);
-	}
+    @Override
+    public Stream<Field> streamFields() {
+        return applyToFields(Collection::stream);
+    }
+
+    private <T> T applyToFields(Function<List<Field>, T> mapper) {
+        return mapper.apply(fields);
+    }
 }

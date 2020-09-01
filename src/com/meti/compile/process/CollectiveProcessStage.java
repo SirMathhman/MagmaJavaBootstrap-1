@@ -4,14 +4,13 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class CollectiveProcessStage implements ProcessStage {
 	public Node load(Node node) {
-		return streamLoaders()
+		return streamPreprocessors()
 				.filter(preprocessor -> node.applyToGroup(preprocessor::canPreprocess))
 				.map(preprocessor -> preprocessor.preprocess(node))
 				.findFirst()
@@ -27,7 +26,7 @@ public abstract class CollectiveProcessStage implements ProcessStage {
 		return transformOptional.orElse(copy);
 	}
 
-	public abstract Stream<Preprocessor> streamLoaders();
+	public abstract Stream<Preprocessor> streamPreprocessors();
 
 	public Optional<Node> transformOptionally(Node copy) {
 		return streamModifiers()

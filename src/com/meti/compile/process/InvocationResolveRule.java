@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class InvocationResolveRule implements NodeResolveRule {
 	@Override
@@ -72,24 +71,18 @@ public class InvocationResolveRule implements NodeResolveRule {
 				.isPresent();
 	}
 
-	public static boolean matchArgumentsFromType(Collection<List<Type>> actualPermutations, Type functionType) {
+	public static boolean matchArgumentsFromType(List<List<Type>> actualPermutations, Type functionType) {
 		List<Type> functionChildren = functionType.streamChildren().collect(Collectors.toList());
 		List<Type> functionArguments = functionChildren.subList(1, functionChildren.size());
 		return matchArguments(actualPermutations, functionArguments);
 	}
 
-	public static boolean matchArguments(Collection<List<Type>> argumentPermutations, List<Type> expected) {
+	public static boolean matchArguments(List<List<Type>> argumentPermutations, List<Type> expected) {
 		if (argumentPermutations.isEmpty()) return true;
-		return argumentPermutations.stream().anyMatch(actual -> matchPermutation(actual, expected));
-	}
-
-	public static boolean matchPermutation(List<Type> actual, List<Type> expected) {
-		return expected.size() == actual.size() &&
-		       IntStream.range(0, expected.size())
-				       .allMatch(index -> matchArgumentIndex(actual, expected, index));
-	}
-
-	public static boolean matchArgumentIndex(List<Type> types, List<Type> actualTypes, int index) {
-		return actualTypes.get(index).matches(types.get(index));
+		for (int i = 0; i < expected.size(); i++) {
+			List<Type> permutation = argumentPermutations.get(i);
+			if(!permutation.contains(expected.get(i))) return false;
+		}
+		return true;
 	}
 }

@@ -5,11 +5,12 @@ import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.block.FunctionNode;
 import com.meti.compile.node.block.FunctionNodeBuilder;
-import com.meti.compile.type.InlineTypePair;
+import com.meti.compile.type.InlineField;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public abstract class FunctionLexRule extends FilteredLexRule {
     @Override
     public Node parseQualified(String content, Lexer lexer) {
         List<String> paramStrings = extractParamStrings(content);
-        List<TypePair> parameters = parseParameters(lexer, paramStrings);
+        List<Field> parameters = parseParameters(lexer, paramStrings);
 
         String header = extractHeader(content);
         int lastSpace = header.lastIndexOf(' ');
@@ -71,7 +72,7 @@ public abstract class FunctionLexRule extends FilteredLexRule {
 
     protected abstract String extractReturnType(String content);
 
-    private List<TypePair> parseParameters(Lexer lexer, List<String> paramStrings) {
+    private List<Field> parseParameters(Lexer lexer, List<String> paramStrings) {
         return paramStrings.stream()
                 .filter(s -> !s.isBlank())
                 .map(String::trim)
@@ -88,11 +89,12 @@ public abstract class FunctionLexRule extends FilteredLexRule {
         return List.of(segments);
     }
 
-    private TypePair parseParameter(String paramString, Lexer lexer) {
+    private Field parseParameter(String paramString, Lexer lexer) {
         int separator = paramString.indexOf(':');
         String name = paramString.substring(0, separator).trim();
         String typeString = paramString.substring(separator + 1).trim();
         Type type = lexer.resolve(typeString);
-        return new InlineTypePair(name, type);
+        //TODO: parameter flags
+        return new InlineField(name, type, Collections.emptyList());
     }
 }

@@ -5,6 +5,7 @@ import com.meti.compile.node.EmptyDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -39,4 +40,9 @@ public class IntNode implements Node {
 	public String render() {
 		return String.valueOf(value);
 	}
+
+    @Override
+    public <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function) {
+        return Optional.empty();
+    }
 }

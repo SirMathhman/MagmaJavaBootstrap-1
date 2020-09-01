@@ -1,6 +1,6 @@
 package com.meti.compile.node;
 
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +14,7 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
-	public <T> T apply(BiFunction<List<TypePair>, List<Node>, T> function) {
+	public <T> T apply(BiFunction<List<Field>, List<Node>, T> function) {
 		return function.apply(Collections.emptyList(), Collections.emptyList());
 	}
 
@@ -28,7 +28,7 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
-	public Dependents copyFields(List<TypePair> fields) {
+	public Dependents copyFields(List<Field> fields) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -38,7 +38,7 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
-	public Stream<TypePair> streamFields() {
+	public Stream<Field> streamFields() {
 		return Stream.empty();
 	}
 }

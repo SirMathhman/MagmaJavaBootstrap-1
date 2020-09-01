@@ -6,6 +6,7 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -57,5 +58,10 @@ public class ImportRule extends FilteredLexRule {
 			String message = "#include <%s.h>\n";
 			return message.formatted(value);
 		}
-	}
+
+        @Override
+        public <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function) {
+            return Optional.empty();
+        }
+    }
 }

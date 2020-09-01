@@ -1,16 +1,23 @@
 package com.meti.compile.type;
 
+import com.meti.compile.process.util.CallFlag;
+import com.meti.compile.process.util.Declaration;
+import com.meti.compile.process.util.MapDeclaration;
+
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class InlineTypePair implements TypePair {
+public class InlineField implements Field {
 	private final Type type;
 	private final String name;
+	private final List<CallFlag> flags;
 
-	public InlineTypePair(String name, Type type) {
+	public InlineField(String name, Type type, List<CallFlag> flags) {
 		this.name = name;
 		this.type = type;
+		this.flags = flags;
 	}
 
 	@Override
@@ -34,18 +41,23 @@ public class InlineTypePair implements TypePair {
 	}
 
 	@Override
-	public TypePair withName(String name) {
-		return new InlineTypePair(name, type);
+	public Field withName(String name) {
+		return new InlineField(name, type, flags);
 	}
 
     @Override
-    public <T> T apply(Function<TypePair, T> function) {
+    public <T> T apply(Function<Field, T> function) {
         return function.apply(this);
     }
 
 	@Override
-	public TypePair acceptType(Consumer<Type> consumer) {
+	public Field acceptType(Consumer<Type> consumer) {
 		consumer.accept(type);
 		return this;
+	}
+
+	@Override
+	public Declaration createDeclaration(String nameToUse){
+		return new MapDeclaration(nameToUse, flags);
 	}
 }

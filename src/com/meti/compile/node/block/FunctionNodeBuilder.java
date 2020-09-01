@@ -2,13 +2,13 @@ package com.meti.compile.node.block;
 
 import com.meti.compile.node.Node;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.List;
 
 public class FunctionNodeBuilder {
 	private String name;
-	private List<TypePair> parameters;
+	private List<Field> parameters;
 	private Type returnType;
 	private Node value;
 
@@ -26,7 +26,7 @@ public class FunctionNodeBuilder {
 		return this;
 	}
 
-	public FunctionNodeBuilder withParameters(List<TypePair> parameters) {
+	public FunctionNodeBuilder withParameters(List<Field> parameters) {
 		this.parameters = parameters;
 		return this;
 	}

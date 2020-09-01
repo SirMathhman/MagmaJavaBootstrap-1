@@ -1,34 +1,26 @@
 package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class MapDeclaration implements Declaration {
     private final Map<Type, String> aliases = new HashMap<>();
     private final String value;
     private int counter = -2;
+    private final List<CallFlag> flags;
 
-    public MapDeclaration(String value) {
+    public MapDeclaration(String value, List<CallFlag> flags) {
         this.value = value;
+        this.flags = flags;
     }
 
     @Override
-    public <T> T applyFirst(Function<Type, T> function) {
-        return aliases.keySet()
-                .stream()
-                .findFirst()
-                .map(function)
-                .orElseThrow();
-    }
-
-    @Override
-    public String defineFrom(TypePair pair) {
+    public String defineFrom(Field pair) {
         return pair.applyToType(this::define);
     }
 
@@ -62,5 +54,10 @@ public class MapDeclaration implements Declaration {
                     "doesn't exist in the registered aliases of %s").formatted(type, aliases);
             throw new IllegalArgumentException(message);
         }
+    }
+
+    @Override
+    public List<CallFlag> flags() {
+        return flags;
     }
 }

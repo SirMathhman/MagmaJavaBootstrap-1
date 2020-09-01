@@ -6,7 +6,7 @@ import com.meti.compile.node.scope.InitialNodeBuilder;
 import com.meti.compile.process.util.CallStack;
 import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 import com.meti.compile.type.primitive.PrimitiveType;
 
 import java.util.List;
@@ -30,8 +30,8 @@ public class InitialProcessor implements Processor {
         return node.applyToDependents(dependents -> dependents.apply(this::construct));
     }
 
-    public Node construct(List<TypePair> typePairs, List<Node> nodes) {
-        TypePair pair = typePairs.get(0);
+    public Node construct(List<Field> fields, List<Node> nodes) {
+        Field pair = fields.get(0);
         Node child = nodes.get(0);
         if (pair.applyToType(type -> PrimitiveType.Implicit == type)) {
             //TODO: implicit types
@@ -43,8 +43,8 @@ public class InitialProcessor implements Processor {
         }
     }
 
-    public InitialNodeBuilder define(TypePair pair) {
-        TypePair newName = stack.define(pair);
+    public InitialNodeBuilder define(Field pair) {
+        Field newName = stack.define(pair);
         return newName.acceptType(typeStack::push)
                 .apply(this::createNode);
     }

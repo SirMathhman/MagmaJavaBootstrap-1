@@ -1,14 +1,17 @@
 package com.meti.compile.node;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Node extends Renderable {
-	void acceptDependents(Consumer<Dependents> consumer);
+    <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function);
 
-	<T> T applyToDependents(Function<Dependents, T> mapper);
+    void acceptDependents(Consumer<Dependents> consumer);
 
-	<T> T applyToGroup(Function<NodeGroup, T> mapper);
+    <T> T applyToDependents(Function<Dependents, T> mapper);
 
-	Node copy(Dependents dependents);
+    <T> T applyToGroup(Function<NodeGroup, T> mapper);
+
+    Node copy(Dependents dependents);
 }

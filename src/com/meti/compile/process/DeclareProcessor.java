@@ -6,7 +6,7 @@ import com.meti.compile.node.NodeGroup;
 import com.meti.compile.node.scope.DeclareNode;
 import com.meti.compile.process.util.CallStack;
 import com.meti.compile.process.util.TypeStack;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 public class DeclareProcessor implements Processor {
     private final CallStack stack;
@@ -30,7 +30,7 @@ public class DeclareProcessor implements Processor {
                 .apply(this::defineInStack);
     }
 
-    public Node defineInStack(TypePair pair) {
+    public Node defineInStack(Field pair) {
         return stack.define(pair)
                 .acceptType(typeStack::push)
                 .apply(DeclareNode::new);

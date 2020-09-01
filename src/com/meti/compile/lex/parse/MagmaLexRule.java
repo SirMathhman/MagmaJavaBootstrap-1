@@ -25,6 +25,7 @@ public class MagmaLexRule extends CompoundLexRule {
 				new AbstractLexRule(),
 				new CharLexRule(),
 				new IntLexRule(),
+				new InfixRule(),
 				new VariableLexRule()
 		);
 	}

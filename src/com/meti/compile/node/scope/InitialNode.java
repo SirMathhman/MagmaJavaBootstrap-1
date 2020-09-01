@@ -4,11 +4,13 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
-import com.meti.compile.type.InlineTypePair;
+import com.meti.compile.type.InlineField;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -25,14 +27,15 @@ public class InitialNode implements Node {
 
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
-		TypePair field = new InlineTypePair(name, type);
+		//TODO: initial flags
+		Field field = new InlineField(name, type, Collections.emptyList());
 		Dependents dependents = InlineDependents.ofSingleton(field, value);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		TypePair field = new InlineTypePair(name, type);
+		Field field = new InlineField(name, type, Collections.emptyList());
 		Dependents dependents = InlineDependents.ofSingleton(field, value);
 		return mapper.apply(dependents);
 	}
@@ -47,8 +50,8 @@ public class InitialNode implements Node {
 		return dependents.apply(InitialNode::copyImpl);
 	}
 
-	public static Node copyImpl(List<TypePair> typePairs, List<Node> nodes) {
-		TypePair field = typePairs.get(0);
+	public static Node copyImpl(List<Field> fields, List<Node> nodes) {
+		Field field = fields.get(0);
 		Node value = nodes.get(0);
 		return field.apply((name, type) -> new InitialNodeBuilder().withName(name).withType(type).withValue(value).build());
 	}
@@ -59,4 +62,9 @@ public class InitialNode implements Node {
 		String renderedValue = value.render();
 		return "%s=%s;".formatted(renderedType, renderedValue);
 	}
+
+    @Override
+    public <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function) {
+        return Optional.empty();
+    }
 }

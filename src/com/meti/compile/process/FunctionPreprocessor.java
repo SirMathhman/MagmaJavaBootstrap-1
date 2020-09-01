@@ -6,7 +6,7 @@ import com.meti.compile.node.NodeGroup;
 import com.meti.compile.process.util.CallStack;
 import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +28,20 @@ public class FunctionPreprocessor implements Preprocessor {
 
     @Override
     public Node preprocess(Node node) {
-        Dependents dependents = node.applyToDependents(this::process);
+        Dependents dependents = node.applyToDependents(this::processFunction);
         return node.copy(dependents);
     }
 
-    public Dependents process(Dependents oldDependents) {
-        List<TypePair> fields = oldDependents.streamFields().collect(Collectors.toList());
-        TypePair first = fields.get(0);
-        Type type = first.applyToType(this::findReturnType);
+    public Dependents processFunction(Dependents oldDependents) {
+        List<Field> fields = oldDependents.streamFields().collect(Collectors.toList());
+        Field oldFirst = fields.get(0);
+        Type type = oldFirst.applyToType(this::findReturnType);
         typeStack.push(type);
-        List<TypePair> oldParameters = fields.subList(1, fields.size());
-        List<TypePair> newParameters = callStack.enter(oldParameters);
-        List<TypePair> newFields = new ArrayList<>();
-        newFields.add(first);
+        List<Field> oldParameters = fields.subList(1, fields.size());
+        Field newFirst = callStack.define(oldFirst);
+        List<Field> newParameters = callStack.enter(oldParameters);
+        List<Field> newFields = new ArrayList<>();
+        newFields.add(newFirst);
         newFields.addAll(newParameters);
         return oldDependents.copyFields(newFields);
     }

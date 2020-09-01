@@ -1,9 +1,11 @@
 package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.Field;
 
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class DequeCallStack implements CallStack {
@@ -20,20 +22,31 @@ public final class DequeCallStack implements CallStack {
     }
 
     @Override
-    public List<TypePair> enter(List<TypePair> scope) {
+    public List<Field> enter(List<Field> scope) {
         enter();
         return scope.stream()
-                .map(this::define)
+                .map(pair -> define(pair))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public TypePair define(TypePair pair) {
+    public Field define(Field pair) {
+        if(pair.applyToName(this::isDefined)) {
+            List<Type> options = pair.applyToName(this::lookup);
+            if(pair.applyToType(options::contains)){
+                throw pair.apply(this::createAlreadyDefined);
+            }
+        }
         return pair.apply(this::defineDeconstructed)
                 .transform(pair::withName);
     }
 
-    private String defineDeconstructed(TypePair pair) {
+    private IllegalArgumentException createAlreadyDefined(String s, Type type) {
+        String message = "%s has already been defined with type %s".formatted(s, type);
+        return new IllegalArgumentException(message);
+    }
+
+    private String defineDeconstructed(Field pair) {
         StackFrame frame = frames.peek();
         if (frame == null) {
             frame = new MapStackFrame();
@@ -68,5 +81,13 @@ public final class DequeCallStack implements CallStack {
     @Override
     public String toString() {
         return frames.toString();
+    }
+
+    @Override
+    public Optional<List<CallFlag>> flags(String name) {
+        return frames.stream()
+                .filter(frame -> frame.isDefined(name))
+                .map(frame -> frame.flags(name))
+                .findFirst();
     }
 }

@@ -5,6 +5,7 @@ import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.type.Type;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -41,4 +42,9 @@ public class DeclareNode implements Node {
 	public String render() {
 		return "%s;".formatted(type.render(name));
 	}
+
+    @Override
+    public <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function) {
+        return Optional.empty();
+    }
 }

@@ -12,15 +12,16 @@ public class TypeProcessStage extends CollectiveProcessStage {
 	private final TypeStack typeStack = new TypeStack();
 
 	@Override
-	public Stream<Preprocessor> streamLoaders() {
+	public Stream<Preprocessor> streamPreprocessors() {
 		return Stream.of(new FunctionPreprocessor(typeStack, callStack));
 	}
+
+	//TODO: add function Postprocessor
 
 	@Override
 	public Stream<Processor> streamModifiers() {
 		return Stream.of(
 				new InvocationProcessor(resolver),
-				new FunctionProcessor(callStack),
 				new DeclareProcessor(callStack, typeStack),
 				new InitialProcessor(callStack, typeStack),
 				new ReturnProcessor(typeStack, resolver)

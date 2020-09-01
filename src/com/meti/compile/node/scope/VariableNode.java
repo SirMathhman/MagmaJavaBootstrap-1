@@ -4,10 +4,12 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
-import com.meti.compile.type.InlineTypePair;
-import com.meti.compile.type.TypePair;
+import com.meti.compile.type.InlineField;
+import com.meti.compile.type.Field;
 import com.meti.compile.type.primitive.PrimitiveType;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -16,14 +18,15 @@ public class VariableNode implements Node {
 
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
-		TypePair pair = new InlineTypePair(content, PrimitiveType.Unknown);
+		//TODO: deprecate VariableNode.acceptDependents() in exchange of applyToContent
+		Field pair = new InlineField(content, PrimitiveType.Unknown, Collections.emptyList());
 		InlineDependents dependents = InlineDependents.of(pair);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		TypePair pair = new InlineTypePair(content, PrimitiveType.Unknown);
+		Field pair = new InlineField(content, PrimitiveType.Unknown, Collections.emptyList());
 		InlineDependents dependents = InlineDependents.of(pair);
 		return mapper.apply(dependents);
 	}
@@ -55,5 +58,12 @@ public class VariableNode implements Node {
 		return "VariableNode{" +
 		       "content='" + content + '\'' +
 		       '}';
+	}
+
+    @Override
+    public <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function) {
+		T value = clazz.cast(content);
+		R result = function.apply(value);
+		return Optional.of(result);
 	}
 }

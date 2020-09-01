@@ -24,7 +24,12 @@ public class Resolver {
     }
 
     public Node force(Node node, Type expectedType) {
-        if (node.applyToGroup(NodeGroup.Invocation::matches)) {
+        if (node.applyToGroup(NodeGroup.Infix::matches)) {
+            Dependents dependents1 = node.applyToDependents(dependents -> nodeResolveRule.resolve(
+                    dependents, expectedType,
+                    this));
+            return node.copy(dependents1);
+        } else if (node.applyToGroup(NodeGroup.Invocation::matches)) {
             Dependents dependents1 = node.applyToDependents(dependents -> nodeResolveRule.resolve(
                     dependents, expectedType,
                     this));

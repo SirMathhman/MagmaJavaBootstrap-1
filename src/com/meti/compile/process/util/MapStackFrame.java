@@ -1,25 +1,27 @@
 package com.meti.compile.process.util;
 
+import com.meti.compile.type.Field;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.TypePair;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class MapStackFrame implements StackFrame {
     private final Map<String, Declaration> definitions = new HashMap<>();
 
     @Override
-    public String define(TypePair pair) {
-        return pair.applyToName(this::allocate).defineFrom(pair);
+    public String define(Field pair) {
+        return pair.apply(field -> field.applyToName(s -> allocate(s, field::createDeclaration))).defineFrom(pair);
     }
 
-    private Declaration allocate(String name) {
+    private Declaration allocate(String name, Function<String, Declaration> function) {
         if (!definitions.containsKey(name)) {
             String nameToUse = validateFirst(name) && validateContent(name) ? name : createInvalidName(name);
-            definitions.put(name, new MapDeclaration(nameToUse));
+            Declaration declaration = function.apply(nameToUse);
+            definitions.put(name, declaration);
         }
         return definitions.get(name);
     }
@@ -69,5 +71,11 @@ public class MapStackFrame implements StackFrame {
                 .filter(definitions::containsKey)
                 .map(definitions::get)
                 .map(definition -> definition.lookup(type));
+    }
+
+    //TODO: replace flags with apply function
+    @Override
+    public List<CallFlag> flags(String name) {
+        return definitions.get(name).flags();
     }
 }

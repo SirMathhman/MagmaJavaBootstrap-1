@@ -9,7 +9,7 @@ public class NativeInfixTest extends FeatureTest{
     @Override
     protected String source() {
         return """
-                native def +(value0 : Int, value1 : Int) : Int;
+                native infix def +(value0 : Int, value1 : Int) : Int;
                 
                 def main() : Int => {
                     return 400 + 20;

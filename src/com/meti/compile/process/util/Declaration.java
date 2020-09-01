@@ -6,7 +6,7 @@ import com.meti.compile.type.Type;
 import java.util.List;
 
 public interface Declaration {
-    String defineFrom(Field pair);
+    String define(Field pair);
 
     String define(Type type);
 

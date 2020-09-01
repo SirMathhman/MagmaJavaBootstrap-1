@@ -5,6 +5,7 @@ import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.block.FunctionNode;
 import com.meti.compile.node.block.FunctionNodeBuilder;
+import com.meti.compile.process.util.CallFlag;
 import com.meti.compile.type.InlineField;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.Field;
@@ -12,6 +13,7 @@ import com.meti.compile.type.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class FunctionLexRule extends FilteredLexRule {
@@ -36,11 +38,15 @@ public abstract class FunctionLexRule extends FilteredLexRule {
     }
 
     private boolean hasKeyword(String header) {
-        int lastSpace = header.lastIndexOf(' ');
-        String value = header.substring(0, lastSpace);
-        String formatted = value.trim();
+        String formatted = formatFlags(header);
         List<String> flags = parseFlags(formatted);
         return flags.contains("def");
+    }
+
+    private String formatFlags(String header) {
+        int lastSpace = header.lastIndexOf(' ');
+        String value = header.substring(0, lastSpace);
+        return value.trim();
     }
 
     private List<String> parseFlags(String keyString) {
@@ -56,6 +62,15 @@ public abstract class FunctionLexRule extends FilteredLexRule {
         List<Field> parameters = parseParameters(lexer, paramStrings);
 
         String header = extractHeader(content);
+        String s = formatFlags(header);
+        List<CallFlag> flags = parseFlags(s)
+                .stream()
+                .filter(k -> !k.isBlank())
+                .map(String::trim)
+                .map(String::toUpperCase)
+                .map(this::asFlag)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toList());
         int lastSpace = header.lastIndexOf(' ');
         String name = header.substring(lastSpace + 1, content.indexOf('(')).trim();
 
@@ -64,8 +79,17 @@ public abstract class FunctionLexRule extends FilteredLexRule {
         FunctionNodeBuilder builder = new FunctionNodeBuilder()
                 .withName(name)
                 .withReturnType(returnType)
-                .withParameters(parameters);
+                .withParameters(parameters)
+                .withFlags(flags);
         return finalize(content, lexer, builder);
+    }
+
+    private Optional<CallFlag> asFlag(String s) {
+        try {
+            return Optional.of(CallFlag.valueOf(s));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
     protected abstract FunctionNode finalize(String content, Lexer lexer, FunctionNodeBuilder builder);

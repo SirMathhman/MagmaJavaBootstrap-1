@@ -7,23 +7,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 public class MapStackFrame implements StackFrame {
     private final Map<String, Declaration> definitions = new HashMap<>();
 
     @Override
     public String define(Field pair) {
-        return pair.apply(field -> field.applyToName(s -> allocate(s, field::createDeclaration))).defineFrom(pair);
+        Declaration declaration = pair.applyToName(definitions::containsKey) ?
+                pair.applyToName(definitions::get) :
+                pair.applyDestruction((s, type, callFlags) -> initialize(s, callFlags));
+        return declaration.define(pair);
     }
 
-    private Declaration allocate(String name, Function<String, Declaration> function) {
-        if (!definitions.containsKey(name)) {
-            String nameToUse = validateFirst(name) && validateContent(name) ? name : createInvalidName(name);
-            Declaration declaration = function.apply(nameToUse);
-            definitions.put(name, declaration);
-        }
-        return definitions.get(name);
+    private MapDeclaration initialize(String s, List<CallFlag> callFlags) {
+        String nameToUse = createName(s, callFlags);
+        MapDeclaration mapDeclaration = new MapDeclaration(nameToUse, callFlags);
+        definitions.put(nameToUse, mapDeclaration);
+        return mapDeclaration;
+    }
+
+    private String createName(String name, List<CallFlag> callFlags) {
+        return callFlags.contains(CallFlag.NATIVE) || hasValidName(name) ? name : createInvalidName(name);
+    }
+
+    private boolean hasValidName(String name) {
+        return validateFirst(name) && validateContent(name);
     }
 
     private String createInvalidName(String name) {

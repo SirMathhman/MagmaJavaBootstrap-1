@@ -25,7 +25,7 @@ public final class DequeCallStack implements CallStack {
     public List<Field> enter(List<Field> scope) {
         enter();
         return scope.stream()
-                .map(pair -> define(pair))
+                .map(this::define)
                 .collect(Collectors.toList());
     }
 

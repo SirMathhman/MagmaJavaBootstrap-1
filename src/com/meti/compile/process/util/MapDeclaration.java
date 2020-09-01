@@ -20,7 +20,7 @@ public class MapDeclaration implements Declaration {
     }
 
     @Override
-    public String defineFrom(Field pair) {
+    public String define(Field pair) {
         return pair.applyToType(this::define);
     }
 

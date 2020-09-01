@@ -4,9 +4,10 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
+import com.meti.compile.process.util.CallFlag;
+import com.meti.compile.type.Field;
 import com.meti.compile.type.InlineField;
 import com.meti.compile.type.Type;
-import com.meti.compile.type.Field;
 import com.meti.compile.type.block.FunctionType;
 
 import java.util.*;
@@ -19,12 +20,14 @@ public class FunctionNode implements Node {
     private final List<Field> parameters;
     private final Type returnType;
     private final Node value;
+    private final List<CallFlag> flags;
 
-    public FunctionNode(String name, Type returnType, Node value, List<Field> parameters) {
+    public FunctionNode(List<CallFlag> flags, String name, List<Field> parameters, Type returnType, Node value) {
         this.parameters = Collections.unmodifiableList(parameters);
         this.returnType = returnType;
         this.value = value;
         this.name = name;
+        this.flags = flags;
     }
 
     @Override
@@ -59,19 +62,20 @@ public class FunctionNode implements Node {
     }
 
     public static Node copyImpl(List<Field> fields, List<Node> nodes) {
-        Field pair = fields.get(0);
+        Field field = fields.get(0);
         List<Field> newParameters = fields.subList(1, fields.size());
-        FunctionNodeBuilder builder = pair.apply(FunctionNode::createBuilder)
+        FunctionNodeBuilder builder = field.applyDestruction(FunctionNode::createBuilder)
                 .withParameters(newParameters);
-        if(!nodes.isEmpty()) builder = builder.withValue(nodes.get(0));
+        if (!nodes.isEmpty()) builder = builder.withValue(nodes.get(0));
         return builder.build();
     }
 
-    public static FunctionNodeBuilder createBuilder(String name, Type type) {
+    public static FunctionNodeBuilder createBuilder(String name, Type type, List<CallFlag> flags) {
         Type returnType = findReturnType(type);
         return new FunctionNodeBuilder()
                 .withName(name)
-                .withReturnType(returnType);
+                .withReturnType(returnType)
+                .withFlags(flags);
     }
 
     public static Type findReturnType(Type type) {
@@ -90,8 +94,7 @@ public class FunctionNode implements Node {
         Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionNode::append,
                 (oldList, newList) -> newList);
         Type type = new FunctionType(returnType, paramTypes);
-        //TODO:  function flags
-        Field pair = new InlineField(name, type, Collections.emptyList());
+        Field pair = new InlineField(name, type, flags);
         return List.of(pair);
     }
 

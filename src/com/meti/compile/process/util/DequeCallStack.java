@@ -2,6 +2,7 @@ package com.meti.compile.process.util;
 
 import com.meti.compile.type.Type;
 import com.meti.compile.type.Field;
+import com.meti.util.TriFunction;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -30,18 +31,18 @@ public final class DequeCallStack implements CallStack {
     }
 
     @Override
-    public Field define(Field pair) {
-        if(pair.applyToName(this::isDefined)) {
-            List<Type> options = pair.applyToName(this::lookup);
-            if(pair.applyToType(options::contains)){
-                throw pair.apply(this::createAlreadyDefined);
+    public Field define(Field field) {
+        if(field.applyToName(this::isDefined)) {
+            List<Type> options = field.applyToName(this::lookup);
+            if(field.applyToType(options::contains)){
+                throw field.applyDestruction(this::createAlreadyDefined);
             }
         }
-        return pair.apply(this::defineDeconstructed)
-                .transform(pair::withName);
+        return field.apply(this::defineDeconstructed)
+                .transform(field::withName);
     }
 
-    private IllegalArgumentException createAlreadyDefined(String s, Type type) {
+    private IllegalArgumentException createAlreadyDefined(String s, Type type, List<CallFlag> flags) {
         String message = "%s has already been defined with type %s".formatted(s, type);
         return new IllegalArgumentException(message);
     }

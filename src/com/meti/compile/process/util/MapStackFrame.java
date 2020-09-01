@@ -19,10 +19,10 @@ public class MapStackFrame implements StackFrame {
         return declaration.define(pair);
     }
 
-    private MapDeclaration initialize(String s, List<CallFlag> callFlags) {
-        String nameToUse = createName(s, callFlags);
+    private MapDeclaration initialize(String name, List<CallFlag> callFlags) {
+        String nameToUse = createName(name, callFlags);
         MapDeclaration mapDeclaration = new MapDeclaration(nameToUse, callFlags);
-        definitions.put(nameToUse, mapDeclaration);
+        definitions.put(name, mapDeclaration);
         return mapDeclaration;
     }
 

@@ -11,7 +11,7 @@ public interface CallStack {
 
     List<Field> enter(List<Field> scope);
 
-    Field define(Field pair);
+    Field define(Field field);
 
     boolean isDefined(String name);
 

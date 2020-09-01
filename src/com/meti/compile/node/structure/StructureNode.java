@@ -58,7 +58,11 @@ public class StructureNode implements Node {
 
     @Override
     public String render() {
-        return "struct " + name + fields.stream()
+        return "struct %s%s;".formatted(name, renderFields());
+    }
+
+    private String renderFields() {
+        return fields.stream()
                 .map(Field::render)
                 .map("%s;"::formatted)
                 .collect(Collectors.joining("", "{", "}"));

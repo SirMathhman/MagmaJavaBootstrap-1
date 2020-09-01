@@ -5,6 +5,7 @@ import com.meti.compile.type.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static java.util.Collections.emptyList;
 
@@ -23,6 +24,14 @@ public class StructureNodeBuilder {
     public StructureNodeBuilder(String name, List<Field> fields) {
         this.name = name;
         this.fields = new ArrayList<>(fields);
+    }
+
+    public StructureNodeBuilder withName(Supplier<String> name) {
+        return new StructureNodeBuilder(name.get(), fields);
+    }
+
+    public StructureNodeBuilder withFields(Supplier<List<Field>> fields) {
+        return new StructureNodeBuilder(name, fields.get());
     }
 
     public StructureNodeBuilder withName(String name) {

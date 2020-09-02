@@ -9,7 +9,7 @@ public class Unit<A> {
         this.value = value;
     }
 
-    public <Τ> Unit<Τ> map(Function<A, Τ> function) {
+    public <B> Unit<B> map(Function<A, B> function) {
         return new Unit<>(function.apply(value));
     }
 

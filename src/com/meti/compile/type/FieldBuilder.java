@@ -10,40 +10,39 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class BuiltFieldBuilder {
+public class FieldBuilder {
     private final String name;
     private final Type type;
     private final List<CallFlag> flags;
 
-    public BuiltFieldBuilder() {
+    public FieldBuilder() {
         this(null, null, Collections.emptyList());
     }
 
-    public BuiltFieldBuilder(String name, Type type, List<CallFlag> flags) {
+    public FieldBuilder(String name, Type type, List<CallFlag> flags) {
         this.name = name;
         this.type = type;
         this.flags = flags;
     }
 
-
-    public BuiltFieldBuilder withName(Supplier<String> name) {
-        return new BuiltFieldBuilder(name.get(), type, flags);
+    public FieldBuilder withName(Supplier<String> name) {
+        return new FieldBuilder(name.get(), type, flags);
     }
 
-    public BuiltFieldBuilder withType(Supplier<Type> type) {
-        return new BuiltFieldBuilder(name, type.get(), flags);
+    public FieldBuilder withType(Supplier<Type> type) {
+        return new FieldBuilder(name, type.get(), flags);
     }
 
-    public BuiltFieldBuilder withName(String name) {
-        return new BuiltFieldBuilder(name, type, flags);
+    public FieldBuilder withName(String name) {
+        return new FieldBuilder(name, type, flags);
     }
 
-    public BuiltFieldBuilder withType(Type type) {
-        return new BuiltFieldBuilder(name, type, flags);
+    public FieldBuilder withType(Type type) {
+        return new FieldBuilder(name, type, flags);
     }
 
-    public BuiltFieldBuilder withFlags(List<CallFlag> flags) {
-        return new BuiltFieldBuilder(name, type, flags);
+    public FieldBuilder withFlags(List<CallFlag> flags) {
+        return new FieldBuilder(name, type, flags);
     }
 
     public BuiltField build() {
@@ -83,7 +82,7 @@ public class BuiltFieldBuilder {
 
         @Override
         public Field withName(String name) {
-            return new BuiltFieldBuilder().withName(name).withType(type).withFlags(flags).build();
+            return new FieldBuilder().withName(name).withType(type).withFlags(flags).build();
         }
 
         @Override

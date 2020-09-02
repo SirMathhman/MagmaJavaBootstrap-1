@@ -4,7 +4,7 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
-import com.meti.compile.type.BuiltFieldBuilder;
+import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.Field;
 
@@ -28,14 +28,14 @@ public class InitialNode implements Node {
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
 		//TODO: initial flags
-		Field field = new BuiltFieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
+		Field field = new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
 		Dependents dependents = InlineDependents.ofSingleton(field, value);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		Field field = new BuiltFieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
+		Field field = new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
 		Dependents dependents = InlineDependents.ofSingleton(field, value);
 		return mapper.apply(dependents);
 	}

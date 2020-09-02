@@ -19,4 +19,8 @@ public class Pair<A, B> {
     public <R> Triplet<A, B, R> explodeFirst(Function<A, R> function) {
         return new Triplet<>(value0, value1, function.apply(value0));
     }
+
+    public <C> Triplet<A, B, C> supply(C value) {
+        return new Triplet<>(value0, value1, value);
+    }
 }

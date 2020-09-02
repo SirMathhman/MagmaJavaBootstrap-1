@@ -13,9 +13,7 @@ public class StructureDeclareTest extends FeatureTest{
                     value : Int;
                 }
                 def main() : Int => {
-                    const wrapper : Wrapper = <Wrapper>{
-                        value : 420;
-                    };
+                    const wrapper : Wrapper = <Wrapper>{420};
                     return 0;
                 }
                 """;

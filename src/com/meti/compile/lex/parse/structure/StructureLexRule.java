@@ -4,7 +4,7 @@ import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.structure.StructureNodeBuilder;
-import com.meti.compile.type.BuiltFieldBuilder;
+import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
 import com.meti.compile.type.Type;
 import com.meti.util.Unit;
@@ -60,7 +60,7 @@ public class StructureLexRule extends FilteredLexRule {
     }
 
     private Field parseField(String fieldString, Lexer lexer) {
-        return new BuiltFieldBuilder()
+        return new FieldBuilder()
                 .withName(() -> parseFieldName(fieldString))
                 .withType(() -> parseFieldType(fieldString, lexer))
                 .build();

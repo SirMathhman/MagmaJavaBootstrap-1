@@ -12,6 +12,10 @@ public class Pair<A, B> {
         this.value1 = value1;
     }
 
+    public Pair<B, A> swap() {
+        return new Pair<>(value1, value0);
+    }
+
     public <T> Unit<T> implode(BiFunction<A, B, T> function) {
         return new Unit<>(function.apply(value0, value1));
     }
@@ -22,5 +26,13 @@ public class Pair<A, B> {
 
     public <C> Triplet<A, B, C> supply(C value) {
         return new Triplet<>(value0, value1, value);
+    }
+
+    public <T> Pair<A, T> zipSecond(BiFunction<A, B, T> function) {
+        return new Pair<>(value0, function.apply(value0, value1));
+    }
+
+    public <T> Pair<T, B> mapFirst(Function<A, T> function) {
+        return new Pair<>(function.apply(value0), value1);
     }
 }

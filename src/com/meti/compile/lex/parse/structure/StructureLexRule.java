@@ -30,7 +30,7 @@ public class StructureLexRule extends FilteredLexRule {
 
     private List<Field> parseFields(String content, Lexer lexer) {
         return extractFields(content)
-                .supply(lexer)
+                .with(lexer)
                 .implode(this::parseFields)
                 .complete();
     }

@@ -21,7 +21,7 @@ public class Unit<A> {
         return value;
     }
 
-    public <B> Pair<A, B> supply(B next) {
+    public <B> Pair<A, B> with(B next) {
         return new Pair<>(value, next);
     }
 }

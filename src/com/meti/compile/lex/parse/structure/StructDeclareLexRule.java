@@ -18,7 +18,7 @@ public class StructDeclareLexRule extends FilteredLexRule {
     @Override
     public Node parseQualified(String content, Lexer lexer) {
         return createBuilderWithName(content)
-                .supply(content).supply(lexer)
+                .with(content).supply(lexer)
                 .implode(this::parseFields)
                 .complete();
     }

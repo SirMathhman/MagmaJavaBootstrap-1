@@ -13,7 +13,8 @@ public class MagmaResolveRule extends CompoundResolveRule {
 				new IntResolveRule(),
 				new StringResolveRule(),
 				new AnyResolveRule(),
-				new VoidResolveRule()
+				new VoidResolveRule(),
+				new StructResolveRule()
 		);
 	}
 }

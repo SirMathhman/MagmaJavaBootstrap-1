@@ -40,7 +40,8 @@ public class Resolver {
         } else if (node.applyToGroup(NodeGroup.Int::matches) && PrimitiveType.Int == expectedType) {
             return node;
         } else {
-            throw new IllegalArgumentException("Cannot force " + node + " to expectedType of " + expectedType);
+            String message = "%s doesn't seem to be a type of %s".formatted(node, expectedType);
+            throw new IllegalArgumentException(message);
         }
     }
 

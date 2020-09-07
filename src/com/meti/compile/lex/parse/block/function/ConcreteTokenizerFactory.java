@@ -5,7 +5,7 @@ import com.meti.compile.node.Token;
 import com.meti.compile.node.block.FunctionToken;
 import com.meti.compile.node.block.FunctionNodeBuilder;
 
-public class ConcreteLexRule extends FunctionLexRule {
+public class ConcreteTokenizerFactory extends FunctionTokenizerFactory {
     @Override
     protected FunctionToken finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
         int separator = content.indexOf("=>");

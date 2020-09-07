@@ -7,7 +7,7 @@ import com.meti.compile.node.Token;
 import java.util.Collection;
 import java.util.Optional;
 
-public abstract class CompoundLexRule implements LexRule {
+public abstract class CompoundTokenizerFactory implements TokenizerFactory {
 	@Override
 	public Optional<Token> parse(String content, Lexer lexer) {
 		return supplyRules().stream()
@@ -16,7 +16,7 @@ public abstract class CompoundLexRule implements LexRule {
 				.findFirst();
 	}
 
-	public abstract Collection<LexRule> supplyRules();
+	public abstract Collection<TokenizerFactory> supplyRules();
 
     @Override
     public Tokenizer create(String content) {

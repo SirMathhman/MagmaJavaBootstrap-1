@@ -1,7 +1,7 @@
 package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.StructureNodeBuilder;
 import com.meti.compile.type.FieldBuilder;
@@ -12,7 +12,7 @@ import com.meti.util.Monad;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StructureLexRule extends FilteredLexRule {
+public class StructureTokenizerFactory extends FilteredTokenizerFactory {
     private static final String HEADER = "struct ";
 
     @Override

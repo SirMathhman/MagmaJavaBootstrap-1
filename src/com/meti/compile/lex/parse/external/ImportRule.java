@@ -1,7 +1,7 @@
 package com.meti.compile.lex.parse.external;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 import static com.meti.compile.node.EmptyDependents.EmptyDependents;
 
-public class ImportRule extends FilteredLexRule {
+public class ImportRule extends FilteredTokenizerFactory {
 	public static final String HEADER = "import native ";
 
 	@Override

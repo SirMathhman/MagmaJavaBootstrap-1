@@ -6,7 +6,7 @@ import com.meti.compile.node.Token;
 
 import java.util.Optional;
 
-public abstract class FilteredLexRule implements LexRule {
+public abstract class FilteredTokenizerFactory implements TokenizerFactory {
 	@Override
 	public Optional<Token> parse(String content, Lexer lexer) {
 		return Optional.of(content)

@@ -1,13 +1,13 @@
 package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.FieldToken;
 import com.meti.util.Duad;
 import com.meti.util.Monad;
 
-public class FieldLexRule extends FilteredLexRule {
+public class FieldTokenizerFactory extends FilteredTokenizerFactory {
     @Override
     public boolean canQualify(String content) {
         return content.contains("->");

@@ -1,6 +1,6 @@
 package com.meti.compile.lex;
 
-import com.meti.compile.lex.parse.LexRule;
+import com.meti.compile.lex.parse.TokenizerFactory;
 import com.meti.compile.lex.parse.ParseException;
 import com.meti.compile.lex.resolve.ResolveException;
 import com.meti.compile.lex.resolve.ResolveRule;
@@ -9,16 +9,16 @@ import com.meti.compile.type.Type;
 
 public class RootLexer implements Lexer {
 	private final ResolveRule rootResolveRule;
-	private final LexRule rootLexRule;
+	private final TokenizerFactory rootTokenizerFactory;
 
-	public RootLexer(LexRule rootLexRule, ResolveRule rootResolveRule) {
+	public RootLexer(TokenizerFactory rootTokenizerFactory, ResolveRule rootResolveRule) {
 		this.rootResolveRule = rootResolveRule;
-		this.rootLexRule = rootLexRule;
+		this.rootTokenizerFactory = rootTokenizerFactory;
 	}
 
 	@Override
 	public Token parse(String content) {
-		return rootLexRule.parse(content, this)
+		return rootTokenizerFactory.parse(content, this)
 				.orElseThrow(() -> createInvalidParse(content));
 	}
 

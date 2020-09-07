@@ -1,7 +1,7 @@
 package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.InfixToken;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class InfixRule extends FilteredLexRule {
+public class InfixRule extends FilteredTokenizerFactory {
     @Override
     public boolean canQualify(String content) {
         return streamValues(content).count() == 3;

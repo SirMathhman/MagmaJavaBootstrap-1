@@ -1,7 +1,7 @@
 package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.BlockToken;
 
@@ -14,7 +14,7 @@ TODO: add content as field instead of being passed as parameter
 instead of canQualify, use validate() instead, removes parameter
 also, replace parsing structure with valued nodes such that it's non-recursive
  */
-public class BlockRule extends FilteredLexRule {
+public class BlockRule extends FilteredTokenizerFactory {
     @Override
     public boolean canQualify(String content) {
         return content.startsWith("{") &&

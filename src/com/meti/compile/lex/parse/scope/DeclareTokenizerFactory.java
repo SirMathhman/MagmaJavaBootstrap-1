@@ -1,7 +1,7 @@
 package com.meti.compile.lex.parse.scope;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.scope.DeclareToken;
 import com.meti.compile.node.scope.InitialToken;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DeclareLexRule extends FilteredLexRule {
+public class DeclareTokenizerFactory extends FilteredTokenizerFactory {
 	@Override
 	public Token parseQualified(String content, Lexer lexer) {
 		String name = parseName(content);

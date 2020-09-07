@@ -1,14 +1,14 @@
 package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.InvocationToken;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InvocationRule extends FilteredLexRule {
+public class InvocationRule extends FilteredTokenizerFactory {
     @Override
     public boolean canQualify(String content) {
         return content.contains("(") && content.endsWith(")");

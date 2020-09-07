@@ -1,14 +1,14 @@
 package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.StructDeclareToken.Builder;
 import com.meti.util.Monad;
 
 import java.util.List;
 
-public class StructDeclareLexRule extends FilteredLexRule {
+public class StructDeclareTokenizerFactory extends FilteredTokenizerFactory {
     @Override
     public boolean canQualify(String content) {
         return content.startsWith("<") && content.contains(">") &&

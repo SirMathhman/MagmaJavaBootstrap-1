@@ -4,7 +4,7 @@ import com.meti.compile.lex.Lexer;
 import com.meti.compile.node.block.FunctionToken;
 import com.meti.compile.node.block.FunctionNodeBuilder;
 
-public class AbstractLexRule extends FunctionLexRule {
+public class AbstractTokenizerFactory extends FunctionTokenizerFactory {
     @Override
     protected FunctionToken finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
         return builder.build();

@@ -1,7 +1,7 @@
 package com.meti.compile.lex.parse.block.function;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredLexRule;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.FunctionToken;
 import com.meti.compile.node.block.FunctionNodeBuilder;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class FunctionLexRule extends FilteredLexRule {
+public abstract class FunctionTokenizerFactory extends FilteredTokenizerFactory {
     @Override
     public boolean canQualify(String content) {
         int paramStart = content.indexOf('(');

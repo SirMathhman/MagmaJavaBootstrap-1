@@ -6,7 +6,7 @@ import com.meti.compile.node.Token;
 
 import java.util.Optional;
 
-public interface LexRule {
+public interface TokenizerFactory {
     Tokenizer create(String content);
 
     Optional<Token> parse(String content, Lexer lexer);

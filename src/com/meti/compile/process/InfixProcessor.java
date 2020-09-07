@@ -32,7 +32,7 @@ public class InfixProcessor implements Processor {
     }
 
     private ParentToken processDependents(Dependents dependents) {
-        List<Token> children = dependents.streamChildren().collect(Collectors.toList());
+        List<Token> children = dependents.streamChildrenNatively().collect(Collectors.toList());
         Token operator = children.get(0);
         Token value0 = children.get(1);
         Token value1 = children.get(2);

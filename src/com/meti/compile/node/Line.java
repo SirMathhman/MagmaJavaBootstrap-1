@@ -28,7 +28,7 @@ public class Line implements Token {
 
     @Override
     public Token copy(Dependents dependents) {
-        return dependents.streamChildren()
+        return dependents.streamChildrenNatively()
                 .findFirst()
                 .map(Line::new)
                 .orElseThrow();

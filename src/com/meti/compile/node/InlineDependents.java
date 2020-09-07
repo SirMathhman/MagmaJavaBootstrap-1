@@ -1,6 +1,7 @@
 package com.meti.compile.node;
 
 import com.meti.compile.type.Field;
+import com.meti.util.MonadStream;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -62,16 +63,21 @@ public final class InlineDependents implements Dependents {
     }
 
     @Override
-    public Stream<Token> streamChildren() {
+    public Stream<Token> streamChildrenNatively() {
         return children.stream();
     }
 
     @Override
-    public Stream<Field> streamFields() {
+    public Stream<Field> streamFieldsNatively() {
         return applyToFields(Collection::stream);
     }
 
     private <T> T applyToFields(Function<List<Field>, T> mapper) {
         return mapper.apply(fields);
+    }
+
+    @Override
+    public MonadStream<Token> streamChildren(){
+        throw new UnsupportedOperationException();
     }
 }

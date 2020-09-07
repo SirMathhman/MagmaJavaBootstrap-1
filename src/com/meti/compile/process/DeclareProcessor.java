@@ -24,7 +24,7 @@ public class DeclareProcessor implements Processor {
 
     @Override
     public Token process(Token token) {
-        return token.applyToDependents(Dependents::streamFields)
+        return token.applyToDependents(Dependents::streamFieldsNatively)
                 .findFirst()
                 .orElseThrow()
                 .apply(this::defineInStack);

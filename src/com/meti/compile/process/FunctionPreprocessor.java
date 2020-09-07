@@ -33,7 +33,7 @@ public class FunctionPreprocessor implements Preprocessor {
     }
 
     public Dependents processFunction(Dependents oldDependents) {
-        List<Field> fields = oldDependents.streamFields().collect(Collectors.toList());
+        List<Field> fields = oldDependents.streamFieldsNatively().collect(Collectors.toList());
         Field oldFirst = fields.get(0);
         Type type = oldFirst.applyToType(this::findReturnType);
         typeStack.push(type);

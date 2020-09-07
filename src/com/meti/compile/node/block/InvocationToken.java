@@ -28,7 +28,7 @@ public class InvocationToken extends ParentToken {
 
 	@Override
 	public Token copy(Dependents dependents) {
-		List<Token> newChildren = dependents.streamChildren().collect(Collectors.toList());
+		List<Token> newChildren = dependents.streamChildrenNatively().collect(Collectors.toList());
 		Token newCaller = newChildren.get(0);
 		List<Token> newArguments = newChildren.subList(1, newChildren.size());
 		return new InvocationToken(newCaller, newArguments);

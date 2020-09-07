@@ -1,12 +1,11 @@
 package com.meti.compile.lex;
 
 import com.meti.compile.lex.parse.TokenizerFactory;
-import com.meti.compile.lex.parse.ParseException;
 import com.meti.compile.lex.resolve.ResolveException;
 import com.meti.compile.lex.resolve.ResolveRule;
 import com.meti.compile.node.Token;
 import com.meti.compile.type.Type;
-import com.meti.util.Option;
+import com.meti.util.MonadOption;
 
 public class RootLexer implements Lexer {
 	private final ResolveRule rootResolveRule;
@@ -34,7 +33,7 @@ public class RootLexer implements Lexer {
 	}
 
 	@Override
-	public Option<Token> parseToOption(String content) {
+	public MonadOption<Token> parseToOption(String content) {
 		return rootTokenizerFactory.create(content).evaluate();
 	}
 }

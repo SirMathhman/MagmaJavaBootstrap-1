@@ -53,7 +53,7 @@ public class StructureToken implements Token {
     }
 
     private StructureNodeBuilder attachFields(Dependents dependents, StructureNodeBuilder builder) {
-        return dependents.streamFields().reduce(builder, StructureNodeBuilder::withField, (oldBuilder, newBuilder) -> newBuilder);
+        return dependents.streamFieldsNatively().reduce(builder, StructureNodeBuilder::withField, (oldBuilder, newBuilder) -> newBuilder);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class InvocationResolveRule implements NodeResolveRule {
 	@Override
 	public Dependents resolve(Dependents dependents, Type returnType, Resolver resolver) {
-		List<Token> children = dependents.streamChildren().collect(Collectors.toList());
+		List<Token> children = dependents.streamChildrenNatively().collect(Collectors.toList());
 		Token caller = children.get(0);
 		List<Token> arguments = children.subList(1, children.size());
 		List<Token> newChildren = createNewChildren(caller, arguments, returnType, resolver);

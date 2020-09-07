@@ -12,11 +12,11 @@ public class Duad<A, B> {
         this.value1 = value1;
     }
 
-    public Duad<B, A> swap() {
+    public Duad<B, A> reverse() {
         return new Duad<>(value1, value0);
     }
 
-    public <T> Monad<T> implode(BiFunction<A, B, T> function) {
+    public <T> Monad<T> map(BiFunction<A, B, T> function) {
         return new Monad<>(function.apply(value0, value1));
     }
 

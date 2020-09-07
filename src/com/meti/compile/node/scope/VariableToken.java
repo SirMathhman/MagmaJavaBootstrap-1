@@ -38,7 +38,7 @@ public class VariableToken implements Token {
 
 	@Override
 	public Token copy(Dependents dependents) {
-		return dependents.streamFields()
+		return dependents.streamFieldsNatively()
 				.findFirst()
 				.map(field -> field.applyToName(VariableToken::new))
 				.orElseThrow();

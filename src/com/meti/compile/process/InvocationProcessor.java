@@ -30,7 +30,7 @@ public class InvocationProcessor implements Processor {
     }
 
     private boolean canReturnVoid(Dependents dependents) {
-        return dependents.streamChildren()
+        return dependents.streamChildrenNatively()
                 .findFirst()
                 .map(resolver::search)
                 .orElseThrow()

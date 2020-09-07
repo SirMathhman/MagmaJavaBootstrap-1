@@ -41,7 +41,7 @@ public class InfixToken extends ParentToken {
 
     @Override
     public Token copy(Dependents dependents) {
-        List<Token> children = dependents.streamChildren()
+        List<Token> children = dependents.streamChildrenNatively()
                 .collect(Collectors.toList());
         return new InfixToken(children.get(0), children.get(1), children.get(2));
     }

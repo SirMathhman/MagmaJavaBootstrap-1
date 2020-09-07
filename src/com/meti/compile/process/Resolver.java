@@ -46,7 +46,7 @@ public class Resolver {
     }
 
     public Optional<Token> mapToVariable(Dependents dependents, Type type) {
-        return dependents.streamFields()
+        return dependents.streamFieldsNatively()
                 .findFirst()
                 .map(typePair -> typePair.applyToName(name -> mapToAlias(name, type)));
     }
@@ -77,7 +77,7 @@ public class Resolver {
     }
 
     public List<Type> searchVariable(Dependents dependents) {
-        return dependents.streamFields()
+        return dependents.streamFieldsNatively()
                 .findFirst()
                 .orElseThrow()
                 .applyToName(this::lookupExceptionally);

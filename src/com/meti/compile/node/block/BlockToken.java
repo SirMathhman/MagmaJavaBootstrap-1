@@ -29,7 +29,7 @@ public class BlockToken extends ParentToken {
 
 	@Override
 	public Token copy(Dependents dependents) {
-		return dependents.streamChildren()
+		return dependents.streamChildrenNatively()
 				.reduce(new BlockNodeBuilder(),
 						BlockNodeBuilder::append,
 						(oldBuilder, newBuilder) -> newBuilder)

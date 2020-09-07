@@ -36,7 +36,7 @@ public class ReturnProcessor implements Processor {
 	}
 
 	public Token findNewValue(Token token, Type type) {
-		return token.applyToDependents(dependents -> dependents.streamChildren()
+		return token.applyToDependents(dependents -> dependents.streamChildrenNatively()
 				.findFirst()
 				.map(value -> resolver.force(value, type))
 				.orElseThrow());

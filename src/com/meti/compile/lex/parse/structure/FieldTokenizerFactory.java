@@ -18,14 +18,14 @@ public class FieldTokenizerFactory extends FilteredTokenizerFactory {
         return new Duad<>(content, lexer)
                 .zipSecond(this::parseParent)
                 .mapFirst(this::parseName)
-                .swap().implode(FieldToken::new)
+                .reverse().map(FieldToken::new)
                 .complete();
     }
 
     private String parseName(String content) {
         return new Monad<>(content)
                 .extract(value -> value.indexOf("->"))
-                .implode((value, index) -> value.substring(index + 2))
+                .map((value, index) -> value.substring(index + 2))
                 .map(String::trim)
                 .complete();
     }
@@ -33,7 +33,7 @@ public class FieldTokenizerFactory extends FilteredTokenizerFactory {
     private Token parseParent(String content, Lexer lexer) {
         return new Monad<>(content)
                 .extract(value -> value.indexOf("->"))
-                .implode((value, index) -> value.substring(0, index))
+                .map((value, index) -> value.substring(0, index))
                 .map(String::trim)
                 .map(lexer::parse)
                 .complete();

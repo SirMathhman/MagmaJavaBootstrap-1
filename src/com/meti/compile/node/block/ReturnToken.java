@@ -29,7 +29,7 @@ public class ReturnToken implements Token {
 
 	@Override
 	public Token copy(Dependents dependents) {
-		return dependents.streamChildren()
+		return dependents.streamChildrenNatively()
 				.findFirst().map(ReturnToken::new)
 				.orElseThrow();
 	}

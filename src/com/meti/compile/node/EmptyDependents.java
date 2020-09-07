@@ -1,6 +1,7 @@
 package com.meti.compile.node;
 
 import com.meti.compile.type.Field;
+import com.meti.util.MonadStream;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,12 +34,17 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
-	public Stream<Token> streamChildren() {
+	public Stream<Token> streamChildrenNatively() {
 		return Stream.empty();
 	}
 
 	@Override
-	public Stream<Field> streamFields() {
+	public Stream<Field> streamFieldsNatively() {
 		return Stream.empty();
+	}
+
+	@Override
+	public MonadStream<Token> streamChildren(){
+		throw new UnsupportedOperationException();
 	}
 }

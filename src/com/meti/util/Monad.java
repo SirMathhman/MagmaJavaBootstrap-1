@@ -2,26 +2,37 @@ package com.meti.util;
 
 import java.util.function.Function;
 
-public class Monad<A> {
-    private final A value;
+import static com.meti.util.Some.Some;
 
-    public Monad(A value) {
+public class Monad<T> {
+    private final T value;
+
+    public MonadOption<T> asOption() {
+        return Some(value);
+    }
+
+    public Monad(T value) {
         this.value = value;
     }
 
-    public <B> Monad<B> map(Function<A, B> function) {
+    public <B> Monad<B> map(Function<T, B> function) {
         return new Monad<>(function.apply(value));
     }
 
-    public <R> Duad<A, R> extract(Function<A, R> function) {
+    public <R> Duad<T, R> extract(Function<T, R> function) {
         return new Duad<>(value, function.apply(value));
     }
 
-    public A complete() {
+    @Deprecated
+    public T complete() {
         return value;
     }
 
-    public <B> Duad<A, B> with(B next) {
+    public <B> Duad<T, B> with(B next) {
         return new Duad<>(value, next);
+    }
+
+    public <R> R apply(Function<T, R> function) {
+        return function.apply(value);
     }
 }

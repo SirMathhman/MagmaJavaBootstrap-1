@@ -38,7 +38,7 @@ public abstract class CollectiveProcessStage implements ProcessStage {
 	public abstract Stream<Processor> streamModifiers();
 
 	private Dependents transformDependents(Dependents dependents) {
-		List<Token> children = dependents.streamChildren()
+		List<Token> children = dependents.streamChildrenNatively()
 				.map(this::process)
 				.collect(Collectors.toList());
 		return dependents.copyChildren(children);

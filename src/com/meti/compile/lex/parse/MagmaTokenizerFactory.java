@@ -11,13 +11,14 @@ import com.meti.compile.lex.parse.scope.VariableTokenizerFactory;
 import com.meti.compile.lex.parse.structure.FieldTokenizerFactory;
 import com.meti.compile.lex.parse.structure.StructDeclareTokenizerFactory;
 import com.meti.compile.lex.parse.structure.StructureTokenizerFactory;
+import com.meti.util.MonadStream;
 
 import java.util.Collection;
 import java.util.List;
 
 public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
 	@Override
-	public Collection<TokenizerFactory> supplyRules() {
+	public Collection<TokenizerFactory> supplyFactories() {
 		return List.of(
 				new StructDeclareTokenizerFactory(),
 				new StructureTokenizerFactory(),
@@ -34,5 +35,10 @@ public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
 				new FieldTokenizerFactory(),
 				new VariableTokenizerFactory()
 		);
+	}
+
+	@Override
+	public MonadStream<TokenizerFactory> streamFactories(){
+		throw new UnsupportedOperationException("Factories haven't been supplied yet.");
 	}
 }

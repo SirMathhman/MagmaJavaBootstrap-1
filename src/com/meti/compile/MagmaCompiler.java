@@ -10,7 +10,7 @@ import com.meti.compile.node.Token;
 import com.meti.compile.process.FixProcessStage;
 import com.meti.compile.process.ProcessStage;
 import com.meti.compile.process.TypeProcessStage;
-import com.meti.util.Option;
+import com.meti.util.Monad;
 
 public class MagmaCompiler implements Compiler {
     private final TokenizerFactory rootParserRule = new MagmaTokenizerFactory();
@@ -33,9 +33,15 @@ public class MagmaCompiler implements Compiler {
     }
 
     private String applyPipeline(Token token) {
-        Token withFixes = fixStage.process(token);
-        Token withTypes = typeStage.process(withFixes);
-        String result = withTypes.render();
-        return result.substring(1, result.length() - 1);
+        return new Monad<>(token)
+                .map(fixStage::process)
+                .map(typeStage::process)
+                .map(Token::render)
+                .extract(String::length)
+                .apply(this::unwrap);
+    }
+
+    private String unwrap(String renderedToken, int length) {
+        return renderedToken.substring(1, length - 1);
     }
 }

@@ -35,4 +35,8 @@ public class Duad<A, B> {
     public <T> Duad<T, B> mapFirst(Function<A, T> function) {
         return new Duad<>(function.apply(value0), value1);
     }
+
+    public <T> T apply(BiFunction<A, B, T> function) {
+        return function.apply(value0, value1);
+    }
 }

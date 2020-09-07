@@ -13,7 +13,7 @@ public class Monad<A> {
         return new Monad<>(function.apply(value));
     }
 
-    public <R> Duad<A, R> explode(Function<A, R> function) {
+    public <R> Duad<A, R> extract(Function<A, R> function) {
         return new Duad<>(value, function.apply(value));
     }
 

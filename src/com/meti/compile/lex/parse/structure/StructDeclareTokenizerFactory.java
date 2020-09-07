@@ -33,7 +33,7 @@ public class StructDeclareTokenizerFactory extends FilteredTokenizerFactory {
 
     private List<String> extractChildren(String content) {
         return new Monad<>(content)
-                .explode(value -> value.indexOf('{'))
+                .extract(value -> value.indexOf('{'))
                 .explodeFirst(value -> value.indexOf('}'))
                 .implode((value, start, end) -> value.substring(start + 1, end))
                 .map(String::trim)
@@ -44,7 +44,7 @@ public class StructDeclareTokenizerFactory extends FilteredTokenizerFactory {
 
     private Monad<Builder> createBuilderWithName(String content) {
         return new Monad<>(content)
-                .explode(value -> value.indexOf('<'))
+                .extract(value -> value.indexOf('<'))
                 .explodeFirst(value -> value.indexOf('>'))
                 .implode((value, start, end) -> value.substring(start + 1, end))
                 .map(String::trim)

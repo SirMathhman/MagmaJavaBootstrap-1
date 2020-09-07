@@ -2,8 +2,8 @@ package com.meti.compile.node.scope;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.Field;
@@ -14,12 +14,12 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class InitialNode implements Node {
+public class InitialToken implements Token {
 	private final String name;
 	private final Type type;
-	private final Node value;
+	private final Token value;
 
-	public InitialNode(String name, Type type, Node value) {
+	public InitialToken(String name, Type type, Token value) {
 		this.name = name;
 		this.type = type;
 		this.value = value;
@@ -41,18 +41,18 @@ public class InitialNode implements Node {
 	}
 
 	@Override
-	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		return mapper.apply(NodeGroup.Initial);
+	public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+		return mapper.apply(TokenGroup.Initial);
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
-		return dependents.apply(InitialNode::copyImpl);
+	public Token copy(Dependents dependents) {
+		return dependents.apply(InitialToken::copyImpl);
 	}
 
-	public static Node copyImpl(List<Field> fields, List<Node> nodes) {
+	public static Token copyImpl(List<Field> fields, List<Token> tokens) {
 		Field field = fields.get(0);
-		Node value = nodes.get(0);
+		Token value = tokens.get(0);
 		return field.apply((name, type) -> new InitialNodeBuilder().withName(name).withType(type).withValue(value).build());
 	}
 

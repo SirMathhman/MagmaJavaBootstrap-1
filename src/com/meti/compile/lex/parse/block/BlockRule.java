@@ -2,8 +2,8 @@ package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.block.BlockNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.block.BlockToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +22,13 @@ public class BlockRule extends FilteredLexRule {
     }
 
     @Override
-    public Node parseQualified(String content, Lexer lexer) {
+    public Token parseQualified(String content, Lexer lexer) {
         List<String> childStrings = extractChildren(content);
-        List<Node> childNodes = parseChildren(lexer, childStrings);
-        return new BlockNode(childNodes);
+        List<Token> childTokens = parseChildren(lexer, childStrings);
+        return new BlockToken(childTokens);
     }
 
-    private static List<Node> parseChildren(Lexer lexer, List<String> children) {
+    private static List<Token> parseChildren(Lexer lexer, List<String> children) {
 		return children.stream()
                 .filter(s -> !s.isBlank())
                 .map(String::trim)

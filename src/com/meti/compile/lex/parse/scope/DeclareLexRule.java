@@ -2,9 +2,9 @@ package com.meti.compile.lex.parse.scope;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.scope.DeclareNode;
-import com.meti.compile.node.scope.InitialNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.scope.DeclareToken;
+import com.meti.compile.node.scope.InitialToken;
 import com.meti.compile.node.scope.InitialNodeBuilder;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class DeclareLexRule extends FilteredLexRule {
 	@Override
-	public Node parseQualified(String content, Lexer lexer) {
+	public Token parseQualified(String content, Lexer lexer) {
 		String name = parseName(content);
 		Type type = parseType(content, lexer);
 		return -1 == content.indexOf('=')
@@ -40,10 +40,10 @@ public class DeclareLexRule extends FilteredLexRule {
 		return header.substring(separator + 1).trim();
 	}
 
-	public static InitialNode buildInitial(String content, Lexer lexer, String name, Type type) {
+	public static InitialToken buildInitial(String content, Lexer lexer, String name, Type type) {
 		int equals = content.indexOf('=');
 		String valueString = content.substring(equals + 1).trim();
-		Node value = lexer.parse(valueString);
+		Token value = lexer.parse(valueString);
 		return new InitialNodeBuilder().withName(name).withType(type).withValue(value).build();
 	}
 
@@ -54,8 +54,8 @@ public class DeclareLexRule extends FilteredLexRule {
 				parseTypePresent(content, lexer);
 	}
 
-	public static DeclareNode buildDeclare(String name, Type type) {
-		return new DeclareNode(name, type);
+	public static DeclareToken buildDeclare(String name, Type type) {
+		return new DeclareToken(name, type);
 	}
 
 	public static Type parseTypePresent(String content, Lexer lexer) {

@@ -1,15 +1,15 @@
 package com.meti.compile.lex.parse.block.function;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.block.FunctionNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.block.FunctionToken;
 import com.meti.compile.node.block.FunctionNodeBuilder;
 
 public class ConcreteLexRule extends FunctionLexRule {
     @Override
-    protected FunctionNode finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
+    protected FunctionToken finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
         int separator = content.indexOf("=>");
-        Node value = content.substring(separator + 2)
+        Token value = content.substring(separator + 2)
                 .trim().transform(lexer::parse);
         return builder.withValue(value).build();
     }

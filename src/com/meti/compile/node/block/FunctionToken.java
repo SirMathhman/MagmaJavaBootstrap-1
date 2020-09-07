@@ -2,8 +2,8 @@ package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.process.util.CallFlag;
 import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
@@ -15,14 +15,14 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class FunctionNode implements Node {
+public class FunctionToken implements Token {
     private final String name;
     private final List<Field> parameters;
     private final Type returnType;
-    private final Node value;
+    private final Token value;
     private final List<CallFlag> flags;
 
-    public FunctionNode(List<CallFlag> flags, String name, List<Field> parameters, Type returnType, Node value) {
+    public FunctionToken(List<CallFlag> flags, String name, List<Field> parameters, Type returnType, Token value) {
         this.parameters = Collections.unmodifiableList(parameters);
         this.returnType = returnType;
         this.value = value;
@@ -33,7 +33,7 @@ public class FunctionNode implements Node {
     @Override
     public void acceptDependents(Consumer<Dependents> consumer) {
         List<Field> fields = buildFields();
-        List<Node> children = Collections.singletonList(value);
+        List<Token> children = Collections.singletonList(value);
         Dependents dependents = InlineDependents.of(fields, children);
         consumer.accept(dependents);
     }
@@ -41,7 +41,7 @@ public class FunctionNode implements Node {
     @Override
     public <T> T applyToDependents(Function<Dependents, T> mapper) {
         List<Field> fields = buildFields();
-        List<Node> children;
+        List<Token> children;
         if (value == null) {
             children = Collections.emptyList();
         } else {
@@ -52,21 +52,21 @@ public class FunctionNode implements Node {
     }
 
     @Override
-    public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-        return mapper.apply(NodeGroup.Function);
+    public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+        return mapper.apply(TokenGroup.Function);
     }
 
     @Override
-    public Node copy(Dependents dependents) {
-        return dependents.apply(FunctionNode::copyImpl);
+    public Token copy(Dependents dependents) {
+        return dependents.apply(FunctionToken::copyImpl);
     }
 
-    public static Node copyImpl(List<Field> fields, List<Node> nodes) {
+    public static Token copyImpl(List<Field> fields, List<Token> tokens) {
         Field field = fields.get(0);
         List<Field> newParameters = fields.subList(1, fields.size());
-        FunctionNodeBuilder builder = field.applyDestruction(FunctionNode::createBuilder)
+        FunctionNodeBuilder builder = field.applyDestruction(FunctionToken::createBuilder)
                 .withParameters(newParameters);
-        if (!nodes.isEmpty()) builder = builder.withValue(nodes.get(0));
+        if (!tokens.isEmpty()) builder = builder.withValue(tokens.get(0));
         return builder.build();
     }
 
@@ -91,7 +91,7 @@ public class FunctionNode implements Node {
     }
 
     public List<Field> createNamePair() {
-        Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionNode::append,
+        Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionToken::append,
                 (oldList, newList) -> newList);
         Type type = new FunctionType(returnType, paramTypes);
         Field pair = new FieldBuilder().withName(name).withType(type).withFlags(flags).build();

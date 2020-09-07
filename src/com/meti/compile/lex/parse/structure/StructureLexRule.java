@@ -2,7 +2,7 @@ package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.StructureNodeBuilder;
 import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
@@ -21,7 +21,7 @@ public class StructureLexRule extends FilteredLexRule {
     }
 
     @Override
-    public Node parseQualified(String content, Lexer lexer) {
+    public Token parseQualified(String content, Lexer lexer) {
         return new StructureNodeBuilder()
                 .withName(() -> parseName(content))
                 .withFields(() -> parseFields(content, lexer))

@@ -4,14 +4,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public interface Node extends Renderable {
+public interface Token extends Renderable {
     <T, R> Optional<R> applyToContent(Class<? extends T> clazz, Function<T, R> function);
 
     void acceptDependents(Consumer<Dependents> consumer);
 
     <T> T applyToDependents(Function<Dependents, T> mapper);
 
-    <T> T applyToGroup(Function<NodeGroup, T> mapper);
+    <T> T applyToGroup(Function<TokenGroup, T> mapper);
 
-    Node copy(Dependents dependents);
+    Token copy(Dependents dependents);
 }

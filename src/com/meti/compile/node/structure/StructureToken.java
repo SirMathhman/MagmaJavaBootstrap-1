@@ -1,8 +1,8 @@
 package com.meti.compile.node.structure;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.type.Field;
 
 import java.util.List;
@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.node.InlineDependents.toFields;
 
-public class StructureNode implements Node {
+public class StructureToken implements Token {
     private final String name;
     private final List<Field> fields;
 
-    public StructureNode(String name, List<Field> fields) {
+    public StructureToken(String name, List<Field> fields) {
         this.name = name;
         this.fields = fields;
     }
@@ -40,12 +40,12 @@ public class StructureNode implements Node {
     }
 
     @Override
-    public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-        return mapper.apply(NodeGroup.Structure);
+    public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+        return mapper.apply(TokenGroup.Structure);
     }
 
     @Override
-    public Node copy(Dependents dependents) {
+    public Token copy(Dependents dependents) {
         return new StructureNodeBuilder()
                 .withName(name)
                 .apply(structureNodeBuilder -> attachFields(dependents, structureNodeBuilder))

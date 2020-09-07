@@ -1,12 +1,12 @@
 package com.meti.compile.lex.parse.block.function;
 
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.node.block.FunctionNode;
+import com.meti.compile.node.block.FunctionToken;
 import com.meti.compile.node.block.FunctionNodeBuilder;
 
 public class AbstractLexRule extends FunctionLexRule {
     @Override
-    protected FunctionNode finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
+    protected FunctionToken finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
         return builder.build();
     }
 

@@ -1,6 +1,6 @@
 package com.meti.compile.node.block;
 
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 import com.meti.compile.process.util.CallFlag;
 import com.meti.compile.type.Field;
 import com.meti.compile.type.Type;
@@ -12,14 +12,14 @@ public class FunctionNodeBuilder {
     private final String name;
     private final List<Field> parameters;
     private final Type returnType;
-    private final Node value;
+    private final Token value;
     private final List<CallFlag> flags;
 
     public FunctionNodeBuilder() {
         this(Collections.emptyList(), null, Collections.emptyList(), null, null);
     }
 
-    public FunctionNodeBuilder(List<CallFlag> flags, String name, List<Field> parameters, Type returnType, Node value) {
+    public FunctionNodeBuilder(List<CallFlag> flags, String name, List<Field> parameters, Type returnType, Token value) {
         this.name = name;
         this.parameters = parameters;
         this.returnType = returnType;
@@ -31,8 +31,8 @@ public class FunctionNodeBuilder {
         return new FunctionNodeBuilder(flags, name, parameters, returnType, value);
     }
 
-    public FunctionNode build() {
-        return new FunctionNode(flags, name, parameters, returnType, value);
+    public FunctionToken build() {
+        return new FunctionToken(flags, name, parameters, returnType, value);
     }
 
     public FunctionNodeBuilder withName(String name) {
@@ -47,7 +47,7 @@ public class FunctionNodeBuilder {
         return new FunctionNodeBuilder(flags, name, parameters, returnType, value);
     }
 
-    public FunctionNodeBuilder withValue(Node value) {
+    public FunctionNodeBuilder withValue(Token value) {
         return new FunctionNodeBuilder(flags, name, parameters, returnType, value);
     }
 }

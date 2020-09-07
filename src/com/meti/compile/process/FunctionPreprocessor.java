@@ -1,8 +1,8 @@
 package com.meti.compile.process;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.process.util.CallStack;
 import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
@@ -22,14 +22,14 @@ public class FunctionPreprocessor implements Preprocessor {
     }
 
     @Override
-    public boolean canPreprocess(NodeGroup group) {
-        return group.matches(NodeGroup.Function);
+    public boolean canPreprocess(TokenGroup group) {
+        return group.matches(TokenGroup.Function);
     }
 
     @Override
-    public Node preprocess(Node node) {
-        Dependents dependents = node.applyToDependents(this::processFunction);
-        return node.copy(dependents);
+    public Token preprocess(Token token) {
+        Dependents dependents = token.applyToDependents(this::processFunction);
+        return token.copy(dependents);
     }
 
     public Dependents processFunction(Dependents oldDependents) {

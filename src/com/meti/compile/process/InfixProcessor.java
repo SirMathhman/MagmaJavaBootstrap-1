@@ -1,11 +1,11 @@
 package com.meti.compile.process;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
-import com.meti.compile.node.block.InfixNode;
-import com.meti.compile.node.block.InvocationNode;
-import com.meti.compile.node.block.ParentNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
+import com.meti.compile.node.block.InfixToken;
+import com.meti.compile.node.block.InvocationToken;
+import com.meti.compile.node.block.ParentToken;
 import com.meti.compile.process.util.CallFlag;
 import com.meti.compile.process.util.CallStack;
 
@@ -22,30 +22,30 @@ public class InfixProcessor implements Processor {
     }
 
     @Override
-    public boolean canProcess(NodeGroup group) {
-        return NodeGroup.Infix.matches(group);
+    public boolean canProcess(TokenGroup group) {
+        return TokenGroup.Infix.matches(group);
     }
 
     @Override
-    public Node process(Node node) {
-        return node.applyToDependents((Function<Dependents, Node>) this::processDependents);
+    public Token process(Token token) {
+        return token.applyToDependents((Function<Dependents, Token>) this::processDependents);
     }
 
-    private ParentNode processDependents(Dependents dependents) {
-        List<Node> children = dependents.streamChildren().collect(Collectors.toList());
-        Node operator = children.get(0);
-        Node value0 = children.get(1);
-        Node value1 = children.get(2);
-        if (operator.applyToGroup(NodeGroup.Variable::matches)) {
+    private ParentToken processDependents(Dependents dependents) {
+        List<Token> children = dependents.streamChildren().collect(Collectors.toList());
+        Token operator = children.get(0);
+        Token value0 = children.get(1);
+        Token value1 = children.get(2);
+        if (operator.applyToGroup(TokenGroup.Variable::matches)) {
             boolean isNativeInfix = isNativeInfix(operator);
             if (isNativeInfix) {
-                return new InfixNode(operator, value0, value1);
+                return new InfixToken(operator, value0, value1);
             }
         }
-        return new InvocationNode(operator, List.of(value0, value1));
+        return new InvocationToken(operator, List.of(value0, value1));
     }
 
-    private boolean isNativeInfix(Node operator) {
+    private boolean isNativeInfix(Token operator) {
         return operator.applyToContent(String.class, callStack::flags)
                 .flatMap(Function.identity())
                 .orElseThrow(() -> new ProcessException("%s is not defined in %s, cannot resolve infix.".formatted(operator.render(), callStack)))

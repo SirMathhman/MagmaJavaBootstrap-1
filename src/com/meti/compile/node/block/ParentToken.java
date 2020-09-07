@@ -1,13 +1,13 @@
 package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public abstract class ParentNode implements Node {
+public abstract class ParentToken implements Token {
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
 		consumer.accept(createDependents());

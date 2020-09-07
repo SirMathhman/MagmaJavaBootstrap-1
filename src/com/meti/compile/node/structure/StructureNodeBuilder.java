@@ -43,7 +43,7 @@ public class StructureNodeBuilder {
         return this;
     }
 
-    public StructureNode build() {
-        return new StructureNode(name, fields);
+    public StructureToken build() {
+        return new StructureToken(name, fields);
     }
 }

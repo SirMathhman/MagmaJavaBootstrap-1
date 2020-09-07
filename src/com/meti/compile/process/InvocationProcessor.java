@@ -2,12 +2,10 @@ package com.meti.compile.process;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Line;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
-
-import java.util.function.Predicate;
 
 public class InvocationProcessor implements Processor {
     private final Resolver resolver;
@@ -17,17 +15,17 @@ public class InvocationProcessor implements Processor {
     }
 
     @Override
-    public boolean canProcess(NodeGroup group) {
-        return group.matches(NodeGroup.Invocation);
+    public boolean canProcess(TokenGroup group) {
+        return group.matches(TokenGroup.Invocation);
     }
 
     @Override
-    public Node process(Node node) {
-        Boolean aBoolean = node.applyToDependents(this::canReturnVoid);
+    public Token process(Token token) {
+        Boolean aBoolean = token.applyToDependents(this::canReturnVoid);
         if (aBoolean) {
-            return new Line(node);
+            return new Line(token);
         } else {
-            return node;
+            return token;
         }
     }
 

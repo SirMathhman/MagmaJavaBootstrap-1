@@ -2,8 +2,8 @@ package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.structure.StructDeclareNode.Builder;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.structure.StructDeclareToken.Builder;
 import com.meti.util.Unit;
 
 import java.util.List;
@@ -16,14 +16,14 @@ public class StructDeclareLexRule extends FilteredLexRule {
     }
 
     @Override
-    public Node parseQualified(String content, Lexer lexer) {
+    public Token parseQualified(String content, Lexer lexer) {
         return createBuilderWithName(content)
                 .with(content).supply(lexer)
                 .implode(this::parseFields)
                 .complete();
     }
 
-    private Node parseFields(Builder builder, String content, Lexer lexer) {
+    private Token parseFields(Builder builder, String content, Lexer lexer) {
         return extractChildren(content).stream()
                 .filter(s -> !s.isBlank())
                 .map(String::trim).map(lexer::parse)

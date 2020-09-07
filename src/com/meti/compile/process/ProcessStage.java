@@ -1,7 +1,7 @@
 package com.meti.compile.process;
 
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 
 public interface ProcessStage {
-	Node process(Node node);
+	Token process(Token token);
 }

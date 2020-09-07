@@ -7,13 +7,13 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public interface Dependents {
-	<T> T apply(BiFunction<List<Field>, List<Node>, T> function);
+	<T> T apply(BiFunction<List<Field>, List<Token>, T> function);
 
-	Dependents copyChildren(List<Node> children);
+	Dependents copyChildren(List<Token> children);
 
 	Dependents copyFields(List<Field> fields);
 
-	Stream<Node> streamChildren();
+	Stream<Token> streamChildren();
 
 	Stream<Field> streamFields();
 }

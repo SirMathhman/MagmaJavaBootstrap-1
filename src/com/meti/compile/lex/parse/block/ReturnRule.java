@@ -2,8 +2,8 @@ package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.block.ReturnNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.block.ReturnToken;
 
 public class ReturnRule extends FilteredLexRule {
 	@Override
@@ -12,10 +12,10 @@ public class ReturnRule extends FilteredLexRule {
 	}
 
 	@Override
-	public Node parseQualified(String content, Lexer lexer) {
+	public Token parseQualified(String content, Lexer lexer) {
 		String value = content.substring(7);
 		String formatted = value.trim();
-		Node node = lexer.parse(formatted);
-		return new ReturnNode(node);
+		Token token = lexer.parse(formatted);
+		return new ReturnToken(token);
 	}
 }

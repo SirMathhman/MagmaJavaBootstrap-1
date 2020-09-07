@@ -4,10 +4,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Line implements Node {
-    private final Node child;
+public class Line implements Token {
+    private final Token child;
 
-    public Line(Node child) {
+    public Line(Token child) {
         this.child = child;
     }
 
@@ -22,12 +22,12 @@ public class Line implements Node {
     }
 
     @Override
-    public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-        return mapper.apply(NodeGroup.Line);
+    public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+        return mapper.apply(TokenGroup.Line);
     }
 
     @Override
-    public Node copy(Dependents dependents) {
+    public Token copy(Dependents dependents) {
         return dependents.streamChildren()
                 .findFirst()
                 .map(Line::new)

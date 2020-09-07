@@ -1,8 +1,8 @@
 package com.meti.compile.node.primitive;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -10,10 +10,10 @@ import java.util.function.Function;
 
 import static com.meti.compile.node.EmptyDependents.EmptyDependents;
 
-public class CharNode implements Node {
+public class CharToken implements Token {
 	private final char value;
 
-	public CharNode(char value) {
+	public CharToken(char value) {
 		this.value = value;
 	}
 
@@ -28,13 +28,13 @@ public class CharNode implements Node {
 	}
 
 	@Override
-	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		return mapper.apply(NodeGroup.Char);
+	public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+		return mapper.apply(TokenGroup.Char);
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
-		return new CharNode(value);
+	public Token copy(Dependents dependents) {
+		return new CharToken(value);
 	}
 
 	@Override

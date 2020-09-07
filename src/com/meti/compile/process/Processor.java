@@ -1,10 +1,10 @@
 package com.meti.compile.process;
 
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 
 public interface Processor {
-	boolean canProcess(NodeGroup group);
+	boolean canProcess(TokenGroup group);
 
-	Node process(Node node);
+	Token process(Token token);
 }

@@ -14,12 +14,12 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
-	public <T> T apply(BiFunction<List<Field>, List<Node>, T> function) {
+	public <T> T apply(BiFunction<List<Field>, List<Token>, T> function) {
 		return function.apply(Collections.emptyList(), Collections.emptyList());
 	}
 
 	@Override
-	public Dependents copyChildren(List<Node> children) {
+	public Dependents copyChildren(List<Token> children) {
 		return EmptyDependents();
 	}
 
@@ -33,7 +33,7 @@ public final class EmptyDependents implements Dependents {
 	}
 
 	@Override
-	public Stream<Node> streamChildren() {
+	public Stream<Token> streamChildren() {
 		return Stream.empty();
 	}
 

@@ -1,10 +1,10 @@
 package com.meti.compile.process;
 
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 
 public interface Preprocessor {
-	boolean canPreprocess(NodeGroup group);
+	boolean canPreprocess(TokenGroup group);
 
-	Node preprocess(Node node);
+	Token preprocess(Token token);
 }

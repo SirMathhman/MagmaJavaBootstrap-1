@@ -3,8 +3,8 @@ package com.meti.compile.lex.parse.external;
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -21,15 +21,15 @@ public class ImportRule extends FilteredLexRule {
 	}
 
 	@Override
-	public Node parseQualified(String content, Lexer lexer) {
+	public Token parseQualified(String content, Lexer lexer) {
 		String value = content.substring(HEADER.length());
-		return new ImportNode(value);
+		return new ImportToken(value);
 	}
 
-	private static final class ImportNode implements Node {
+	private static final class ImportToken implements Token {
 		private final String value;
 
-		private ImportNode(String value) {
+		private ImportToken(String value) {
 			this.value = value;
 		}
 
@@ -44,13 +44,13 @@ public class ImportRule extends FilteredLexRule {
 		}
 
 		@Override
-		public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-			return mapper.apply(NodeGroup.Import);
+		public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+			return mapper.apply(TokenGroup.Import);
 		}
 
 		@Override
-		public Node copy(Dependents dependents) {
-			return new ImportNode(value);
+		public Token copy(Dependents dependents) {
+			return new ImportToken(value);
 		}
 
 		@Override

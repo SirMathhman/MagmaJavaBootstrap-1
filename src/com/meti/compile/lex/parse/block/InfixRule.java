@@ -2,8 +2,8 @@ package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.block.InfixNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.block.InfixToken;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,14 +16,14 @@ public class InfixRule extends FilteredLexRule {
     }
 
     @Override
-    public Node parseQualified(String content, Lexer lexer) {
-        List<Node> items = streamValues(content)
+    public Token parseQualified(String content, Lexer lexer) {
+        List<Token> items = streamValues(content)
                 .map(lexer::parse)
                 .collect(Collectors.toList());
-        Node value0 = items.get(0);
-        Node operator = items.get(1);
-        Node value1 = items.get(2);
-        return new InfixNode(operator, value0, value1);
+        Token value0 = items.get(0);
+        Token operator = items.get(1);
+        Token value1 = items.get(2);
+        return new InfixToken(operator, value0, value1);
     }
 
     private Stream<String> streamValues(String content) {

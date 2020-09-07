@@ -1,19 +1,19 @@
 package com.meti.compile.node.block;
 
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockNodeBuilder {
-	private final List<Node> children = new ArrayList<>();
+	private final List<Token> children = new ArrayList<>();
 
-	public BlockNodeBuilder append(Node node) {
-		children.add(node);
+	public BlockNodeBuilder append(Token token) {
+		children.add(token);
 		return this;
 	}
 
-	public Node build() {
-		return new BlockNode(children);
+	public Token build() {
+		return new BlockToken(children);
 	}
 }

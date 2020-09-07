@@ -2,15 +2,15 @@ package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class ReturnNode implements Node {
-	private final Node value;
+public class ReturnToken implements Token {
+	private final Token value;
 
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
@@ -23,18 +23,18 @@ public class ReturnNode implements Node {
 	}
 
 	@Override
-	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		return mapper.apply(NodeGroup.Return);
+	public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+		return mapper.apply(TokenGroup.Return);
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
+	public Token copy(Dependents dependents) {
 		return dependents.streamChildren()
-				.findFirst().map(ReturnNode::new)
+				.findFirst().map(ReturnToken::new)
 				.orElseThrow();
 	}
 
-	public ReturnNode(Node value) {
+	public ReturnToken(Token value) {
 		this.value = value;
 	}
 

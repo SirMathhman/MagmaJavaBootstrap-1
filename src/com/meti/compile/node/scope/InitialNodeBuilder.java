@@ -1,15 +1,15 @@
 package com.meti.compile.node.scope;
 
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 import com.meti.compile.type.Type;
 
 public class InitialNodeBuilder {
 	private String name;
 	private Type type;
-	private Node value;
+	private Token value;
 
-	public InitialNode build() {
-		return new InitialNode(name, type, value);
+	public InitialToken build() {
+		return new InitialToken(name, type, value);
 	}
 
 	public InitialNodeBuilder withName(String name) {
@@ -22,7 +22,7 @@ public class InitialNodeBuilder {
 		return this;
 	}
 
-	public InitialNodeBuilder withValue(Node value) {
+	public InitialNodeBuilder withValue(Token value) {
 		this.value = value;
 		return this;
 	}

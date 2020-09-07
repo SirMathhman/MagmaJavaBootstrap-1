@@ -2,19 +2,19 @@ package com.meti.compile.node.block;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class InfixNode extends ParentNode {
-    private final Node child0;
-    private final Node child1;
-    private final Node operator;
+public class InfixToken extends ParentToken {
+    private final Token child0;
+    private final Token child1;
+    private final Token operator;
 
-    public InfixNode(Node operator, Node child0, Node child1) {
+    public InfixToken(Token operator, Token child0, Token child1) {
         this.child0 = child0;
         this.child1 = child1;
         this.operator = operator;
@@ -35,15 +35,15 @@ public class InfixNode extends ParentNode {
      */
 
     @Override
-    public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-        return mapper.apply(NodeGroup.Infix);
+    public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+        return mapper.apply(TokenGroup.Infix);
     }
 
     @Override
-    public Node copy(Dependents dependents) {
-        List<Node> children = dependents.streamChildren()
+    public Token copy(Dependents dependents) {
+        List<Token> children = dependents.streamChildren()
                 .collect(Collectors.toList());
-        return new InfixNode(children.get(0), children.get(1), children.get(2));
+        return new InfixToken(children.get(0), children.get(1), children.get(2));
     }
 
     @Override

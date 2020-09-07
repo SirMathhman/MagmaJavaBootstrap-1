@@ -2,18 +2,18 @@ package com.meti.compile.node.structure;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
-import com.meti.compile.node.block.ParentNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
+import com.meti.compile.node.block.ParentToken;
 import com.meti.util.Unit;
 
 import java.util.function.Function;
 
-public class FieldNode extends ParentNode {
-    private final Node child;
+public class FieldToken extends ParentToken {
+    private final Token child;
     private final String name;
 
-    public FieldNode(Node child, String name) {
+    public FieldToken(Token child, String name) {
         this.child = child;
         this.name = name;
     }
@@ -24,18 +24,18 @@ public class FieldNode extends ParentNode {
     }
 
     @Override
-    public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-        return mapper.apply(NodeGroup.Field);
+    public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+        return mapper.apply(TokenGroup.Field);
     }
 
     @Override
-    public Node copy(Dependents dependents) {
+    public Token copy(Dependents dependents) {
         return dependents.streamChildren()
                 .findFirst()
                 .map(Unit::new)
                 .orElseThrow()
                 .with(name)
-                .implode(FieldNode::new)
+                .implode(FieldToken::new)
                 .complete();
     }
 

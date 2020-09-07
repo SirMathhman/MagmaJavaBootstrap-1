@@ -2,8 +2,8 @@ package com.meti.compile.lex.parse.block.function;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.block.FunctionNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.block.FunctionToken;
 import com.meti.compile.node.block.FunctionNodeBuilder;
 import com.meti.compile.process.util.CallFlag;
 import com.meti.compile.type.FieldBuilder;
@@ -57,7 +57,7 @@ public abstract class FunctionLexRule extends FilteredLexRule {
     }
 
     @Override
-    public Node parseQualified(String content, Lexer lexer) {
+    public Token parseQualified(String content, Lexer lexer) {
         List<String> paramStrings = extractParamStrings(content);
         List<Field> parameters = parseParameters(lexer, paramStrings);
 
@@ -92,7 +92,7 @@ public abstract class FunctionLexRule extends FilteredLexRule {
         }
     }
 
-    protected abstract FunctionNode finalize(String content, Lexer lexer, FunctionNodeBuilder builder);
+    protected abstract FunctionToken finalize(String content, Lexer lexer, FunctionNodeBuilder builder);
 
     protected abstract String extractReturnType(String content);
 

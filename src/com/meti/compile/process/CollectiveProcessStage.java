@@ -1,7 +1,7 @@
 package com.meti.compile.process;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,26 +9,26 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class CollectiveProcessStage implements ProcessStage {
-	public Node load(Node node) {
+	public Token load(Token token) {
 		return streamPreprocessors()
-				.filter(preprocessor -> node.applyToGroup(preprocessor::canPreprocess))
-				.map(preprocessor -> preprocessor.preprocess(node))
+				.filter(preprocessor -> token.applyToGroup(preprocessor::canPreprocess))
+				.map(preprocessor -> preprocessor.preprocess(token))
 				.findFirst()
-				.orElse(node);
+				.orElse(token);
 	}
 
 	@Override
-	public Node process(Node node) {
-		Node loaded = load(node);
+	public Token process(Token token) {
+		Token loaded = load(token);
 		Dependents dependents = loaded.applyToDependents(this::transformDependents);
-		Node copy = loaded.copy(dependents);
-		Optional<Node> transformOptional = transformOptionally(copy);
+		Token copy = loaded.copy(dependents);
+		Optional<Token> transformOptional = transformOptionally(copy);
 		return transformOptional.orElse(copy);
 	}
 
 	public abstract Stream<Preprocessor> streamPreprocessors();
 
-	public Optional<Node> transformOptionally(Node copy) {
+	public Optional<Token> transformOptionally(Token copy) {
 		return streamModifiers()
 				.filter(modifier1 -> copy.applyToGroup(modifier1::canProcess))
 				.map(modifier1 -> modifier1.process(copy))
@@ -38,7 +38,7 @@ public abstract class CollectiveProcessStage implements ProcessStage {
 	public abstract Stream<Processor> streamModifiers();
 
 	private Dependents transformDependents(Dependents dependents) {
-		List<Node> children = dependents.streamChildren()
+		List<Token> children = dependents.streamChildren()
 				.map(this::process)
 				.collect(Collectors.toList());
 		return dependents.copyChildren(children);

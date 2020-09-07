@@ -4,7 +4,7 @@ import com.meti.compile.lex.parse.LexRule;
 import com.meti.compile.lex.parse.ParseException;
 import com.meti.compile.lex.resolve.ResolveException;
 import com.meti.compile.lex.resolve.ResolveRule;
-import com.meti.compile.node.Node;
+import com.meti.compile.node.Token;
 import com.meti.compile.type.Type;
 
 public class RootLexer implements Lexer {
@@ -17,7 +17,7 @@ public class RootLexer implements Lexer {
 	}
 
 	@Override
-	public Node parse(String content) {
+	public Token parse(String content) {
 		return rootLexRule.parse(content, this)
 				.orElseThrow(() -> createInvalidParse(content));
 	}

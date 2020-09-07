@@ -1,19 +1,19 @@
 package com.meti.compile.node.scope;
 
 import com.meti.compile.node.Dependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.type.Type;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class DeclareNode implements Node {
+public class DeclareToken implements Token {
 	private final String name;
 	private final Type type;
 
-	public DeclareNode(String name, Type type) {
+	public DeclareToken(String name, Type type) {
 		this.name = name;
 		this.type = type;
 	}
@@ -29,12 +29,12 @@ public class DeclareNode implements Node {
 	}
 
 	@Override
-	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
+	public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
+	public Token copy(Dependents dependents) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -2,8 +2,8 @@ package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.block.InvocationNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.block.InvocationToken;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,14 +15,14 @@ public class InvocationRule extends FilteredLexRule {
     }
 
     @Override
-    public Node parseQualified(String content, Lexer lexer) {
-        Node caller = parseCaller(content, lexer);
+    public Token parseQualified(String content, Lexer lexer) {
+        Token caller = parseCaller(content, lexer);
         List<String> argStrings = extractArgStrings(content);
-        List<Node> arguments = parseArguments(lexer, argStrings);
-        return new InvocationNode(caller, arguments);
+        List<Token> arguments = parseArguments(lexer, argStrings);
+        return new InvocationToken(caller, arguments);
     }
 
-    private Node parseCaller(String content, Lexer lexer) {
+    private Token parseCaller(String content, Lexer lexer) {
         int callerEnd = content.indexOf('(');
         String value = content.substring(0, callerEnd);
         String formatted = value.trim();
@@ -38,7 +38,7 @@ public class InvocationRule extends FilteredLexRule {
         return List.of(args);
     }
 
-    private List<Node> parseArguments(Lexer lexer, List<String> argStrings) {
+    private List<Token> parseArguments(Lexer lexer, List<String> argStrings) {
         return argStrings.stream()
                 .filter(s -> !s.isBlank())
                 .map(String::trim)

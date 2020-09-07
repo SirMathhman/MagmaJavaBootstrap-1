@@ -1,8 +1,8 @@
 package com.meti.compile.process;
 
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
-import com.meti.compile.node.block.ReturnNode;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
+import com.meti.compile.node.block.ReturnToken;
 import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
@@ -17,16 +17,16 @@ public class ReturnProcessor implements Processor {
 	}
 
 	@Override
-	public boolean canProcess(NodeGroup group) {
-		return group.matches(NodeGroup.Return);
+	public boolean canProcess(TokenGroup group) {
+		return group.matches(TokenGroup.Return);
 	}
 
 	@Override
-	public Node process(Node node) {
+	public Token process(Token token) {
 		return typeStack.peek()
 				.filter(type -> PrimitiveType.Implicit != type)
-				.map(type -> findNewValue(node, type))
-				.map(ReturnNode::new)
+				.map(type -> findNewValue(token, type))
+				.map(ReturnToken::new)
 				.orElseThrow(this::createEmptyError);
 	}
 
@@ -35,8 +35,8 @@ public class ReturnProcessor implements Processor {
 		return new IllegalStateException(message);
 	}
 
-	public Node findNewValue(Node node, Type type) {
-		return node.applyToDependents(dependents -> dependents.streamChildren()
+	public Token findNewValue(Token token, Type type) {
+		return token.applyToDependents(dependents -> dependents.streamChildren()
 				.findFirst()
 				.map(value -> resolver.force(value, type))
 				.orElseThrow());

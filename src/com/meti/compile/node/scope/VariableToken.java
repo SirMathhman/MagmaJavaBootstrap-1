@@ -2,8 +2,8 @@ package com.meti.compile.node.scope;
 
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
-import com.meti.compile.node.Node;
-import com.meti.compile.node.NodeGroup;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.TokenGroup;
 import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
 import com.meti.compile.type.primitive.PrimitiveType;
@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class VariableNode implements Node {
+public class VariableToken implements Token {
 	private final String content;
 
 	@Override
@@ -32,19 +32,19 @@ public class VariableNode implements Node {
 	}
 
 	@Override
-	public <T> T applyToGroup(Function<NodeGroup, T> mapper) {
-		return mapper.apply(NodeGroup.Variable);
+	public <T> T applyToGroup(Function<TokenGroup, T> mapper) {
+		return mapper.apply(TokenGroup.Variable);
 	}
 
 	@Override
-	public Node copy(Dependents dependents) {
+	public Token copy(Dependents dependents) {
 		return dependents.streamFields()
 				.findFirst()
-				.map(field -> field.applyToName(VariableNode::new))
+				.map(field -> field.applyToName(VariableToken::new))
 				.orElseThrow();
 	}
 
-	public VariableNode(String content) {
+	public VariableToken(String content) {
 		this.content = content;
 	}
 

@@ -22,11 +22,6 @@ public class RootLexer implements Lexer {
 		throw new UnsupportedOperationException("Method has been deprecated.");
 	}
 
-	public static ParseException createInvalidParse(String content) {
-		String message = "Failed to parse: %s".formatted(content);
-		return new ParseException(message);
-	}
-
 	@Override
 	public Type resolve(String name) {
 		return rootResolveRule.resolve(name)

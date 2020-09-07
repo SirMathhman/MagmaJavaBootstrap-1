@@ -1,11 +1,17 @@
 package com.meti.util;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class MonadStream<T> {
     private final Stream<Monad<T>> stream;
+
+    @SafeVarargs
+    public static <R> MonadStream<R> Stream(R... values) {
+        return Stream(List.of(values));
+    }
 
     public static <R> MonadStream<R> Stream(Collection<R> collection) {
         return Stream(collection.stream());

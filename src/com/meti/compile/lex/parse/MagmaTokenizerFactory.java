@@ -16,10 +16,17 @@ import com.meti.util.MonadStream;
 import java.util.Collection;
 import java.util.List;
 
+import static com.meti.util.MonadStream.Stream;
+
 public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
 	@Override
 	public Collection<TokenizerFactory> supplyFactories() {
-		return List.of(
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public MonadStream<TokenizerFactory> streamFactories(){
+		return Stream(
 				new StructDeclareTokenizerFactory(),
 				new StructureTokenizerFactory(),
 				new ImportRule(),
@@ -33,12 +40,6 @@ public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
 				new IntTokenizerFactory(),
 				new InfixRule(),
 				new FieldTokenizerFactory(),
-				new VariableTokenizerFactory()
-		);
-	}
-
-	@Override
-	public MonadStream<TokenizerFactory> streamFactories(){
-		throw new UnsupportedOperationException("Factories haven't been supplied yet.");
+				new VariableTokenizerFactory());
 	}
 }

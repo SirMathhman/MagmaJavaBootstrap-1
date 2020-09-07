@@ -6,6 +6,7 @@ import com.meti.compile.lex.resolve.ResolveException;
 import com.meti.compile.lex.resolve.ResolveRule;
 import com.meti.compile.node.Token;
 import com.meti.compile.type.Type;
+import com.meti.util.Option;
 
 public class RootLexer implements Lexer {
 	private final ResolveRule rootResolveRule;
@@ -18,8 +19,7 @@ public class RootLexer implements Lexer {
 
 	@Override
 	public Token parse(String content) {
-		return rootTokenizerFactory.parse(content, this)
-				.orElseThrow(() -> createInvalidParse(content));
+		throw new UnsupportedOperationException("Method has been deprecated.");
 	}
 
 	public static ParseException createInvalidParse(String content) {
@@ -36,5 +36,10 @@ public class RootLexer implements Lexer {
 	public static ResolveException createInvalidResolve(String name) {
 		String message = "Failed to resolve name: %s".formatted(name);
 		return new ResolveException(message);
+	}
+
+	@Override
+	public Option<Token> parseToOption(String content) {
+		throw new UnsupportedOperationException();
 	}
 }

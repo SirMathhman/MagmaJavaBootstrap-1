@@ -40,6 +40,6 @@ public class RootLexer implements Lexer {
 
 	@Override
 	public Option<Token> parseToOption(String content) {
-		throw new UnsupportedOperationException();
+		return rootTokenizerFactory.create(content).evaluate();
 	}
 }

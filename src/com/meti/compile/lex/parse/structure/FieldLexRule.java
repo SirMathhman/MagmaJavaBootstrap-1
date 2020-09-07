@@ -4,8 +4,8 @@ import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.FieldToken;
-import com.meti.util.Pair;
-import com.meti.util.Unit;
+import com.meti.util.Duad;
+import com.meti.util.Monad;
 
 public class FieldLexRule extends FilteredLexRule {
     @Override
@@ -15,7 +15,7 @@ public class FieldLexRule extends FilteredLexRule {
 
     @Override
     public Token parseQualified(String content, Lexer lexer) {
-        return new Pair<>(content, lexer)
+        return new Duad<>(content, lexer)
                 .zipSecond(this::parseParent)
                 .mapFirst(this::parseName)
                 .swap().implode(FieldToken::new)
@@ -23,7 +23,7 @@ public class FieldLexRule extends FilteredLexRule {
     }
 
     private String parseName(String content) {
-        return new Unit<>(content)
+        return new Monad<>(content)
                 .explode(value -> value.indexOf("->"))
                 .implode((value, index) -> value.substring(index + 2))
                 .map(String::trim)
@@ -31,7 +31,7 @@ public class FieldLexRule extends FilteredLexRule {
     }
 
     private Token parseParent(String content, Lexer lexer) {
-        return new Unit<>(content)
+        return new Monad<>(content)
                 .explode(value -> value.indexOf("->"))
                 .implode((value, index) -> value.substring(0, index))
                 .map(String::trim)

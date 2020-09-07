@@ -7,7 +7,7 @@ import com.meti.compile.node.structure.StructureNodeBuilder;
 import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
 import com.meti.compile.type.Type;
-import com.meti.util.Unit;
+import com.meti.util.Monad;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,8 +43,8 @@ public class StructureLexRule extends FilteredLexRule {
                 .collect(Collectors.toList());
     }
 
-    private Unit<List<String>> extractFields(String content) {
-        return new Unit<>(content)
+    private Monad<List<String>> extractFields(String content) {
+        return new Monad<>(content)
                 .explode(value -> value.indexOf('{'))
                 .explodeFirst(String::length)
                 .implode((value, start, end) -> value.substring(start + 1, end - 2))
@@ -53,7 +53,7 @@ public class StructureLexRule extends FilteredLexRule {
     }
 
     private String parseName(String content) {
-        return new Unit<>(content)
+        return new Monad<>(content)
                 .explode(value -> value.indexOf('{'))
                 .implode((value, index) -> value.substring(0, index))
                 .complete().trim().transform(value -> value.substring(HEADER.length()));
@@ -67,14 +67,14 @@ public class StructureLexRule extends FilteredLexRule {
     }
 
     private String parseFieldName(String fieldString) {
-        return new Unit<>(fieldString)
+        return new Monad<>(fieldString)
                 .explode(value -> value.indexOf(':'))
                 .implode((value, index) -> value.substring(0, index))
                 .complete().trim();
     }
 
     private Type parseFieldType(String fieldString, Lexer lexer) {
-        return new Unit<>(fieldString)
+        return new Monad<>(fieldString)
                 .explode(value -> value.indexOf(":"))
                 .implode((value, index) -> value.substring(index + 1))
                 .complete().trim().transform(lexer::resolve);

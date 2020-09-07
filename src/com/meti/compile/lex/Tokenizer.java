@@ -1,5 +1,9 @@
 package com.meti.compile.lex;
 
-public interface Tokenizer {
+import com.meti.compile.node.Token;
 
+import java.util.Optional;
+
+public interface Tokenizer {
+    Optional<Token> create();
 }

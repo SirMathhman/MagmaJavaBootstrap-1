@@ -4,7 +4,7 @@ import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredLexRule;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.StructDeclareToken.Builder;
-import com.meti.util.Unit;
+import com.meti.util.Monad;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class StructDeclareLexRule extends FilteredLexRule {
     }
 
     private List<String> extractChildren(String content) {
-        return new Unit<>(content)
+        return new Monad<>(content)
                 .explode(value -> value.indexOf('{'))
                 .explodeFirst(value -> value.indexOf('}'))
                 .implode((value, start, end) -> value.substring(start + 1, end))
@@ -42,8 +42,8 @@ public class StructDeclareLexRule extends FilteredLexRule {
                 .complete();
     }
 
-    private Unit<Builder> createBuilderWithName(String content) {
-        return new Unit<>(content)
+    private Monad<Builder> createBuilderWithName(String content) {
+        return new Monad<>(content)
                 .explode(value -> value.indexOf('<'))
                 .explodeFirst(value -> value.indexOf('>'))
                 .implode((value, start, end) -> value.substring(start + 1, end))

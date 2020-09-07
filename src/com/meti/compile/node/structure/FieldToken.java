@@ -5,7 +5,7 @@ import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
 import com.meti.compile.node.block.ParentToken;
-import com.meti.util.Unit;
+import com.meti.util.Monad;
 
 import java.util.function.Function;
 
@@ -32,7 +32,7 @@ public class FieldToken extends ParentToken {
     public Token copy(Dependents dependents) {
         return dependents.streamChildren()
                 .findFirst()
-                .map(Unit::new)
+                .map(Monad::new)
                 .orElseThrow()
                 .with(name)
                 .implode(FieldToken::new)

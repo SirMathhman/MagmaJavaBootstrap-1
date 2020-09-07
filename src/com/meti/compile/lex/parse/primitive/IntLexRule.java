@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.primitive;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.LexRule;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.primitive.IntToken;
@@ -17,4 +18,9 @@ public class IntLexRule implements LexRule {
 			return Optional.empty();
 		}
 	}
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
 }

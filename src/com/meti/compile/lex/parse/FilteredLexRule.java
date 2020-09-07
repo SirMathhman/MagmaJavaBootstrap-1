@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.node.Token;
 
 import java.util.Optional;
@@ -16,4 +17,9 @@ public abstract class FilteredLexRule implements LexRule {
 	public abstract boolean canQualify(String content);
 
 	public abstract Token parseQualified(String content, Lexer lexer);
+
+	@Override
+	public Tokenizer create(String content) {
+		throw new UnsupportedOperationException("Not implemented yet.");
+	}
 }

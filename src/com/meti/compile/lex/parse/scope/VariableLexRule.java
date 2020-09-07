@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.scope;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.LexRule;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.scope.VariableToken;
@@ -12,4 +13,9 @@ public class VariableLexRule implements LexRule {
 	public Optional<Token> parse(String content, Lexer lexer) {
 		return Optional.of(new VariableToken(content));
 	}
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
 }

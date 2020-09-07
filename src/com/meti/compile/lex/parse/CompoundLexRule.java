@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.node.Token;
 
 import java.util.Collection;
@@ -16,4 +17,9 @@ public abstract class CompoundLexRule implements LexRule {
 	}
 
 	public abstract Collection<LexRule> supplyRules();
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
 }

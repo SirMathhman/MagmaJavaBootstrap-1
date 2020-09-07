@@ -4,7 +4,7 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
-import com.meti.compile.type.InlineField;
+import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
 import com.meti.compile.type.primitive.PrimitiveType;
 
@@ -19,15 +19,15 @@ public class VariableNode implements Node {
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
 		//TODO: deprecate VariableNode.acceptDependents() in exchange of applyToContent
-		Field pair = new InlineField(content, PrimitiveType.Unknown, Collections.emptyList());
-		InlineDependents dependents = InlineDependents.of(pair);
+		Field pair = new FieldBuilder().withName(content).withType(PrimitiveType.Unknown).withFlags(Collections.emptyList()).build();
+		InlineDependents dependents = InlineDependents.toFields(pair);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		Field pair = new InlineField(content, PrimitiveType.Unknown, Collections.emptyList());
-		InlineDependents dependents = InlineDependents.of(pair);
+		Field pair = new FieldBuilder().withName(content).withType(PrimitiveType.Unknown).withFlags(Collections.emptyList()).build();
+		InlineDependents dependents = InlineDependents.toFields(pair);
 		return mapper.apply(dependents);
 	}
 

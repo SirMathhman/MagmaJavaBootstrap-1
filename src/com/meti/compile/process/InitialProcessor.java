@@ -45,8 +45,7 @@ public class InitialProcessor implements Processor {
 
     public InitialNodeBuilder define(Field pair) {
         Field newName = stack.define(pair);
-        return newName.acceptType(typeStack::push)
-                .apply(this::createNode);
+        return newName.apply(this::createNode);
     }
 
     private InitialNodeBuilder createNode(String name, Type type) {

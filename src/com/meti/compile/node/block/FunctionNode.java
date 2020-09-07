@@ -5,8 +5,8 @@ import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Node;
 import com.meti.compile.node.NodeGroup;
 import com.meti.compile.process.util.CallFlag;
+import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
-import com.meti.compile.type.InlineField;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.block.FunctionType;
 
@@ -94,7 +94,7 @@ public class FunctionNode implements Node {
         Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionNode::append,
                 (oldList, newList) -> newList);
         Type type = new FunctionType(returnType, paramTypes);
-        Field pair = new InlineField(name, type, flags);
+        Field pair = new FieldBuilder().withName(name).withType(type).withFlags(flags).build();
         return List.of(pair);
     }
 

@@ -48,7 +48,7 @@ public class InfixProcessor implements Processor {
     private boolean isNativeInfix(Node operator) {
         return operator.applyToContent(String.class, callStack::flags)
                 .flatMap(Function.identity())
-                .orElseThrow(() -> new ProcessException(operator.render() + " is not defined in " + callStack))
+                .orElseThrow(() -> new ProcessException("%s is not defined in %s, cannot resolve infix.".formatted(operator.render(), callStack)))
                 .containsAll(Set.of(CallFlag.NATIVE, CallFlag.INFIX));
     }
 }

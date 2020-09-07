@@ -6,7 +6,7 @@ import com.meti.compile.node.Node;
 import com.meti.compile.node.block.FunctionNode;
 import com.meti.compile.node.block.FunctionNodeBuilder;
 import com.meti.compile.process.util.CallFlag;
-import com.meti.compile.type.InlineField;
+import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.Field;
 
@@ -119,6 +119,6 @@ public abstract class FunctionLexRule extends FilteredLexRule {
         String typeString = paramString.substring(separator + 1).trim();
         Type type = lexer.resolve(typeString);
         //TODO: parameter flags
-        return new InlineField(name, type, Collections.emptyList());
+        return new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
     }
 }

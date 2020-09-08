@@ -16,7 +16,7 @@ public class FieldBuilder {
     private final Type type;
     private final List<CallFlag> flags;
 
-    public FieldBuilder() {
+    private FieldBuilder() {
         this(null, null, Collections.emptyList());
     }
 
@@ -24,6 +24,10 @@ public class FieldBuilder {
         this.name = name;
         this.type = type;
         this.flags = flags;
+    }
+
+    public static FieldBuilder create() {
+        return new FieldBuilder();
     }
 
     public FieldBuilder withName(Supplier<String> name) {
@@ -83,7 +87,7 @@ public class FieldBuilder {
 
         @Override
         public Field withName(String name) {
-            return new FieldBuilder().withName(name).withType(type).withFlags(flags).build();
+            return create().withName(name).withType(type).withFlags(flags).build();
         }
 
         @Override

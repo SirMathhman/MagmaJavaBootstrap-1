@@ -19,14 +19,14 @@ public class VariableToken implements Token {
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
 		//TODO: deprecate VariableNode.acceptDependents() in exchange of applyToContent
-		Field pair = new FieldBuilder().withName(content).withType(PrimitiveType.Unknown).withFlags(Collections.emptyList()).build();
+		Field pair = FieldBuilder.create().withName(content).withType(PrimitiveType.Unknown).withFlags(Collections.emptyList()).build();
 		InlineDependents dependents = InlineDependents.toFields(pair);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		Field pair = new FieldBuilder().withName(content).withType(PrimitiveType.Unknown).withFlags(Collections.emptyList()).build();
+		Field pair = FieldBuilder.create().withName(content).withType(PrimitiveType.Unknown).withFlags(Collections.emptyList()).build();
 		InlineDependents dependents = InlineDependents.toFields(pair);
 		return mapper.apply(dependents);
 	}

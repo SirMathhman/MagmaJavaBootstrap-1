@@ -79,27 +79,27 @@ public final class InlineDependents implements Dependents {
     }
 
     @Override
-    public MonadStream<Token> streamChildren(){
+    public MonadStream<Token> streamChildren() {
         return Stream(children);
     }
 
     @Override
-    public Dependents identity(){
+    public Dependents identity() {
+        return new InlineDependents(Collections.emptyList(), Collections.emptyList());
+    }
+
+    @Override
+    public Dependents append(Token child) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Dependents append(Token child){
+    public MonadStream<Field> streamFields() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public MonadStream<Field> streamFields(){
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> T applyToProperties(Function<Field, T> function){
+    public <T> T applyToProperties(Function<Field, T> function) {
         throw new UnsupportedOperationException();
     }
 
@@ -109,7 +109,7 @@ public final class InlineDependents implements Dependents {
     }
 
     @Override
-    public DependentsBuilder withoutFields(){
+    public DependentsBuilder withoutFields() {
         throw new UnsupportedOperationException();
     }
 }

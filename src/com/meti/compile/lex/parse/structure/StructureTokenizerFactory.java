@@ -61,7 +61,7 @@ public class StructureTokenizerFactory extends FilteredTokenizerFactory {
     }
 
     private Field parseField(String fieldString, Lexer lexer) {
-        return new FieldBuilder()
+        return FieldBuilder.create()
                 .withName(() -> parseFieldName(fieldString))
                 .withType(() -> parseFieldType(fieldString, lexer))
                 .build();

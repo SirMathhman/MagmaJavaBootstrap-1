@@ -120,7 +120,7 @@ public abstract class FunctionTokenizerFactory extends FilteredTokenizerFactory 
         String typeString = paramString.substring(separator + 1).trim();
         Type type = lexer.resolve(typeString);
         //TODO: parameter flags
-        return new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
+        return FieldBuilder.create().withName(name).withType(type).withFlags(Collections.emptyList()).build();
     }
 
     @Override

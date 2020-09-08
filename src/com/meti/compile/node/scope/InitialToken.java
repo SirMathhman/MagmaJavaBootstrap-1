@@ -28,14 +28,14 @@ public class InitialToken implements Token {
 	@Override
 	public void acceptDependents(Consumer<Dependents> consumer) {
 		//TODO: initial flags
-		Field field = new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
+		Field field = FieldBuilder.create().withName(name).withType(type).withFlags(Collections.emptyList()).build();
 		Dependents dependents = InlineDependents.ofSingleton(field, value);
 		consumer.accept(dependents);
 	}
 
 	@Override
 	public <T> T applyToDependents(Function<Dependents, T> mapper) {
-		Field field = new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
+		Field field = FieldBuilder.create().withName(name).withType(type).withFlags(Collections.emptyList()).build();
 		Dependents dependents = InlineDependents.ofSingleton(field, value);
 		return mapper.apply(dependents);
 	}

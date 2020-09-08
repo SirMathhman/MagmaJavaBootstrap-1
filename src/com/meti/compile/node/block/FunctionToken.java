@@ -99,7 +99,7 @@ public class FunctionToken implements Token {
         Collection<Type> paramTypes = parameters.stream().reduce(new ArrayList<>(), FunctionToken::append,
                 (oldList, newList) -> newList);
         Type type = new FunctionType(returnType, paramTypes);
-        Field pair = new FieldBuilder().withName(name).withType(type).withFlags(flags).build();
+        Field pair = FieldBuilder.create().withName(name).withType(type).withFlags(flags).build();
         return List.of(pair);
     }
 

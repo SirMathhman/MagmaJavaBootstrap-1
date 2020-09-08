@@ -10,5 +10,7 @@ public interface TokenizerFactory {
     Tokenizer create(String content);
 
     @Deprecated
-    Optional<Token> parse(String content, Lexer lexer);
+    default Optional<Token> parse(String content, Lexer lexer) {
+        throw new UnsupportedOperationException();
+    }
 }

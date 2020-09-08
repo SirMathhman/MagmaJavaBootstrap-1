@@ -1,6 +1,7 @@
 package com.meti.util;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Some<T> implements MonadOption<T> {
     private final T value;
@@ -11,6 +12,11 @@ public class Some<T> implements MonadOption<T> {
 
     public static <T> MonadOption<T> Some(T value) {
         return new Some<>(value);
+    }
+
+    @Override
+    public <R> DuadOption<T, R> extract(Function<T, R> function) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -25,6 +31,16 @@ public class Some<T> implements MonadOption<T> {
 
     @Override
     public MonadStream<T> stream() {
-        return null;
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public MonadOption<T> filter(Predicate<T> predicate) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R> MonadOption<R> map(Function<T, R> function) {
+        throw new UnsupportedOperationException();
     }
 }

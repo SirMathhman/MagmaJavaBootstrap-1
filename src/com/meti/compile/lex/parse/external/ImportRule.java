@@ -3,14 +3,13 @@ package com.meti.compile.lex.parse.external;
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Dependents;
+import com.meti.compile.node.EmptyDependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import static com.meti.compile.node.EmptyDependents.EmptyDependents;
 
 public class ImportRule extends FilteredTokenizerFactory {
 	public static final String HEADER = "import native ";
@@ -35,12 +34,12 @@ public class ImportRule extends FilteredTokenizerFactory {
 
 		@Override
 		public void acceptDependents(Consumer<Dependents> consumer) {
-			consumer.accept(EmptyDependents());
+            consumer.accept(EmptyDependents.Empty);
 		}
 
 		@Override
 		public <T> T applyToDependents(Function<Dependents, T> mapper) {
-			return mapper.apply(EmptyDependents());
+            return mapper.apply(EmptyDependents.Empty);
 		}
 
 		@Override

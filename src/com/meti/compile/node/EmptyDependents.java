@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public final class EmptyDependents implements Dependents {
-	public static final EmptyDependents THIS = new EmptyDependents();
+	public static final EmptyDependents Empty = new EmptyDependents();
 
 	private EmptyDependents() {
 	}
@@ -21,11 +21,7 @@ public final class EmptyDependents implements Dependents {
 
 	@Override
 	public Dependents copyChildren(List<Token> children) {
-		return EmptyDependents();
-	}
-
-	public static EmptyDependents EmptyDependents() {
-		return THIS;
+		return Empty;
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import com.meti.compile.lex.parse.structure.StructureTokenizerFactory;
 import com.meti.util.MonadStream;
 
 import java.util.Collection;
-import java.util.List;
 
 import static com.meti.util.MonadStream.Stream;
 
@@ -30,7 +29,7 @@ public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
 				new StructDeclareTokenizerFactory(),
 				new StructureTokenizerFactory(),
 				new ImportRule(),
-				new BlockRule(),
+				new BlockFactory(),
 				new ReturnRule(),
 				new InvocationRule(),
 				new DeclareTokenizerFactory(),

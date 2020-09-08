@@ -23,12 +23,12 @@ public class IntToken implements Token {
 
     @Override
     public void acceptDependents(Consumer<Dependents> consumer) {
-        consumer.accept(EmptyDependents.EmptyDependents());
+        consumer.accept(EmptyDependents.Empty);
     }
 
     @Override
     public <T> T applyToDependents(Function<Dependents, T> mapper) {
-        return mapper.apply(EmptyDependents.EmptyDependents());
+        return mapper.apply(EmptyDependents.Empty);
     }
 
     @Override

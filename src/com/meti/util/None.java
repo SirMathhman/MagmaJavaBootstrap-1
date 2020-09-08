@@ -1,6 +1,9 @@
 package com.meti.util;
 
+import java.util.NoSuchElementException;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class None<T> implements MonadOption<T> {
     private None() {
@@ -8,6 +11,11 @@ public class None<T> implements MonadOption<T> {
 
     public static <T> None<T> None() {
         return new None<>();
+    }
+
+    @Override
+    public <R> DuadOption<T, R> extract(Function<T, R> function) {
+        return null;
     }
 
     @Override
@@ -23,5 +31,25 @@ public class None<T> implements MonadOption<T> {
     @Override
     public MonadStream<T> stream() {
         return MonadStream.Empty();
+    }
+
+    @Override
+    public MonadOption<T> filter(Predicate<T> predicate) {
+        return null;
+    }
+
+    @Override
+    public <R> MonadOption<R> map(Function<T, R> function) {
+        return null;
+    }
+
+    @Override
+    public <R> MonadOption<R> replace(Supplier<R> supplier) {
+        return null;
+    }
+
+    @Override
+    public <R> R applyOrThrow(Function<T, R> function){
+        return applyOrThrow(function, new NoSuchElementException("No value present."));
     }
 }

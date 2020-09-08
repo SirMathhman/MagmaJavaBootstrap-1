@@ -2,6 +2,7 @@ package com.meti.compile.type;
 
 import com.meti.compile.process.util.CallFlag;
 import com.meti.util.TriFunction;
+import com.meti.util.Triad;
 
 import java.util.Collections;
 import java.util.List;
@@ -101,5 +102,9 @@ public class FieldBuilder {
             return this;
         }
 
+        @Override
+        public Triad<String, Type, List<CallFlag>> destructure() {
+        throw new UnsupportedOperationException();
+        }
     }
 }

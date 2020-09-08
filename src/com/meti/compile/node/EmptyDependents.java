@@ -53,4 +53,9 @@ public final class EmptyDependents implements Dependents {
 	public Dependents append(Token child){
 		throw new UnsupportedOperationException();
 	}
+
+    @Override
+    public MonadStream<Field> streamFields(){
+        throw new UnsupportedOperationException();
+    }
 }

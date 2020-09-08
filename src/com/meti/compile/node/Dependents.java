@@ -21,6 +21,8 @@ public interface Dependents {
 
     MonadStream<Token> streamChildren();
 
+    MonadStream<Field> streamFields();
+
     @Deprecated
     Stream<Field> streamFieldsNatively();
 

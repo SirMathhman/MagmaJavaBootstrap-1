@@ -24,15 +24,16 @@ public class DeclareProcessor implements Processor {
 
     @Override
     public Token process(Token token) {
-        return token.applyToDependents(Dependents::streamFieldsNatively)
+        return token.applyToDependents(Dependents::streamFields)
                 .findFirst()
-                .orElseThrow()
-                .apply(this::defineInStack);
+                .applyOrThrow(this::defineInStack);
     }
 
     public Token defineInStack(Field pair) {
         return stack.define(pair)
                 .acceptType(typeStack::push)
+                .destructure()
+                .withoutEnd()
                 .apply(DeclareToken::new);
     }
 }

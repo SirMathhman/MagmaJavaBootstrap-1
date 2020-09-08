@@ -90,4 +90,9 @@ public final class InlineDependents implements Dependents {
     public Dependents append(Token child){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public MonadStream<Field> streamFields(){
+        throw new UnsupportedOperationException();
+    }
 }

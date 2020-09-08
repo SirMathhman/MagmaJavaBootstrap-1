@@ -1,5 +1,6 @@
 package com.meti.util;
 
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -48,5 +49,10 @@ public class Some<T> implements MonadOption<T> {
     @Override
     public <R> MonadOption<R> replace(Supplier<R> supplier) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R> R applyOrThrow(Function<T, R> function){
+        return applyOrThrow(function, new NoSuchElementException("No value present."));
     }
 }

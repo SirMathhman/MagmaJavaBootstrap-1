@@ -9,6 +9,8 @@ public interface MonadOption<T> {
 
     <R, E extends Throwable> R applyOrThrow(Function<T, R> function, E exception) throws E;
 
+    <R> R applyOrThrow(Function<T, R> function);
+
     <R> DuadOption<T, R> with(R other);
 
     MonadStream<T> stream();

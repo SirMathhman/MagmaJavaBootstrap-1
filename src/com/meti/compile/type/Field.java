@@ -3,6 +3,7 @@ package com.meti.compile.type;
 import com.meti.compile.node.Renderable;
 import com.meti.compile.process.util.CallFlag;
 import com.meti.util.TriFunction;
+import com.meti.util.Triad;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -13,6 +14,8 @@ public interface Field extends Renderable {
     <T> T applyDestruction(TriFunction<String, Type, List<CallFlag>, T> function);
 
     <T> T apply(Function<Field, T> function);
+
+    Triad<String, Type, List<CallFlag>> destructure();
 
     @Deprecated
     <T> T apply(BiFunction<String, Type, T> function);

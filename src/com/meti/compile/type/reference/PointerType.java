@@ -2,6 +2,7 @@ package com.meti.compile.type.reference;
 
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypeGroup;
+import com.meti.util.MonadStream;
 
 import java.util.List;
 import java.util.function.Function;
@@ -23,7 +24,7 @@ public class PointerType implements Type {
     @Override
     public boolean matches(Type other) {
         if (!other.applyToGroup(TypeGroup.Pointer::matches)) return false;
-        List<Type> children = other.streamChildren().collect(Collectors.toList());
+        List<Type> children = other.streamChildrenNatively().collect(Collectors.toList());
         if (children.size() != 1) return false;
         return children.get(0).matches(parent);
     }
@@ -34,7 +35,12 @@ public class PointerType implements Type {
     }
 
     @Override
-    public Stream<Type> streamChildren() {
+    public Stream<Type> streamChildrenNatively() {
         return Stream.of(parent);
+    }
+
+    @Override
+    public MonadStream<Type> streamChildren(){
+        throw new UnsupportedOperationException();
     }
 }

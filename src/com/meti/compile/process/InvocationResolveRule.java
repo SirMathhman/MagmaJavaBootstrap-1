@@ -49,7 +49,7 @@ public class InvocationResolveRule implements NodeResolveRule {
 	}
 
 	public static List<Token> composeNewArguments(List<Token> arguments, Type expectedFunctionType, Resolver resolver) {
-		List<Type> argumentTypes = expectedFunctionType.streamChildren().collect(Collectors.toList());
+		List<Type> argumentTypes = expectedFunctionType.streamChildrenNatively().collect(Collectors.toList());
 		List<Type> actualArgumentTypes = argumentTypes.subList(1, argumentTypes.size());
 		List<Token> newArguments = new ArrayList<>();
 		for (int i = 0; i < actualArgumentTypes.size(); i++) {
@@ -65,14 +65,14 @@ public class InvocationResolveRule implements NodeResolveRule {
 	}
 
 	public static boolean matchReturn(Type expectedType, Type type) {
-		return type.streamChildren()
+		return type.streamChildrenNatively()
 				.findFirst()
 				.filter(expectedType::equals)
 				.isPresent();
 	}
 
 	public static boolean matchArgumentsFromType(List<List<Type>> actualPermutations, Type functionType) {
-		List<Type> functionChildren = functionType.streamChildren().collect(Collectors.toList());
+		List<Type> functionChildren = functionType.streamChildrenNatively().collect(Collectors.toList());
 		List<Type> functionArguments = functionChildren.subList(1, functionChildren.size());
 		return matchArguments(actualPermutations, functionArguments);
 	}

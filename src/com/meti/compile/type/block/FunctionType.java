@@ -2,6 +2,7 @@ package com.meti.compile.type.block;
 
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypeGroup;
+import com.meti.util.MonadStream;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -54,7 +55,7 @@ public class FunctionType implements Type {
     }
 
     @Override
-    public Stream<Type> streamChildren() {
+    public Stream<Type> streamChildrenNatively() {
         return Stream.concat(
                 Stream.of(returnType),
                 parameterTypes.stream()
@@ -67,5 +68,10 @@ public class FunctionType implements Type {
                 "parameterTypes=" + parameterTypes +
                 ", returnType=" + returnType +
                 '}';
+    }
+
+    @Override
+    public MonadStream<Type> streamChildren(){
+        throw new UnsupportedOperationException();
     }
 }

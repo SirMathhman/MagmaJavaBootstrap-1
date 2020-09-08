@@ -2,6 +2,7 @@ package com.meti.compile.lex.resolve;
 
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypeGroup;
+import com.meti.util.MonadStream;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -41,8 +42,13 @@ public class StructResolveRule implements ResolveRule {
         }
 
         @Override
-        public Stream<Type> streamChildren() {
+        public Stream<Type> streamChildrenNatively() {
             return Stream.empty();
+        }
+
+        @Override
+        public MonadStream<Type> streamChildren(){
+            throw new UnsupportedOperationException();
         }
     }
 }

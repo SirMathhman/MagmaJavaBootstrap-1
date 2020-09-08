@@ -2,6 +2,7 @@ package com.meti.compile.type.primitive;
 
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypeGroup;
+import com.meti.util.MonadStream;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -36,7 +37,12 @@ public enum PrimitiveType implements Type {
     }
 
     @Override
-    public Stream<Type> streamChildren() {
+    public Stream<Type> streamChildrenNatively() {
         return Stream.empty();
+    }
+
+    @Override
+    public MonadStream<Type> streamChildren(){
+        throw new UnsupportedOperationException();
     }
 }

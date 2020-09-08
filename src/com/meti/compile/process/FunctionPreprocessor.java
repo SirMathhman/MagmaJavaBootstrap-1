@@ -47,7 +47,7 @@ public class FunctionPreprocessor implements Preprocessor {
     }
 
     public Type findReturnType(Type type) {
-        return type.streamChildren()
+        return type.streamChildrenNatively()
                 .findFirst()
                 .orElseThrow(() -> createMalformedType(type));
     }

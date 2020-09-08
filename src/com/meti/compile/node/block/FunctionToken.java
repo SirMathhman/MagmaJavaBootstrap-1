@@ -79,7 +79,7 @@ public class FunctionToken implements Token {
     }
 
     public static Type findReturnType(Type type) {
-        return type.streamChildren()
+        return type.streamChildrenNatively()
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No return type was found in: " + type));
     }

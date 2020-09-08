@@ -1,5 +1,7 @@
 package com.meti.compile.type;
 
+import com.meti.util.MonadStream;
+
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -14,5 +16,8 @@ public interface Type {
 
 	String render(String name);
 
-	Stream<Type> streamChildren();
+	MonadStream<Type> streamChildren();
+
+	@Deprecated
+	Stream<Type> streamChildrenNatively();
 }

@@ -39,7 +39,7 @@ public class InvocationProcessor implements Processor {
     }
 
     private boolean doesReturnVoid(Type type) {
-        return type.streamChildren()
+        return type.streamChildrenNatively()
                 .findFirst()
                 .orElseThrow()
                 .matches(PrimitiveType.Void);

@@ -1,26 +1,12 @@
 package com.meti.compile.lex.parse;
 
-import com.meti.compile.lex.Lexer;
 import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.node.Token;
 import com.meti.util.Monad;
 import com.meti.util.MonadOption;
 import com.meti.util.MonadStream;
 
-import java.util.Collection;
-import java.util.Optional;
-
 public abstract class CompoundTokenizerFactory implements TokenizerFactory {
-    @Override
-    public Optional<Token> parse(String content, Lexer lexer) {
-        return supplyFactories().stream()
-                .map(rule -> rule.parse(content, lexer))
-                .flatMap(Optional::stream)
-                .findFirst();
-    }
-
-    public abstract Collection<TokenizerFactory> supplyFactories();
-
     public abstract MonadStream<TokenizerFactory> streamFactories();
 
     @Override

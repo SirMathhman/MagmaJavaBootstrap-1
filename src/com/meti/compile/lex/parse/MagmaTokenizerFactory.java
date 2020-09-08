@@ -13,15 +13,9 @@ import com.meti.compile.lex.parse.structure.StructDeclareTokenizerFactory;
 import com.meti.compile.lex.parse.structure.StructureTokenizerFactory;
 import com.meti.util.MonadStream;
 
-import java.util.Collection;
-
 import static com.meti.util.MonadStream.Stream;
 
 public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
-	@Override
-	public Collection<TokenizerFactory> supplyFactories() {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public MonadStream<TokenizerFactory> streamFactories(){

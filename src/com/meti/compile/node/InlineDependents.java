@@ -80,4 +80,14 @@ public final class InlineDependents implements Dependents {
     public MonadStream<Token> streamChildren(){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Dependents identity(){
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Dependents append(Token child){
+        throw new UnsupportedOperationException();
+    }
 }

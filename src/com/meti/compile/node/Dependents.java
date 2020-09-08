@@ -14,6 +14,8 @@ public interface Dependents {
 
     Dependents copyFields(List<Field> fields);
 
+    Dependents identity();
+
     @Deprecated
     Stream<Token> streamChildrenNatively();
 
@@ -21,4 +23,6 @@ public interface Dependents {
 
     @Deprecated
     Stream<Field> streamFieldsNatively();
+
+    Dependents append(Token child);
 }

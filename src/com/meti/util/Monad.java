@@ -44,4 +44,8 @@ public class Monad<T> {
     public void accept(Consumer<T> consumer) {
         consumer.accept(value);
     }
+
+    public <A, B> Duad<A, B> separate(Function<T, A> first, Function<T, B> second) {
+        return new Duad<>(first.apply(value), second.apply(value));
+    }
 }

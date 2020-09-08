@@ -32,7 +32,7 @@ public class FieldToken extends ParentToken {
     public Token copy(Dependents dependents) {
         return dependents.streamChildrenNatively()
                 .findFirst()
-                .map(Monad::new)
+                .map(Monad::Monad)
                 .orElseThrow()
                 .with(name)
                 .map(FieldToken::new)

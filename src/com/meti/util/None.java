@@ -35,7 +35,7 @@ public class None<T> implements MonadOption<T> {
 
     @Override
     public MonadOption<T> filter(Predicate<T> predicate) {
-        throw new UnsupportedOperationException();
+        return None();
     }
 
     @Override

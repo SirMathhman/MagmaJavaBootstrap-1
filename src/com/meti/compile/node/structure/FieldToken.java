@@ -30,13 +30,11 @@ public class FieldToken extends ParentToken {
 
     @Override
     public Token copy(Dependents dependents) {
-        return dependents.streamChildrenNatively()
+        return dependents.streamChildren()
                 .findFirst()
-                .map(Monad::Monad)
-                .orElseThrow()
+                .applyOrThrow(Monad::Monad)
                 .with(name)
-                .map(FieldToken::new)
-                .complete();
+                .apply(FieldToken::new);
     }
 
     @Override

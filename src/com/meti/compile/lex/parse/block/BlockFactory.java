@@ -33,7 +33,7 @@ public class BlockFactory implements TokenizerFactory {
                     .extract(value -> value.startsWith("{"))
                     .extractStart(value -> value.endsWith("}"))
                     .filterMiddle(IdentityPredicate)
-                    .filterMiddle(IdentityPredicate)
+                    .filterEnd(IdentityPredicate)
                     .onlyFirst()
                     .map(this::extractChildren)
                     .map(this::parseChildren)

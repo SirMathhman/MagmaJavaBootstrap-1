@@ -15,7 +15,7 @@ public class None<T> implements MonadOption<T> {
 
     @Override
     public <R> DuadOption<T, R> extract(Function<T, R> function) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class None<T> implements MonadOption<T> {
 
     @Override
     public <R> DuadOption<T, R> with(R other) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -35,17 +35,17 @@ public class None<T> implements MonadOption<T> {
 
     @Override
     public MonadOption<T> filter(Predicate<T> predicate) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public <R> MonadOption<R> map(Function<T, R> function) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public <R> MonadOption<R> replace(Supplier<R> supplier) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override

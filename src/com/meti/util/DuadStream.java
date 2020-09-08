@@ -1,16 +1,15 @@
 package com.meti.util;
 
 import java.util.function.BiFunction;
-import java.util.stream.Stream;
 
 public class DuadStream<A, B> {
-    private final Stream<Duad<A, B>> stream;
+    private final MonadStream<Duad<A, B>> parent;
 
-    public DuadStream(Stream<Duad<A, B>> stream) {
-        this.stream = stream;
+    public DuadStream(MonadStream<Duad<A, B>> parent) {
+        this.parent = parent;
     }
 
     public <T> MonadStream<T> map(BiFunction<A, B, T> function) {
-        return new MonadStream<>(stream.map(duad -> duad.map(function)));
+        return parent.map(duad -> duad.apply(function));
     }
 }

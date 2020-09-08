@@ -46,19 +46,22 @@ public class MonadStream<T> {
     }
 
     public <R> DuadStream<T, R> with(R value) {
-        return new DuadStream<>(stream.map(tMonad -> tMonad.with(value)));
+        return mapAsMonad(monad -> monad.with(value)).apply(DuadStream::new);
+    }
+
+    private <R> Monad<MonadStream<R>> mapAsMonad(Function<Monad<T>, R> function) {
+        return Monad(function)
+                .map(stream::map)
+                .map(this::encapsulate)
+                .map(MonadStream::new);
+    }
+
+    private <R> Stream<Monad<R>> encapsulate(Stream<R> stream) {
+        return stream.map(Monad::Monad);
     }
 
     public <R> MonadStream<R> map(Function<T, R> function) {
         return new MonadStream<>(stream.map(monad -> monad.map(function)));
-    }
-
-    public <R> Option<R> applyFirst(Function<T, R> function) {
-        return stream.findFirst()
-                .map(Some::Some)
-                .orElseGet(None::None)
-                .with(function)
-                .map(Monad::apply);
     }
 
     public <R> MonadStream<R> flatMap(Function<T, MonadStream<R>> function) {

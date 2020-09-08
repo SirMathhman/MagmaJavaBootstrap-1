@@ -54,7 +54,7 @@ public class Some<T> implements Option<T> {
     }
 
     @Override
-    public <R> Option<R> replace(Supplier<R> supplier) {
+    public <R> Option<R> set(Supplier<R> supplier) {
         throw new UnsupportedOperationException();
     }
 
@@ -65,6 +65,11 @@ public class Some<T> implements Option<T> {
 
     @Override
     public <E extends Throwable> void acceptOrThrow(Consumer<T> consumer, E exception) throws E{
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R> Monad<R> set(R ifPresent, R ifEmpty) {
         throw new UnsupportedOperationException();
     }
 }

@@ -8,11 +8,15 @@ import com.meti.compile.node.block.InvocationToken;
 import com.meti.compile.node.block.ParentToken;
 import com.meti.compile.process.util.CallFlag;
 import com.meti.compile.process.util.CallStack;
+import com.meti.util.CollectiveUtilities;
+import com.meti.util.Triad;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+
+import static com.meti.compile.node.TokenGroup.Variable;
+import static com.meti.util.Triad.Triad;
 
 public class InfixProcessor implements Processor {
     private final CallStack callStack;
@@ -32,17 +36,18 @@ public class InfixProcessor implements Processor {
     }
 
     private ParentToken processDependents(Dependents dependents) {
-        List<Token> children = dependents.streamChildrenNatively().collect(Collectors.toList());
-        Token operator = children.get(0);
-        Token value0 = children.get(1);
-        Token value1 = children.get(2);
-        if (operator.applyToGroup(TokenGroup.Variable::matches)) {
-            boolean isNativeInfix = isNativeInfix(operator);
-            if (isNativeInfix) {
-                return new InfixToken(operator, value0, value1);
-            }
-        }
-        return new InvocationToken(operator, List.of(value0, value1));
+        return dependents.streamChildren()
+                .reduceToMonad(new ArrayList<Token>(), CollectiveUtilities::join)
+                .apply(Triad::Triad)
+                .mapByStart(this::isValue, this::processVariable, InvocationToken::new);
+    }
+
+    private Boolean isValue(Token operator) {
+        return operator.applyToGroup(Variable::matches);
+    }
+
+    private ParentToken processVariable(Token token, Token token2, Token token3) {
+        return Triad(token, token2, token3).mapByStart(this::isNativeInfix, InfixToken::new, InvocationToken::new);
     }
 
     private boolean isNativeInfix(Token operator) {

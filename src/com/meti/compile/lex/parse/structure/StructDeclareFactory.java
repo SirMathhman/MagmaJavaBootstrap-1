@@ -60,7 +60,7 @@ public class StructDeclareFactory implements TokenizerFactory {
                     .filter(value -> value.contains(">"))
                     .filter(value -> value.contains("{"))
                     .filter(value -> value.endsWith("}"))
-                    .replace(this::createBuilder)
+                    .set(this::createBuilder)
                     .map(this::parseFields);
         }
     }

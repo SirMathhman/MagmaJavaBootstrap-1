@@ -17,6 +17,10 @@ public class InvocationToken extends ParentToken {
     private final List<Token> arguments;
     private final Token caller;
 
+    public InvocationToken(Token caller, Token... arguments) {
+        this(caller, List.of(arguments));
+    }
+
     public InvocationToken(Token caller, List<Token> arguments) {
         this.caller = caller;
         this.arguments = Collections.unmodifiableList(arguments);

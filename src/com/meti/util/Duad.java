@@ -25,11 +25,11 @@ public class Duad<A, B> {
     }
 
     public <R> Triad<A, B, R> extractStart(Function<A, R> function) {
-        return new Triad<>(start, end, function.apply(start));
+        return Triad.Triad(start, end, function.apply(start));
     }
 
     public <C> Triad<A, B, C> supply(C value) {
-        return new Triad<>(start, end, value);
+        return Triad.Triad(start, end, value);
     }
 
     public <T> Duad<A, T> zipSecond(BiFunction<A, B, T> function) {

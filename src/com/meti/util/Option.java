@@ -22,5 +22,7 @@ public interface Option<T> {
 
     <R> Option<R> map(Function<T, R> function);
 
-    <R> Option<R> replace(Supplier<R> supplier);
+    <R> Option<R> set(Supplier<R> supplier);
+
+    <R> Monad<R> set(R ifPresent, R ifEmpty);
 }

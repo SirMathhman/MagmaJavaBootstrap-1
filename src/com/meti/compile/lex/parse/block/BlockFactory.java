@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.meti.util.FunctionaUtilities.IdentityPredicate;
+import static com.meti.util.FunctionalUtilities.IdentityPredicate;
 import static com.meti.util.Some.Some;
 
 public class BlockFactory implements TokenizerFactory {

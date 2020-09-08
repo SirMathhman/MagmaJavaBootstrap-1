@@ -4,20 +4,23 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.TypeGroup;
+import com.meti.util.CollectiveUtilities;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class InvocationResolveRule implements NodeResolveRule {
 	@Override
 	public Dependents resolve(Dependents dependents, Type returnType, Resolver resolver) {
-		List<Token> children = dependents.streamChildrenNatively().collect(Collectors.toList());
-		Token caller = children.get(0);
-		List<Token> arguments = children.subList(1, children.size());
-		List<Token> newChildren = createNewChildren(caller, arguments, returnType, resolver);
-		return dependents.copyChildren(newChildren);
+		return dependents.streamChildren()
+				.reduceToMonad(new ArrayList<Token>(), CollectiveUtilities::join)
+				.split(tokens -> tokens.get(0), tokens -> tokens.subList(1, tokens.size()))
+				.map((token, tokens) -> createNewChildren(token, tokens, returnType, resolver))
+				.apply(dependents::copyChildren);
 	}
 
 	public List<Token> createNewChildren(Token caller, List<Token> arguments, Type returnType, Resolver resolver) {

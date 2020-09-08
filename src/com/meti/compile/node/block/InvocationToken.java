@@ -35,7 +35,7 @@ public class InvocationToken extends ParentToken {
     public Token copy(Dependents dependents) {
         return dependents.streamChildren()
                 .reduceToMonad(new ArrayList<Token>(), CollectiveUtilities::join)
-                .separate(list -> list.get(0), list -> list.subList(1, list.size()))
+                .split(list -> list.get(0), list -> list.subList(1, list.size()))
                 .apply(InvocationToken::new);
     }
 

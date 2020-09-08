@@ -45,7 +45,7 @@ public class Monad<T> {
         consumer.accept(value);
     }
 
-    public <A, B> Duad<A, B> separate(Function<T, A> first, Function<T, B> second) {
+    public <A, B> Duad<A, B> split(Function<T, A> first, Function<T, B> second) {
         return new Duad<>(first.apply(value), second.apply(value));
     }
 }

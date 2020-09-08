@@ -4,7 +4,7 @@ import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.TokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.primitive.CharToken;
-import com.meti.util.MonadOption;
+import com.meti.util.Option;
 
 import static com.meti.util.Some.Some;
 
@@ -22,7 +22,7 @@ public class CharTokenizerFactory implements TokenizerFactory {
         }
 
         @Override
-        public MonadOption<Token> evaluate() {
+        public Option<Token> evaluate() {
             return Some(content)
                     .filter(value -> value.startsWith("'"))
                     .filter(value -> value.endsWith("'"))

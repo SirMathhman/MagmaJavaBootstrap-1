@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 import static com.meti.util.Monad.Monad;
 
-public class None<T> implements MonadOption<T> {
+public class None<T> implements Option<T> {
     private None() {
     }
 
@@ -36,17 +36,17 @@ public class None<T> implements MonadOption<T> {
     }
 
     @Override
-    public MonadOption<T> filter(Predicate<T> predicate) {
+    public Option<T> filter(Predicate<T> predicate) {
         return None();
     }
 
     @Override
-    public <R> MonadOption<R> map(Function<T, R> function) {
+    public <R> Option<R> map(Function<T, R> function) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <R> MonadOption<R> replace(Supplier<R> supplier) {
+    public <R> Option<R> replace(Supplier<R> supplier) {
         return Monad(supplier)
                 .map(Supplier::get)
                 .toOption();

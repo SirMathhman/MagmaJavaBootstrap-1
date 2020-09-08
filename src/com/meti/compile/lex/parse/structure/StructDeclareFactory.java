@@ -54,7 +54,7 @@ public class StructDeclareFactory implements TokenizerFactory {
         }
 
         @Override
-        public MonadOption<Token> evaluate() {
+        public Option<Token> evaluate() {
             return Some.Some(content)
                     .filter(value -> value.startsWith("<"))
                     .filter(value -> value.contains(">"))

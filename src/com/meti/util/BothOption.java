@@ -15,7 +15,7 @@ public class BothOption<A, B> implements DuadOption<A, B> {
     }
 
     @Override
-    public <R> MonadOption<R> map(BiFunction<A, B, R> function) {
+    public <R> Option<R> map(BiFunction<A, B, R> function) {
         return Some(function.apply(value0, value1));
     }
 

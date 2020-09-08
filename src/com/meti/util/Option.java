@@ -4,7 +4,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public interface MonadOption<T> {
+public interface Option<T> {
     <R> DuadOption<T, R> extract(Function<T, R> function);
 
     <R, E extends Throwable> R applyOrThrow(Function<T, R> function, E exception) throws E;
@@ -15,9 +15,9 @@ public interface MonadOption<T> {
 
     MonadStream<T> stream();
 
-    MonadOption<T> filter(Predicate<T> predicate);
+    Option<T> filter(Predicate<T> predicate);
 
-    <R> MonadOption<R> map(Function<T, R> function);
+    <R> Option<R> map(Function<T, R> function);
 
-    <R> MonadOption<R> replace(Supplier<R> supplier);
+    <R> Option<R> replace(Supplier<R> supplier);
 }

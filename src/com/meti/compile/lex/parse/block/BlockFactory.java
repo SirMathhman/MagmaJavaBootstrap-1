@@ -5,7 +5,7 @@ import com.meti.compile.lex.parse.TokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.ValueToken;
 import com.meti.compile.node.block.BlockToken;
-import com.meti.util.MonadOption;
+import com.meti.util.Option;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class BlockFactory implements TokenizerFactory {
         }
 
         @Override
-        public MonadOption<Token> evaluate() {
+        public Option<Token> evaluate() {
             return Some(content)
                     .extract(value -> value.startsWith("{"))
                     .extractStart(value -> value.endsWith("}"))

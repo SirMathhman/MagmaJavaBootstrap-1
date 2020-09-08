@@ -9,14 +9,14 @@ import static com.meti.util.Monad.Monad;
 import static com.meti.util.MonadStream.Stream;
 import static com.meti.util.None.None;
 
-public class Some<T> implements MonadOption<T> {
+public class Some<T> implements Option<T> {
     private final T value;
 
     private Some(T value) {
         this.value = value;
     }
 
-    public static <T> MonadOption<T> Some(T value) {
+    public static <T> Option<T> Some(T value) {
         return new Some<>(value);
     }
 
@@ -41,19 +41,19 @@ public class Some<T> implements MonadOption<T> {
     }
 
     @Override
-    public MonadOption<T> filter(Predicate<T> predicate) {
+    public Option<T> filter(Predicate<T> predicate) {
         return predicate.test(value) ? Some(value) : None();
     }
 
     @Override
-    public <R> MonadOption<R> map(Function<T, R> function) {
+    public <R> Option<R> map(Function<T, R> function) {
         return Monad(value)
                 .map(function)
                 .toOption();
     }
 
     @Override
-    public <R> MonadOption<R> replace(Supplier<R> supplier) {
+    public <R> Option<R> replace(Supplier<R> supplier) {
         throw new UnsupportedOperationException();
     }
 

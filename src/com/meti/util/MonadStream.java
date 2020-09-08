@@ -53,7 +53,7 @@ public class MonadStream<T> {
         return new MonadStream<>(stream.map(monad -> monad.map(function)));
     }
 
-    public <R> MonadOption<R> applyFirst(Function<T, R> function) {
+    public <R> Option<R> applyFirst(Function<T, R> function) {
         return stream.findFirst()
                 .map(Some::Some)
                 .orElseGet(None::None)
@@ -70,7 +70,7 @@ public class MonadStream<T> {
         return stream;
     }
 
-    public MonadOption<T> findFirst() {
+    public Option<T> findFirst() {
         return stream.findFirst()
                 .map(Monad::toOption)
                 .orElseGet(None::None);

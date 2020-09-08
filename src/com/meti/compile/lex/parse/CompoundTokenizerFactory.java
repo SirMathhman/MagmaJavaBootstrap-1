@@ -3,7 +3,7 @@ package com.meti.compile.lex.parse;
 import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.node.Token;
 import com.meti.util.Monad;
-import com.meti.util.MonadOption;
+import com.meti.util.Option;
 import com.meti.util.MonadStream;
 
 public abstract class CompoundTokenizerFactory implements TokenizerFactory {
@@ -26,11 +26,11 @@ public abstract class CompoundTokenizerFactory implements TokenizerFactory {
         }
 
         @Override
-        public MonadOption<Token> evaluate() {
+        public Option<Token> evaluate() {
             return factories.with(content)
                     .map(TokenizerFactory::create)
                     .map(Tokenizer::evaluate)
-                    .flatMap(MonadOption::stream)
+                    .flatMap(Option::stream)
                     .findFirst();
         }
     }

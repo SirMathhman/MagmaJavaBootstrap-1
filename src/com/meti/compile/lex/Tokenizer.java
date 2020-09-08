@@ -1,8 +1,8 @@
 package com.meti.compile.lex;
 
 import com.meti.compile.node.Token;
-import com.meti.util.MonadOption;
+import com.meti.util.Option;
 
 public interface Tokenizer {
-    MonadOption<Token> evaluate();
+    Option<Token> evaluate();
 }

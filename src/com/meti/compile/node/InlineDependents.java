@@ -95,4 +95,19 @@ public final class InlineDependents implements Dependents {
     public MonadStream<Field> streamFields(){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public <T> T applyToProperties(Function<Field, T> function){
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Dependents copyProperties(Field properties) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DependentsBuilder withoutFields(){
+        throw new UnsupportedOperationException();
+    }
 }

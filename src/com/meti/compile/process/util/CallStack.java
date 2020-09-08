@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface CallStack {
     void enter();
 
-    List<Field> enter(List<Field> scope);
-
     Field define(Field field);
 
     boolean isDefined(String name);

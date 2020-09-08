@@ -5,8 +5,8 @@ import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
 import com.meti.compile.process.util.CallFlag;
-import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Field;
+import com.meti.compile.type.FieldBuilder;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.block.FunctionType;
 
@@ -71,17 +71,22 @@ public class FunctionToken implements Token {
     }
 
     public static FunctionNodeBuilder createBuilder(String name, Type type, List<CallFlag> flags) {
-        Type returnType = findReturnType(type);
+        return type.streamChildren()
+                .findFirst()
+                .with(name)
+                .with(flags)
+                .applyDestructionOrThrow(FunctionToken::createBuilder, createNoReturnType(type));
+    }
+
+    private static FunctionNodeBuilder createBuilder(Type type, String name, List<CallFlag> flags) {
         return new FunctionNodeBuilder()
                 .withName(name)
-                .withReturnType(returnType)
+                .withReturnType(type)
                 .withFlags(flags);
     }
 
-    public static Type findReturnType(Type type) {
-        return type.streamChildrenNatively()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No return type was found in: " + type));
+    private static IllegalArgumentException createNoReturnType(Type type) {
+        return new IllegalArgumentException("No return type was found in: " + type);
     }
 
     public List<Field> buildFields() {

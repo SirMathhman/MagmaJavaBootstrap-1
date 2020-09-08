@@ -1,5 +1,6 @@
 package com.meti.util;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -8,6 +9,8 @@ public interface Option<T> {
     <R> DuadOption<T, R> extract(Function<T, R> function);
 
     <R, E extends Throwable> R applyOrThrow(Function<T, R> function, E exception) throws E;
+
+    <E extends Throwable> void acceptOrThrow(Consumer<T> consumer, E exception) throws E;
 
     <R> R applyOrThrow(Function<T, R> function);
 

@@ -6,6 +6,7 @@ import com.meti.util.MonadStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public final class EmptyDependents implements Dependents {
@@ -58,4 +59,19 @@ public final class EmptyDependents implements Dependents {
     public MonadStream<Field> streamFields(){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public <T> T applyToProperties(Function<Field, T> function){
+        throw new UnsupportedOperationException();
+    }
+
+	@Override
+	public Dependents copyProperties(Field properties) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public DependentsBuilder withoutFields(){
+		throw new UnsupportedOperationException();
+	}
 }

@@ -1,6 +1,7 @@
 package com.meti.util;
 
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -60,5 +61,10 @@ public class Some<T> implements Option<T> {
     @Override
     public <R> R applyOrThrow(Function<T, R> function) {
         return applyOrThrow(function, new NoSuchElementException("No value present."));
+    }
+
+    @Override
+    public <E extends Throwable> void acceptOrThrow(Consumer<T> consumer, E exception) throws E{
+        throw new UnsupportedOperationException();
     }
 }

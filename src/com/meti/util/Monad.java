@@ -1,5 +1,6 @@
 package com.meti.util;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static com.meti.util.Some.Some;
@@ -38,5 +39,9 @@ public class Monad<T> {
 
     public <R> R apply(Function<T, R> function) {
         return function.apply(value);
+    }
+
+    public void accept(Consumer<T> consumer) {
+        consumer.accept(value);
     }
 }

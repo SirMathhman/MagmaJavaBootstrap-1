@@ -3,6 +3,7 @@ package com.meti.util;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -91,4 +92,7 @@ public class MonadStream<T> {
                 .apply(function);
     }
 
+    public void forEach(Consumer<T> consumer) {
+        stream.forEach(monad -> monad.accept(consumer));
+    }
 }

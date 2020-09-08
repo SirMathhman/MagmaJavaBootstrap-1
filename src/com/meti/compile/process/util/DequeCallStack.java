@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public final class DequeCallStack implements CallStack {
     private final Deque<StackFrame> frames = new LinkedList<>();
 
-
     public DequeCallStack() {
         enter();
     }
@@ -20,14 +19,6 @@ public final class DequeCallStack implements CallStack {
     @Override
     public void enter() {
         this.frames.add(new MapStackFrame());
-    }
-
-    @Override
-    public List<Field> enter(List<Field> scope) {
-        enter();
-        return scope.stream()
-                .map(this::define)
-                .collect(Collectors.toList());
     }
 
     @Override

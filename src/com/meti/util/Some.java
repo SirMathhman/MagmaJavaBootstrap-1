@@ -5,6 +5,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import static com.meti.util.None.None;
+
 public class Some<T> implements MonadOption<T> {
     private final T value;
 
@@ -38,7 +40,7 @@ public class Some<T> implements MonadOption<T> {
 
     @Override
     public MonadOption<T> filter(Predicate<T> predicate) {
-        throw new UnsupportedOperationException();
+        return predicate.test(value) ? Some(value) : None();
     }
 
     @Override
@@ -52,7 +54,7 @@ public class Some<T> implements MonadOption<T> {
     }
 
     @Override
-    public <R> R applyOrThrow(Function<T, R> function){
+    public <R> R applyOrThrow(Function<T, R> function) {
         return applyOrThrow(function, new NoSuchElementException("No value present."));
     }
 }

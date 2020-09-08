@@ -4,10 +4,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class MonadStream<T> {
     private final Stream<Monad<T>> stream;
+
+    public MonadStream<T> filter(Predicate<T> predicate) {
+        Function<T, Boolean> function = FunctionaUtilities.toFunction(predicate);
+        return new MonadStream<>(stream.filter(tMonad -> tMonad.apply(function)));
+    }
 
     @SafeVarargs
     public static <R> MonadStream<R> Stream(R... values) {

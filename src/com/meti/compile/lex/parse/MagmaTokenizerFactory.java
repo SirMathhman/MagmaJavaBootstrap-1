@@ -9,7 +9,7 @@ import com.meti.compile.lex.parse.primitive.IntTokenizerFactory;
 import com.meti.compile.lex.parse.scope.DeclareTokenizerFactory;
 import com.meti.compile.lex.parse.scope.VariableTokenizerFactory;
 import com.meti.compile.lex.parse.structure.FieldTokenizerFactory;
-import com.meti.compile.lex.parse.structure.StructDeclareTokenizerFactory;
+import com.meti.compile.lex.parse.structure.StructDeclareFactory;
 import com.meti.compile.lex.parse.structure.StructureTokenizerFactory;
 import com.meti.util.MonadStream;
 
@@ -20,7 +20,7 @@ public class MagmaTokenizerFactory extends CompoundTokenizerFactory {
 	@Override
 	public MonadStream<TokenizerFactory> streamFactories(){
 		return Stream(
-				new StructDeclareTokenizerFactory(),
+				new StructDeclareFactory(),
 				new StructureTokenizerFactory(),
 				new ImportRule(),
 				new BlockFactory(),

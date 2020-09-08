@@ -29,9 +29,9 @@ public class ReturnToken implements Token {
 
 	@Override
 	public Token copy(Dependents dependents) {
-		return dependents.streamChildrenNatively()
-				.findFirst().map(ReturnToken::new)
-				.orElseThrow();
+		return dependents.streamChildren()
+				.findFirst()
+				.applyOrThrow(ReturnToken::new);
 	}
 
 	public ReturnToken(Token value) {

@@ -24,7 +24,7 @@ public class ConcreteTokenizerFactory extends FunctionTokenizerFactory {
                 .extract(value -> value.indexOf(')'))
                 .replaceEnd((value, index) -> value.indexOf(':', index))
                 .extractStart(value -> value.indexOf("=>"))
-                .implode((value, start, end) -> value.substring(start + 1, end))
+                .map((value, start, end) -> value.substring(start + 1, end))
                 .apply(String::trim);
     }
 

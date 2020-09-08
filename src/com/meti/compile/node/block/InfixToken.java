@@ -4,10 +4,11 @@ import com.meti.compile.node.Dependents;
 import com.meti.compile.node.InlineDependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
+import com.meti.util.CollectiveUtilities;
+import com.meti.util.Triad;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class InfixToken extends ParentToken {
     private final Token child0;
@@ -41,9 +42,10 @@ public class InfixToken extends ParentToken {
 
     @Override
     public Token copy(Dependents dependents) {
-        List<Token> children = dependents.streamChildrenNatively()
-                .collect(Collectors.toList());
-        return new InfixToken(children.get(0), children.get(1), children.get(2));
+        return dependents.streamChildren()
+                .reduceToMonad(new ArrayList<Token>(), CollectiveUtilities::join)
+                .apply(Triad::Triad)
+                .apply(InfixToken::new);
     }
 
     @Override

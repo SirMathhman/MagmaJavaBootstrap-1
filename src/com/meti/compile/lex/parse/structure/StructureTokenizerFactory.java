@@ -48,7 +48,7 @@ public class StructureTokenizerFactory extends FilteredTokenizerFactory {
         return Monad.Monad(content)
                 .extract(value -> value.indexOf('{'))
                 .extractStart(String::length)
-                .implode((value, start, end) -> value.substring(start + 1, end - 2))
+                .map((value, start, end) -> value.substring(start + 1, end - 2))
                 .map(value -> value.split(";"))
                 .map(List::of);
     }

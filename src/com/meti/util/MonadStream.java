@@ -80,6 +80,10 @@ public class MonadStream<T> {
                 .orElseGet(None::None);
     }
 
+    public <R> Monad<R> reduceToMonad(R identity, BiFunction<R, T, R> function) {
+        return Monad(reduce(identity, function));
+    }
+
     public <R> R reduce(R identity, BiFunction<R, T, R> function) {
         return stream.reduce(identity,
                 (previous, monad) -> wrap(previous, monad, function),

@@ -5,6 +5,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import static com.meti.util.Monad.Monad;
+
 public class None<T> implements MonadOption<T> {
     private None() {
     }
@@ -45,11 +47,13 @@ public class None<T> implements MonadOption<T> {
 
     @Override
     public <R> MonadOption<R> replace(Supplier<R> supplier) {
-        throw new UnsupportedOperationException();
+        return Monad(supplier)
+                .map(Supplier::get)
+                .asOption();
     }
 
     @Override
-    public <R> R applyOrThrow(Function<T, R> function){
+    public <R> R applyOrThrow(Function<T, R> function) {
         return applyOrThrow(function, new NoSuchElementException("No value present."));
     }
 }

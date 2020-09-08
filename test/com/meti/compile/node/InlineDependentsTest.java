@@ -94,6 +94,11 @@ class InlineDependentsTest {
 
     @Test
     void streamFields() {
+        InlineDependents.toFields(create().build()).streamFields()
+                .reduceToMonad(new ArrayList<Field>(), CollectiveUtilities::join)
+                .map(list -> list.get(0))
+                .with(create().build())
+                .accept(Assertions::assertEquals);
     }
 
     @Test

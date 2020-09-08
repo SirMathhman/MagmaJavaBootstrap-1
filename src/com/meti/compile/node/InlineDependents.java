@@ -95,7 +95,7 @@ public final class InlineDependents implements Dependents {
 
     @Override
     public MonadStream<Field> streamFields() {
-        throw new UnsupportedOperationException();
+        return Stream(fields);
     }
 
     @Override

@@ -1,20 +1,34 @@
 package com.meti.compile.lex.parse.primitive;
 
-import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.parse.FilteredTokenizerFactory;
+import com.meti.compile.lex.Tokenizer;
+import com.meti.compile.lex.parse.TokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.primitive.CharToken;
+import com.meti.util.MonadOption;
 
-public class CharTokenizerFactory extends FilteredTokenizerFactory {
-	@Override
-	public boolean canQualify(String content) {
-		return content.startsWith("'")
-		       && content.endsWith("'")
-		       && 3 == content.length();
-	}
+import static com.meti.util.Some.Some;
 
-	@Override
-	public Token parseQualified(String content, Lexer lexer) {
-		return new CharToken(content.charAt(1));
-	}
+public class CharTokenizerFactory implements TokenizerFactory {
+    @Override
+    public Tokenizer create(String content) {
+        return new CharTokenizer(content);
+    }
+
+    private static class CharTokenizer implements Tokenizer {
+        private final String content;
+
+        public CharTokenizer(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public MonadOption<Token> evaluate() {
+            return Some(content)
+                    .filter(value -> value.startsWith("'"))
+                    .filter(value -> value.endsWith("'"))
+                    .filter(value -> value.length() == 3)
+                    .map(value -> value.charAt(1))
+                    .map(CharToken::new);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.InfixToken;
@@ -32,5 +33,10 @@ public class InfixRule extends FilteredTokenizerFactory {
         return list.stream()
                 .filter(s -> !s.isBlank())
                 .map(String::trim);
+    }
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

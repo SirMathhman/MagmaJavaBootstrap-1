@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.block.function;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.FunctionToken;
@@ -120,5 +121,10 @@ public abstract class FunctionTokenizerFactory extends FilteredTokenizerFactory 
         Type type = lexer.resolve(typeString);
         //TODO: parameter flags
         return new FieldBuilder().withName(name).withType(type).withFlags(Collections.emptyList()).build();
+    }
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

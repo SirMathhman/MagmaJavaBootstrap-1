@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.FieldToken;
@@ -37,5 +38,10 @@ public class FieldTokenizerFactory extends FilteredTokenizerFactory {
                 .map(String::trim)
                 .map(lexer::parse)
                 .complete();
+    }
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

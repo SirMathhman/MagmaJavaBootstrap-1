@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.block;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.block.InvocationToken;
@@ -44,5 +45,10 @@ public class InvocationRule extends FilteredTokenizerFactory {
                 .map(String::trim)
                 .map(lexer::parse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

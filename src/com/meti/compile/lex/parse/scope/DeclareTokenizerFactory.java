@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.scope;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.scope.DeclareToken;
@@ -87,4 +88,9 @@ public class DeclareTokenizerFactory extends FilteredTokenizerFactory {
 	public static boolean hasFlags(Collection<String> flags) {
 		return flags.contains("const") || flags.contains("let");
 	}
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
 }

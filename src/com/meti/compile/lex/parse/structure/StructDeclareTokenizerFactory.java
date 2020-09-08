@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.structure;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.structure.StructDeclareToken.Builder;
@@ -53,5 +54,10 @@ public class StructDeclareTokenizerFactory extends FilteredTokenizerFactory {
 
     private Builder createBuilder(String value) {
         return new Builder().withName(value);
+    }
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

@@ -1,6 +1,7 @@
 package com.meti.compile.lex.parse.external;
 
 import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.FilteredTokenizerFactory;
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.EmptyDependents;
@@ -25,7 +26,12 @@ public class ImportRule extends FilteredTokenizerFactory {
 		return new ImportToken(value);
 	}
 
-	private static final class ImportToken implements Token {
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
+
+    private static final class ImportToken implements Token {
 		private final String value;
 
 		private ImportToken(String value) {

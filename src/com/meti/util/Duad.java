@@ -1,5 +1,6 @@
 package com.meti.util;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -42,5 +43,9 @@ public class Duad<A, B> {
 
     public <T> T apply(BiFunction<A, B, T> function) {
         return function.apply(start, end);
+    }
+
+    public void accept(BiConsumer<A, B> consumer) {
+        consumer.accept(start, end);
     }
 }

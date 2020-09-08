@@ -10,6 +10,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static com.meti.util.MonadStream.Stream;
+
 public final class InlineDependents implements Dependents {
     private final List<Token> children;
     private final List<Field> fields;
@@ -78,7 +80,7 @@ public final class InlineDependents implements Dependents {
 
     @Override
     public MonadStream<Token> streamChildren(){
-        throw new UnsupportedOperationException();
+        return Stream(children);
     }
 
     @Override

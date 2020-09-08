@@ -45,7 +45,7 @@ public class StructureTokenizerFactory extends FilteredTokenizerFactory {
     }
 
     private Monad<List<String>> extractFields(String content) {
-        return new Monad<>(content)
+        return Monad.Monad(content)
                 .extract(value -> value.indexOf('{'))
                 .extractStart(String::length)
                 .implode((value, start, end) -> value.substring(start + 1, end - 2))
@@ -54,7 +54,7 @@ public class StructureTokenizerFactory extends FilteredTokenizerFactory {
     }
 
     private String parseName(String content) {
-        return new Monad<>(content)
+        return Monad.Monad(content)
                 .extract(value -> value.indexOf('{'))
                 .map((value, index) -> value.substring(0, index))
                 .complete().trim().transform(value -> value.substring(HEADER.length()));
@@ -68,14 +68,14 @@ public class StructureTokenizerFactory extends FilteredTokenizerFactory {
     }
 
     private String parseFieldName(String fieldString) {
-        return new Monad<>(fieldString)
+        return Monad.Monad(fieldString)
                 .extract(value -> value.indexOf(':'))
                 .map((value, index) -> value.substring(0, index))
                 .complete().trim();
     }
 
     private Type parseFieldType(String fieldString, Lexer lexer) {
-        return new Monad<>(fieldString)
+        return Monad.Monad(fieldString)
                 .extract(value -> value.indexOf(":"))
                 .map((value, index) -> value.substring(index + 1))
                 .complete().trim().transform(lexer::resolve);

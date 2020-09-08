@@ -4,12 +4,10 @@ import com.meti.compile.lex.Tokenizer;
 import com.meti.compile.lex.parse.TokenizerFactory;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.ValueToken;
-import com.meti.compile.node.structure.StructDeclareToken;
 import com.meti.compile.node.structure.StructDeclareToken.Builder;
 import com.meti.util.*;
 
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class StructDeclareFactory implements TokenizerFactory {
     @Override
@@ -34,7 +32,7 @@ public class StructDeclareFactory implements TokenizerFactory {
         }
 
         private MonadStream<String> extractChildren() {
-            return new Monad<>(content)
+            return Monad.Monad(content)
                     .extract(value -> value.indexOf('{'))
                     .extractStart(value -> value.indexOf('}'))
                     .implode((value, start, end) -> value.substring(start + 1, end))
@@ -45,7 +43,7 @@ public class StructDeclareFactory implements TokenizerFactory {
         }
 
         private Builder createBuilder() {
-            return new Monad<>(content)
+            return Monad.Monad(content)
                     .extract(value -> value.indexOf('<'))
                     .extractStart(value -> value.indexOf('>'))
                     .implode((value, start, end) -> value.substring(start + 1, end))

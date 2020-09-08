@@ -33,7 +33,7 @@ public class MagmaCompiler implements Compiler {
     }
 
     private String applyPipeline(Token token) {
-        return new Monad<>(token)
+        return Monad.Monad(token)
                 .map(fixStage::process)
                 .map(typeStage::process)
                 .map(Token::render)

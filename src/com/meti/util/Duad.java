@@ -21,7 +21,7 @@ public class Duad<A, B> {
     }
 
     public <T> Monad<T> map(BiFunction<A, B, T> function) {
-        return new Monad<>(function.apply(start, end));
+        return Monad.Monad(function.apply(start, end));
     }
 
     public <R> Triad<A, B, R> extractStart(Function<A, R> function) {

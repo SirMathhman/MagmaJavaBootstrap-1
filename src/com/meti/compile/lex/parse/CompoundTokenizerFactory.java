@@ -11,7 +11,7 @@ public abstract class CompoundTokenizerFactory implements TokenizerFactory {
 
     @Override
     public Tokenizer create(String content) {
-        return new Monad<>(streamFactories())
+        return Monad.Monad(streamFactories())
                 .with(content).reverse()
                 .apply(CompoundTokenizer::new);
     }

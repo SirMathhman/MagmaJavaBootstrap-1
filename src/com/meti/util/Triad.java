@@ -12,7 +12,7 @@ public class Triad<A, B, C> {
     }
 
     public <R> Monad<R> implode(TriFunction<A, B, C, R> function) {
-        return new Monad<>(function.apply(a, b, c));
+        return Monad.Monad(function.apply(a, b, c));
     }
 
     public Duad<A, B> withoutEnd() {

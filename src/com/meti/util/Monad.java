@@ -7,16 +7,20 @@ import static com.meti.util.Some.Some;
 public class Monad<T> {
     private final T value;
 
+    public static <T> Monad<T> Monad(T value) {
+        return new Monad<T>(value);
+    }
+
     public MonadOption<T> asOption() {
         return Some(value);
     }
 
-    public Monad(T value) {
+    private Monad(T value) {
         this.value = value;
     }
 
     public <B> Monad<B> map(Function<T, B> function) {
-        return new Monad<>(function.apply(value));
+        return Monad(function.apply(value));
     }
 
     public <R> Duad<T, R> extract(Function<T, R> function) {

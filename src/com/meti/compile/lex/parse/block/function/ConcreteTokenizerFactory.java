@@ -9,7 +9,7 @@ import com.meti.util.Monad;
 public class ConcreteTokenizerFactory extends FunctionTokenizerFactory {
     @Override
     protected FunctionToken finalize(String content, Lexer lexer, FunctionNodeBuilder builder) {
-        return new Monad<>(content)
+        return Monad.Monad(content)
                 .extract(value -> value.indexOf("=>"))
                 .map((value, index) -> value.substring(index + 2))
                 .map(String::trim)
@@ -20,7 +20,7 @@ public class ConcreteTokenizerFactory extends FunctionTokenizerFactory {
 
     @Override
     protected String extractReturnType(String content) {
-        return new Monad<>(content)
+        return Monad.Monad(content)
                 .extract(value -> value.indexOf(')'))
                 .replaceEnd((value, index) -> value.indexOf(':', index))
                 .extractStart(value -> value.indexOf("=>"))

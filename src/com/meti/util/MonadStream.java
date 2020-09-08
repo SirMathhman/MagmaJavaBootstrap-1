@@ -7,12 +7,21 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import static com.meti.util.Monad.Monad;
+
 public class MonadStream<T> {
     private final Stream<Monad<T>> stream;
 
     public MonadStream<T> filter(Predicate<T> predicate) {
-        Function<T, Boolean> function = FunctionalUtilities.toFunction(predicate);
-        return new MonadStream<>(stream.filter(tMonad -> tMonad.apply(function)));
+        return Monad(predicate)
+                .map(FunctionalUtilities::toFunction)
+                .map(this::createFilter)
+                .map(stream::filter)
+                .apply(MonadStream::new);
+    }
+
+    private Predicate<Monad<T>> createFilter(Function<T, Boolean> tBooleanFunction) {
+        return monad -> monad.apply(tBooleanFunction);
     }
 
     @SafeVarargs
@@ -25,7 +34,7 @@ public class MonadStream<T> {
     }
 
     private static <R> MonadStream<R> Stream(Stream<R> stream) {
-        return new MonadStream<>(stream.map(Monad::new));
+        return new MonadStream<>(stream.map(Monad::Monad));
     }
 
     public MonadStream(Stream<Monad<T>> stream) {

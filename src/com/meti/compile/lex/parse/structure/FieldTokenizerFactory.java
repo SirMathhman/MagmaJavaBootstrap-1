@@ -24,7 +24,7 @@ public class FieldTokenizerFactory extends FilteredTokenizerFactory {
     }
 
     private String parseName(String content) {
-        return new Monad<>(content)
+        return Monad.Monad(content)
                 .extract(value -> value.indexOf("->"))
                 .map((value, index) -> value.substring(index + 2))
                 .map(String::trim)
@@ -32,7 +32,7 @@ public class FieldTokenizerFactory extends FilteredTokenizerFactory {
     }
 
     private Token parseParent(String content, Lexer lexer) {
-        return new Monad<>(content)
+        return Monad.Monad(content)
                 .extract(value -> value.indexOf("->"))
                 .map((value, index) -> value.substring(0, index))
                 .map(String::trim)

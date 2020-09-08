@@ -32,9 +32,8 @@ public class StructDeclareToken extends ParentToken {
 
     @Override
     public Token copy(Dependents dependents) {
-        return dependents.streamChildrenNatively().reduce(createBuilder(),
-                Builder::withChild,
-                (oldBuilder, newBuilder) -> newBuilder)
+        return dependents.streamChildren()
+                .reduce(createBuilder(), Builder::withChild)
                 .build();
     }
 

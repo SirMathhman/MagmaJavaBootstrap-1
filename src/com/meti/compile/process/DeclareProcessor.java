@@ -33,7 +33,7 @@ public class DeclareProcessor implements Processor {
         return stack.define(pair)
                 .acceptType(typeStack::push)
                 .destructure()
-                .withoutEnd()
+                .ignoreEnd()
                 .apply(DeclareToken::new);
     }
 }

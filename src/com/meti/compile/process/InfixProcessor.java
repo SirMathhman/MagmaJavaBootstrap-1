@@ -39,7 +39,7 @@ public class InfixProcessor implements Processor {
         return dependents.streamChildren()
                 .reduceToMonad(new ArrayList<Token>(), CollectiveUtilities::join)
                 .apply(Triad::Triad)
-                .mapByStart(this::isValue, this::processVariable, InvocationToken::new);
+                .applyByStart(this::isValue, this::processVariable, InvocationToken::new);
     }
 
     private Boolean isValue(Token operator) {
@@ -47,7 +47,7 @@ public class InfixProcessor implements Processor {
     }
 
     private ParentToken processVariable(Token token, Token token2, Token token3) {
-        return Triad(token, token2, token3).mapByStart(this::isNativeInfix, InfixToken::new, InvocationToken::new);
+        return Triad(token, token2, token3).applyByStart(this::isNativeInfix, InfixToken::new, InvocationToken::new);
     }
 
     private boolean isNativeInfix(Token operator) {

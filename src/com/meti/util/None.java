@@ -67,4 +67,9 @@ public class None<T> implements Option<T> {
     public <R> Monad<R> set(R ifPresent, R ifEmpty) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public <R, E extends Throwable> R applyOrThrow(Function<T, R> function, Supplier<E> supplier) throws E{
+        return applyOrThrow(function, supplier.get());
+    }
 }

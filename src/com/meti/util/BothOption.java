@@ -2,6 +2,7 @@ package com.meti.util;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static com.meti.util.Some.Some;
 
@@ -21,6 +22,21 @@ public class BothOption<A, B> implements DuadOption<A, B> {
 
     @Override
     public <R> TriadOption<A, B, R> extractStart(Function<A, R> function) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R> TriadOption<A, B, R> with(R value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DuadOption<A, B> filterEnd(Predicate<B> predicate) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R, E extends Throwable> R applyStartOrThrow(Function<A, R> function, Function<Option<B>, E> supplier) throws E {
         throw new UnsupportedOperationException();
     }
 }

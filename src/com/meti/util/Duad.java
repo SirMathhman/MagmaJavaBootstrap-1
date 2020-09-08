@@ -4,39 +4,43 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Duad<A, B> {
-    private final A value0;
-    private final B value1;
+    private final A start;
+    private final B end;
 
-    public Duad(A value0, B value1) {
-        this.value0 = value0;
-        this.value1 = value1;
+    public Duad(A start, B end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    public <R> Duad<A, R> replaceEnd(BiFunction<A, B, R> function) {
+        return new Duad<>(start, function.apply(start, end));
     }
 
     public Duad<B, A> reverse() {
-        return new Duad<>(value1, value0);
+        return new Duad<>(end, start);
     }
 
     public <T> Monad<T> map(BiFunction<A, B, T> function) {
-        return new Monad<>(function.apply(value0, value1));
+        return new Monad<>(function.apply(start, end));
     }
 
-    public <R> Triad<A, B, R> explodeFirst(Function<A, R> function) {
-        return new Triad<>(value0, value1, function.apply(value0));
+    public <R> Triad<A, B, R> extractStart(Function<A, R> function) {
+        return new Triad<>(start, end, function.apply(start));
     }
 
     public <C> Triad<A, B, C> supply(C value) {
-        return new Triad<>(value0, value1, value);
+        return new Triad<>(start, end, value);
     }
 
     public <T> Duad<A, T> zipSecond(BiFunction<A, B, T> function) {
-        return new Duad<>(value0, function.apply(value0, value1));
+        return new Duad<>(start, function.apply(start, end));
     }
 
     public <T> Duad<T, B> mapFirst(Function<A, T> function) {
-        return new Duad<>(function.apply(value0), value1);
+        return new Duad<>(function.apply(start), end);
     }
 
     public <T> T apply(BiFunction<A, B, T> function) {
-        return function.apply(value0, value1);
+        return function.apply(start, end);
     }
 }

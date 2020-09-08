@@ -35,7 +35,7 @@ public class BlockFactory implements TokenizerFactory {
                     .filterMiddle(IdentityPredicate)
                     .filterEnd(IdentityPredicate)
                     .onlyFirst()
-                    .map(this::extractChildren)
+                    .replace(this::extractChildren)
                     .map(this::parseChildren)
                     .map(BlockToken::new);
         }
@@ -48,7 +48,7 @@ public class BlockFactory implements TokenizerFactory {
                     .collect(Collectors.toList());
         }
 
-        public List<String> extractChildren(String content) {
+        private List<String> extractChildren() {
             String value = content.substring(1, content.length() - 1);
             List<String> results = new ArrayList<>();
             StringBuilder cache = new StringBuilder();

@@ -2,6 +2,7 @@ package com.meti.util;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Some<T> implements MonadOption<T> {
     private final T value;
@@ -41,6 +42,11 @@ public class Some<T> implements MonadOption<T> {
 
     @Override
     public <R> MonadOption<R> map(Function<T, R> function) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R> MonadOption<R> replace(Supplier<R> supplier) {
         throw new UnsupportedOperationException();
     }
 }

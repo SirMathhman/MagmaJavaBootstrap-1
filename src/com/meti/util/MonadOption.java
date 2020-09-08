@@ -2,6 +2,7 @@ package com.meti.util;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public interface MonadOption<T> {
     <R> DuadOption<T, R> extract(Function<T, R> function);
@@ -15,4 +16,6 @@ public interface MonadOption<T> {
     MonadOption<T> filter(Predicate<T> predicate);
 
     <R> MonadOption<R> map(Function<T, R> function);
+
+    <R> MonadOption<R> replace(Supplier<R> supplier);
 }

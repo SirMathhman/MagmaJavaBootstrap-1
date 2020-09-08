@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static com.meti.util.Monad.Monad;
+import static com.meti.util.MonadStream.Stream;
 import static com.meti.util.None.None;
 
 public class Some<T> implements MonadOption<T> {
@@ -36,7 +37,7 @@ public class Some<T> implements MonadOption<T> {
 
     @Override
     public MonadStream<T> stream() {
-        throw new UnsupportedOperationException();
+        return Stream(value);
     }
 
     @Override

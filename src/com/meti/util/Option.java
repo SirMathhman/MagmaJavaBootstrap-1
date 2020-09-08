@@ -27,4 +27,6 @@ public interface Option<T> {
     <R> Option<R> set(Supplier<R> supplier);
 
     <R> Monad<R> set(R ifPresent, R ifEmpty);
+
+    <R> R applyOrElse(Function<T, R> function, R other);
 }

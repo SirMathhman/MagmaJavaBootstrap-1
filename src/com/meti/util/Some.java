@@ -77,4 +77,9 @@ public class Some<T> implements Option<T> {
     public <R, E extends Throwable> R applyOrThrow(Function<T, R> function, Supplier<E> supplier) throws E{
         return applyOrThrow(function, supplier.get());
     }
+
+    @Override
+    public <R> R applyOrElse(Function<T, R> function, R other){
+        throw new UnsupportedOperationException();
+    }
 }

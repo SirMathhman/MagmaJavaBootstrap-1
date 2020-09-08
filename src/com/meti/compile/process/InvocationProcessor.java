@@ -9,6 +9,8 @@ import com.meti.compile.type.primitive.PrimitiveType;
 
 import java.util.Collection;
 
+import static com.meti.util.Some.Some;
+
 public class InvocationProcessor implements Processor {
     private final Resolver resolver;
 
@@ -23,12 +25,9 @@ public class InvocationProcessor implements Processor {
 
     @Override
     public Token process(Token token) {
-        Boolean aBoolean = token.applyToDependents(this::canReturnVoid);
-        if (aBoolean) {
-            return new Line(token);
-        } else {
-            return token;
-        }
+        return Some(token)
+                .filter(t -> t.applyToDependents(this::canReturnVoid))
+                .applyOrElse(Line::new, token);
     }
 
     private boolean canReturnVoid(Dependents dependents) {
@@ -40,8 +39,7 @@ public class InvocationProcessor implements Processor {
     }
 
     private boolean doesReturnVoid(Type type) {
-        return type.streamChildren()
-                .findFirst()
+        return type.streamChildren().findFirst()
                 .applyOrThrow(PrimitiveType.Void::matches);
     }
 }

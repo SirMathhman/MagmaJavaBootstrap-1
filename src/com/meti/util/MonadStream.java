@@ -2,6 +2,7 @@ package com.meti.util;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -59,4 +60,17 @@ public class MonadStream<T> {
                 .map(Monad::asOption)
                 .orElseGet(None::None);
     }
+
+    public <R> R reduce(R identity, BiFunction<R, T, R> function) {
+        return stream.reduce(identity,
+                (previous, monad) -> wrap(previous, monad, function),
+                FunctionaUtilities.SelectLast());
+    }
+
+    private <R> R wrap(R previous, Monad<T> monad, BiFunction<R, T, R> function) {
+        return monad.with(previous)
+                .reverse()
+                .apply(function);
+    }
+
 }

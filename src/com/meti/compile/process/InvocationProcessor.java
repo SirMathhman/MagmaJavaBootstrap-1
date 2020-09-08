@@ -7,6 +7,8 @@ import com.meti.compile.node.TokenGroup;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
 
+import java.util.Collection;
+
 public class InvocationProcessor implements Processor {
     private final Resolver resolver;
 
@@ -30,18 +32,16 @@ public class InvocationProcessor implements Processor {
     }
 
     private boolean canReturnVoid(Dependents dependents) {
-        return dependents.streamChildrenNatively()
+        return dependents.streamChildren()
                 .findFirst()
                 .map(resolver::search)
-                .orElseThrow()
-                .stream()
+                .applyOrThrow(Collection::stream)
                 .anyMatch(this::doesReturnVoid);
     }
 
     private boolean doesReturnVoid(Type type) {
-        return type.streamChildrenNatively()
+        return type.streamChildren()
                 .findFirst()
-                .orElseThrow()
-                .matches(PrimitiveType.Void);
+                .applyOrThrow(PrimitiveType.Void::matches);
     }
 }

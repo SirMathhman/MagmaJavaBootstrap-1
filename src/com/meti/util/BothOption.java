@@ -1,6 +1,7 @@
 package com.meti.util;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static com.meti.util.Some.Some;
 
@@ -16,5 +17,10 @@ public class BothOption<A, B> implements DuadOption<A, B> {
     @Override
     public <R> MonadOption<R> map(BiFunction<A, B, R> function) {
         return Some(function.apply(value0, value1));
+    }
+
+    @Override
+    public <R> TriadOption<A, B, R> extractStart(Function<A, R> function) {
+        throw new UnsupportedOperationException();
     }
 }

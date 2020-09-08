@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import static com.meti.util.Monad.Monad;
 import static com.meti.util.None.None;
 
 public class Some<T> implements MonadOption<T> {
@@ -45,7 +46,9 @@ public class Some<T> implements MonadOption<T> {
 
     @Override
     public <R> MonadOption<R> map(Function<T, R> function) {
-        throw new UnsupportedOperationException();
+        return Monad(value)
+                .map(function)
+                .toOption();
     }
 
     @Override

@@ -49,7 +49,7 @@ public class None<T> implements MonadOption<T> {
     public <R> MonadOption<R> replace(Supplier<R> supplier) {
         return Monad(supplier)
                 .map(Supplier::get)
-                .asOption();
+                .toOption();
     }
 
     @Override

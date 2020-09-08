@@ -72,7 +72,7 @@ public class MonadStream<T> {
 
     public MonadOption<T> findFirst() {
         return stream.findFirst()
-                .map(Monad::asOption)
+                .map(Monad::toOption)
                 .orElseGet(None::None);
     }
 

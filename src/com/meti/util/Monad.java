@@ -11,7 +11,7 @@ public class Monad<T> {
         return new Monad<T>(value);
     }
 
-    public MonadOption<T> asOption() {
+    public MonadOption<T> toOption() {
         return Some(value);
     }
 

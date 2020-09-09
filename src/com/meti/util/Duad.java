@@ -29,7 +29,7 @@ public class Duad<A, B> {
         return Triad.Triad(start, end, function.apply(start));
     }
 
-    public <C> Triad<A, B, C> supply(C value) {
+    public <C> Triad<A, B, C> with(C value) {
         return Triad.Triad(start, end, value);
     }
 

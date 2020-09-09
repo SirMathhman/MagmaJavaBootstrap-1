@@ -1,8 +1,10 @@
 package com.meti.compile.node;
 
 import com.meti.compile.type.Field;
+import com.meti.util.CollectiveUtilities;
 import com.meti.util.MonadStream;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -10,15 +12,18 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static com.meti.util.Monad.Monad;
 import static com.meti.util.MonadStream.Stream;
 
 public final class InlineDependents implements Dependents {
     private final List<Token> children;
     private final List<Field> fields;
+    private final Field properties;
 
-    private InlineDependents(List<Field> fields, List<Token> children) {
+    private InlineDependents(List<Token> children, List<Field> fields, Field properties) {
         this.fields = Collections.unmodifiableList(fields);
         this.children = Collections.unmodifiableList(children);
+        this.properties = properties;
     }
 
     public static InlineDependents toFields(Field pair) {
@@ -38,7 +43,7 @@ public final class InlineDependents implements Dependents {
     }
 
     public static InlineDependents of(List<Field> fields, List<Token> children) {
-        return new InlineDependents(fields, children);
+        return new InlineDependents(children, fields, null);
     }
 
     public static InlineDependents ofSingleton(Field pair, Token token) {
@@ -61,7 +66,7 @@ public final class InlineDependents implements Dependents {
 
     @Override
     public Dependents copyFields(List<Field> fields) {
-        return new InlineDependents(fields, children);
+        return new InlineDependents(children, fields, null);
     }
 
     @Override
@@ -85,12 +90,17 @@ public final class InlineDependents implements Dependents {
 
     @Override
     public Dependents identity() {
-        return new InlineDependents(Collections.emptyList(), Collections.emptyList());
+        return new InlineDependents(Collections.emptyList(), Collections.emptyList(), null);
     }
 
     @Override
     public Dependents append(Token child) {
-        throw new UnsupportedOperationException();
+        return Monad(children)
+                .map(ArrayList::new)
+                .with(child)
+                .map(CollectiveUtilities::join)
+                .with(fields)
+                .apply((children1, fields1) -> new InlineDependents(children1, fields1, null));
     }
 
     @Override
@@ -100,16 +110,48 @@ public final class InlineDependents implements Dependents {
 
     @Override
     public <T> T applyToProperties(Function<Field, T> function) {
-        throw new UnsupportedOperationException();
+        if (properties == null) {
+            throw new UnsupportedOperationException("Properties has not been provided.");
+        } else {
+            return function.apply(properties);
+        }
     }
 
     @Override
     public Dependents copyProperties(Field properties) {
-        throw new UnsupportedOperationException();
+        return new InlineDependents(children, fields, properties);
     }
 
     @Override
     public DependentsBuilder withoutFields() {
-        throw new UnsupportedOperationException();
+        return new InlineBuilder(children, fields, properties);
+    }
+
+    private static class InlineBuilder implements DependentsBuilder {
+        private final List<Field> fields;
+        private final List<Token> children;
+        private final Field properties;
+
+        public InlineBuilder(List<Token> children, List<Field> fields, Field properties) {
+            this.fields = fields;
+            this.children = children;
+            this.properties = properties;
+        }
+
+        @Override
+        public Dependents build() {
+            return new InlineDependents(children, fields, properties);
+        }
+
+        @Override
+        public DependentsBuilder append(Field field) {
+            return Monad(fields)
+                    .with(field)
+                    .map(CollectiveUtilities::join)
+                    .with(children)
+                    .reverse()
+                    .with(properties)
+                    .apply(InlineBuilder::new);
+        }
     }
 }

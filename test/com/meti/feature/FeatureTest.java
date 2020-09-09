@@ -3,6 +3,7 @@ package com.meti.feature;
 import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static com.meti.util.Monad.Monad;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -20,7 +22,7 @@ public abstract class FeatureTest {
     private static final Path SOURCE_PATH = Paths.get(".", "test.c");
     private final Compiler compiler = new MagmaCompiler();
 
-    private static String compileNative() throws IOException, InterruptedException {
+    private static String compileNative() throws InterruptedException {
         return execute("gcc", "-o", "test", "test.c").value();
     }
 
@@ -85,8 +87,11 @@ public abstract class FeatureTest {
 
     @Test
     void testContent() {
-        String actual = compiler.compileImpl(source());
-        assertEquals(compile(), actual);
+        Monad(source())
+                .map(compiler::compileImpl)
+                .with(compile())
+                .reverse()
+                .accept(Assertions::assertEquals);
     }
 
     protected abstract String compile();

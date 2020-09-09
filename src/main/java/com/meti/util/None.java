@@ -43,7 +43,7 @@ public class None<T> implements Option<T> {
 
     @Override
     public <R> Option<R> map(Function<T, R> function) {
-        throw new UnsupportedOperationException();
+        return None.None();
     }
 
     @Override
@@ -85,6 +85,6 @@ public class None<T> implements Option<T> {
 
     @Override
     public <R> Option<R> supplyValue(R value) {
-        throw new UnsupportedOperationException();
+        return None.None();
     }
 }

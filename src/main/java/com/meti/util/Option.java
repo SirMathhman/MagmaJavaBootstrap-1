@@ -12,8 +12,6 @@ public interface Option<T> {
 
     <E extends Throwable> void acceptOrThrow(Consumer<T> consumer, E exception) throws E;
 
-    <R, E extends Throwable> R applyOrThrow(Function<T, R> function, Supplier<E> supplier) throws E;
-
     <R> R applyOrThrow(Function<T, R> function);
 
     <R> DuadOption<T, R> with(R other);

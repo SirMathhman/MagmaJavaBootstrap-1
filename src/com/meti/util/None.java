@@ -77,4 +77,9 @@ public class None<T> implements Option<T> {
     public <R> R applyOrElse(Function<T, R> function, R other){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Monad<T> toMonadOrThrow(){
+        throw new UnsupportedOperationException();
+    }
 }

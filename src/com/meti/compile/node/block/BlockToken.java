@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 public class BlockToken extends ParentToken {
 	private final List<Token> children;
 
+	public BlockToken(Token... children) {
+		this(List.of(children));
+	}
+
 	public BlockToken(List<Token> children) {
 		this.children = Collections.unmodifiableList(children);
 	}
@@ -30,7 +34,7 @@ public class BlockToken extends ParentToken {
 	@Override
 	public Token copy(Dependents dependents) {
 		return dependents.streamChildren()
-				.reduce(BlockNodeBuilder.Identity, BlockNodeBuilder::append)
+				.reduce(BlockTokenBuilder.Identity, BlockTokenBuilder::append)
 				.build();
 	}
 

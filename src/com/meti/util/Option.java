@@ -29,4 +29,6 @@ public interface Option<T> {
     <R> Monad<R> set(R ifPresent, R ifEmpty);
 
     <R> R applyOrElse(Function<T, R> function, R other);
+
+    Monad<T> toMonadOrThrow();
 }

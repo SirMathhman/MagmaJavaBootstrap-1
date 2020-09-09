@@ -6,18 +6,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BlockNodeBuilder {
+public class BlockTokenBuilder {
     private final List<Token> children;
-    public static final BlockNodeBuilder Identity = new BlockNodeBuilder(Collections.emptyList());
+    public static final BlockTokenBuilder Identity = new BlockTokenBuilder(Collections.emptyList());
 
-    public BlockNodeBuilder(List<Token> children) {
+    public BlockTokenBuilder() {
+        this(Collections.emptyList());
+    }
+
+    public BlockTokenBuilder(List<Token> children) {
         this.children = Collections.unmodifiableList(children);
     }
 
-    public BlockNodeBuilder append(Token token) {
+    public BlockTokenBuilder append(Token token) {
         List<Token> newChildren = new ArrayList<>(children);
         newChildren.add(token);
-        return new BlockNodeBuilder(newChildren);
+        return new BlockTokenBuilder(newChildren);
     }
 
     public Token build() {

@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.compile.lex.MagmaLexer;
 import com.meti.compile.node.Token;
 import com.meti.compile.process.FixProcessStage;
 import com.meti.compile.process.ProcessStage;

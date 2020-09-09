@@ -18,7 +18,7 @@ public class FieldTokenizerFactory extends FilteredTokenizerFactory {
     public Token parseQualified(String content, Lexer lexer) {
         return new Duad<>(content, lexer)
                 .zipSecond(this::parseParent)
-                .mapFirst(this::parseName)
+                .mapStart(this::parseName)
                 .reverse().map(FieldToken::new)
                 .complete();
     }

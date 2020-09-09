@@ -37,8 +37,12 @@ public class Duad<A, B> {
         return new Duad<>(start, function.apply(start, end));
     }
 
-    public <T> Duad<T, B> mapFirst(Function<A, T> function) {
+    public <T> Duad<T, B> mapStart(Function<A, T> function) {
         return new Duad<>(function.apply(start), end);
+    }
+
+    public <T> Duad<T, B> flatMapStart(Function<A, Monad<T>> function){
+        return function.apply(start).with(end);
     }
 
     public <T> T apply(BiFunction<A, B, T> function) {

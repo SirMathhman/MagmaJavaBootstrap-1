@@ -1,7 +1,5 @@
-package com.meti.compile;
+package com.meti.compile.lex;
 
-import com.meti.compile.lex.Lexer;
-import com.meti.compile.lex.RootLexer;
 import com.meti.compile.lex.parse.MagmaTokenizerFactory;
 import com.meti.compile.lex.parse.TokenizerFactory;
 import com.meti.compile.lex.resolve.MagmaResolveRule;

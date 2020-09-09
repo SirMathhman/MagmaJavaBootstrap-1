@@ -9,6 +9,9 @@ import com.meti.util.*;
 
 import java.util.List;
 
+import static com.meti.util.Monad.Monad;
+import static com.meti.util.Some.Some;
+
 public class StructDeclareFactory implements TokenizerFactory {
     @Override
     public Tokenizer create(String content) {
@@ -32,7 +35,7 @@ public class StructDeclareFactory implements TokenizerFactory {
         }
 
         private MonadStream<String> extractChildren() {
-            return Monad.Monad(content)
+            return Monad(content)
                     .extract(value -> value.indexOf('{'))
                     .extractStart(value -> value.indexOf('}'))
                     .map((value, start, end) -> value.substring(start + 1, end))
@@ -43,7 +46,7 @@ public class StructDeclareFactory implements TokenizerFactory {
         }
 
         private Builder createBuilder() {
-            return Monad.Monad(content)
+            return Monad(content)
                     .extract(value -> value.indexOf('<'))
                     .extractStart(value -> value.indexOf('>'))
                     .map((value, start, end) -> value.substring(start + 1, end))
@@ -55,7 +58,7 @@ public class StructDeclareFactory implements TokenizerFactory {
 
         @Override
         public Option<Token> evaluate() {
-            return Some.Some(content)
+            return Some(content)
                     .filter(value -> value.startsWith("<"))
                     .filter(value -> value.contains(">"))
                     .filter(value -> value.contains("{"))

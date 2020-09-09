@@ -41,6 +41,10 @@ public class Monad<T> {
         return function.apply(value);
     }
 
+    public <R> Monad<R> flatMap(Function<T, Monad<R>> function) {
+        return function.apply(value);
+    }
+
     public void accept(Consumer<T> consumer) {
         consumer.accept(value);
     }

@@ -82,4 +82,9 @@ public class None<T> implements Option<T> {
     public Monad<T> toMonadOrThrow(){
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException();
+    }
 }

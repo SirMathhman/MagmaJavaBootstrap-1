@@ -1,5 +1,7 @@
 package com.meti.util;
 
+import com.meti.compile.node.Token;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -31,4 +33,6 @@ public interface Option<T> {
     <R> R applyOrElse(Function<T, R> function, R other);
 
     Monad<T> toMonadOrThrow();
+
+    boolean isEmpty();
 }

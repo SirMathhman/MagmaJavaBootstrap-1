@@ -87,4 +87,9 @@ public class Some<T> implements Option<T> {
     public Monad<T> toMonadOrThrow(){
         return Monad(value);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

@@ -33,4 +33,8 @@ public interface Option<T> {
     Monad<T> toMonadOrThrow();
 
     boolean isEmpty();
+
+    default <R> Option<R> flatten(Function<T, Option<R>> function) {
+        throw new UnsupportedOperationException();
+    }
 }

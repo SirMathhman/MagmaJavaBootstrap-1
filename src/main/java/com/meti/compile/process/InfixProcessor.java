@@ -12,6 +12,7 @@ import com.meti.util.CollectiveUtilities;
 import com.meti.util.Triad;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -19,6 +20,7 @@ import static com.meti.compile.node.TokenGroup.Variable;
 import static com.meti.util.Triad.Triad;
 
 public class InfixProcessor implements Processor {
+    public static final Set<CallFlag> InfixFlags = Set.of(CallFlag.NATIVE, CallFlag.INFIX);
     private final CallStack callStack;
 
     public InfixProcessor(CallStack callStack) {
@@ -51,9 +53,9 @@ public class InfixProcessor implements Processor {
     }
 
     private boolean isNativeInfix(Token operator) {
-        return operator.applyToContent(String.class, callStack::flags)
-                .flatMap(Function.identity())
-                .orElseThrow(() -> new ProcessException("%s is not defined in %s, cannot resolve infix.".formatted(operator.render(), callStack)))
-                .containsAll(Set.of(CallFlag.NATIVE, CallFlag.INFIX));
+        return operator.applyToContentOptionally(String.class, callStack::flagsOptionally)
+                .flatten(listOption -> listOption)
+                .with(InfixFlags)
+                .applyAllOrThrow(List::containsAll);
     }
 }

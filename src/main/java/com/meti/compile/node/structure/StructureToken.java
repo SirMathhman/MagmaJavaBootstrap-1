@@ -1,10 +1,12 @@
 package com.meti.compile.node.structure;
 
+import com.meti.compile.instance.Field;
 import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
-import com.meti.compile.instance.Field;
+import com.meti.util.CollectiveUtilities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -46,14 +48,11 @@ public class StructureToken implements Token {
 
     @Override
     public Token copy(Dependents dependents) {
-        return new StructureNodeBuilder()
-                .withName(name)
-                .apply(structureNodeBuilder -> attachFields(dependents, structureNodeBuilder))
-                .build();
-    }
-
-    private StructureNodeBuilder attachFields(Dependents dependents, StructureNodeBuilder builder) {
-        return dependents.streamFieldsNatively().reduce(builder, StructureNodeBuilder::withField, (oldBuilder, newBuilder) -> newBuilder);
+        return dependents.streamFields()
+                .reduceToMonad(new ArrayList<Field>(), CollectiveUtilities::join)
+                .append(name)
+                .reverse()
+                .apply(StructureToken::new);
     }
 
     @Override

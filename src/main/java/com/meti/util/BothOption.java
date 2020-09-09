@@ -8,17 +8,17 @@ import java.util.function.Supplier;
 import static com.meti.util.Some.Some;
 
 public class BothOption<A, B> implements DuadOption<A, B> {
-    private final A value0;
-    private final B value1;
+    private final A start;
+    private final B end;
 
-    public BothOption(A value0, B value1) {
-        this.value0 = value0;
-        this.value1 = value1;
+    public BothOption(A start, B end) {
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     public <R> Option<R> map(BiFunction<A, B, R> function) {
-        return Some(function.apply(value0, value1));
+        return Some(function.apply(start, end));
     }
 
     @Override
@@ -44,5 +44,10 @@ public class BothOption<A, B> implements DuadOption<A, B> {
     @Override
     public <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function, Supplier<E> supplier) throws E {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Option<A> ignoreLast() {
+        return Some(start);
     }
 }

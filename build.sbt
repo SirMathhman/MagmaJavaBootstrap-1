@@ -1,4 +1,4 @@
-name := "Test 1"
+name := "MagmaBootstrap"
 
 version := "1.0"
 

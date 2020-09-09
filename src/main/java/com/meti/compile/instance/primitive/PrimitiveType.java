@@ -1,0 +1,48 @@
+package com.meti.compile.instance.primitive;
+
+import com.meti.compile.instance.Type;
+import com.meti.compile.instance.TypeGroup;
+import com.meti.util.MonadStream;
+
+import java.util.function.Function;
+import java.util.stream.Stream;
+
+public enum PrimitiveType implements Type {
+    Int("int"),
+    Implicit("?"),
+    Char("char"),
+    Unknown("?"),
+    Any("void"),
+    Void("void");
+
+    private final String name;
+
+    PrimitiveType(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public <T> T applyToGroup(Function<TypeGroup, T> function) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean matches(Type other) {
+        return this == other;
+    }
+
+    @Override
+    public String render(String name) {
+        return this.name + " " + name;
+    }
+
+    @Override
+    public Stream<Type> streamChildrenNatively() {
+        return Stream.empty();
+    }
+
+    @Override
+    public MonadStream<Type> streamChildren(){
+        throw new UnsupportedOperationException();
+    }
+}

@@ -1,8 +1,0 @@
-def Point(x : Float, y : Float) => {
-	implicit const toString = () => '{' + x + "," + y + "}";
-}
-
-def main() => {
-	const aPoint = Point(3, 4);
-	print("This is a point: " + aPoint);
-}

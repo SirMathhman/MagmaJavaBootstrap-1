@@ -1,0 +1,96 @@
+package com.meti.compile.lex.parse.scope;
+
+import com.meti.compile.lex.Lexer;
+import com.meti.compile.lex.Tokenizer;
+import com.meti.compile.lex.parse.FilteredTokenizerFactory;
+import com.meti.compile.node.Token;
+import com.meti.compile.node.scope.DeclareToken;
+import com.meti.compile.node.scope.InitialToken;
+import com.meti.compile.node.scope.InitialNodeBuilder;
+import com.meti.compile.instance.Type;
+import com.meti.compile.instance.primitive.PrimitiveType;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class DeclareTokenizerFactory extends FilteredTokenizerFactory {
+	@Override
+	public Token parseQualified(String content, Lexer lexer) {
+		String name = parseName(content);
+		Type type = parseType(content, lexer);
+		return -1 == content.indexOf('=')
+				? buildDeclare(name, type)
+				: buildInitial(content, lexer, name, type);
+	}
+
+	@Override
+	public boolean canQualify(String content) {
+		if (!hasFeatures(content)) return false;
+		String header = extractHeader(content);
+		int separator = header.lastIndexOf(' ');
+		if (-1 == separator) return false;
+		List<String> flags = parseFlags(header, separator);
+		return hasFlags(flags);
+	}
+
+	public static String parseName(String content) {
+		String header = extractHeader(content);
+		int separator = header.lastIndexOf(' ');
+		return header.substring(separator + 1).trim();
+	}
+
+	public static InitialToken buildInitial(String content, Lexer lexer, String name, Type type) {
+		int equals = content.indexOf('=');
+		String valueString = content.substring(equals + 1).trim();
+		Token value = lexer.parse(valueString);
+		return new InitialNodeBuilder().withName(name).withType(type).withValue(value).build();
+	}
+
+	public static Type parseType(String content, Lexer lexer) {
+		//const x = 10;
+		return -1 == content.indexOf(':') ?
+				PrimitiveType.Implicit :
+				parseTypePresent(content, lexer);
+	}
+
+	public static DeclareToken buildDeclare(String name, Type type) {
+		return new DeclareToken(name, type);
+	}
+
+	public static Type parseTypePresent(String content, Lexer lexer) {
+		String typeString = -1 == content.indexOf('=')
+				? content.substring(content.indexOf(':') + 1)
+				: content.substring(content.indexOf(':') + 1, content.indexOf('='));
+		String formattedTypeString = typeString.trim();
+		return lexer.resolve(formattedTypeString);
+	}
+
+	public static boolean hasFeatures(String content) {
+		return content.contains(":") || content.contains("=");
+	}
+
+	public static String extractHeader(String content) {
+		int headerEnd = -1 == content.indexOf(':') ?
+				content.indexOf('=') :
+				content.indexOf(':');
+		return content.substring(0, headerEnd).trim();
+	}
+
+	public static List<String> parseFlags(String header, int separator) {
+		return Arrays.stream(header.substring(0, separator).split(" "))
+				.filter(s -> !s.isBlank())
+				.map(String::trim)
+				.collect(Collectors.toList());
+	}
+
+	public static boolean hasFlags(Collection<String> flags) {
+		return flags.contains("const") || flags.contains("let");
+	}
+
+    @Override
+    public Tokenizer create(String content) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
+}

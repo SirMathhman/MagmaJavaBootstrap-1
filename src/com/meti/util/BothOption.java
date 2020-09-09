@@ -3,6 +3,7 @@ package com.meti.util;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import static com.meti.util.Some.Some;
 
@@ -37,6 +38,11 @@ public class BothOption<A, B> implements DuadOption<A, B> {
 
     @Override
     public <R, E extends Throwable> R applyStartOrThrow(Function<A, R> function, Function<Option<B>, E> supplier) throws E {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function, Supplier<E> supplier) throws E {
         throw new UnsupportedOperationException();
     }
 }

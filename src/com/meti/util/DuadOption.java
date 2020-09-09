@@ -3,6 +3,7 @@ package com.meti.util;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public interface DuadOption<A, B> {
     <R> Option<R> map(BiFunction<A, B, R> function);
@@ -14,4 +15,10 @@ public interface DuadOption<A, B> {
     DuadOption<A, B> filterEnd(Predicate<B> predicate);
 
     <R, E extends Throwable> R applyStartOrThrow(Function<A, R> function, Function<Option<B>, E> supplier) throws E;
+
+    default<R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function) throws E {
+        return applyAllOrThrow(function);
+    }
+
+    <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function, Supplier<E> supplier) throws E;
 }

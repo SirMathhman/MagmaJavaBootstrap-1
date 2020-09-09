@@ -1,11 +1,14 @@
 package com.meti.compile.process;
 
+import com.meti.compile.node.Dependents;
 import com.meti.compile.node.Token;
 import com.meti.compile.node.TokenGroup;
 import com.meti.compile.node.block.ReturnToken;
 import com.meti.compile.process.util.TypeStack;
 import com.meti.compile.type.Type;
 import com.meti.compile.type.primitive.PrimitiveType;
+
+import java.util.function.BiFunction;
 
 public class ReturnProcessor implements Processor {
 	private final Resolver resolver;
@@ -36,9 +39,14 @@ public class ReturnProcessor implements Processor {
 	}
 
 	public Token findNewValue(Token token, Type type) {
-		return token.applyToDependents(dependents -> dependents.streamChildrenNatively()
+		return token.applyToDependents(Dependents::streamChildren)
 				.findFirst()
-				.map(value -> resolver.force(value, type))
-				.orElseThrow());
+				.with(type)
+				.applyAllOrThrow(new BiFunction<Token, Type, Token>() {
+					@Override
+					public Token apply(Token token, Type type) {
+						return resolver.force(token, type);
+					}
+				});
 	}
 }

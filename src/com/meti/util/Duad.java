@@ -42,7 +42,7 @@ public class Duad<A, B> {
     }
 
     public <T> Duad<T, B> flatMapStart(Function<A, Monad<T>> function){
-        return function.apply(start).with(end);
+        return function.apply(start).append(end);
     }
 
     public <T> T apply(BiFunction<A, B, T> function) {

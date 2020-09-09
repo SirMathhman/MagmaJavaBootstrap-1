@@ -25,7 +25,11 @@ public class MonadStream<T> {
         return monad -> monad.apply(tBooleanFunction);
     }
 
-    @SafeVarargs
+    public static <R> MonadStream<R> StreamArray(R[] values) {
+        return Stream(List.of(values));
+    }
+
+    @Deprecated
     public static <R> MonadStream<R> Stream(R... values) {
         return Stream(List.of(values));
     }
@@ -47,7 +51,7 @@ public class MonadStream<T> {
     }
 
     public <R> DuadStream<T, R> with(R value) {
-        return mapAsMonad(monad -> monad.with(value)).apply(DuadStream::new);
+        return mapAsMonad(monad -> monad.append(value)).apply(DuadStream::new);
     }
 
     private <R> Monad<MonadStream<R>> mapAsMonad(Function<Monad<T>, R> function) {
@@ -91,7 +95,7 @@ public class MonadStream<T> {
     }
 
     private <R> R wrap(R previous, Monad<T> monad, BiFunction<R, T, R> function) {
-        return monad.with(previous)
+        return monad.append(previous)
                 .reverse()
                 .apply(function);
     }

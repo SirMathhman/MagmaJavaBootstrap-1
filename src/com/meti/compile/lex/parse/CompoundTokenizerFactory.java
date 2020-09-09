@@ -12,7 +12,7 @@ public abstract class CompoundTokenizerFactory implements TokenizerFactory {
     @Override
     public Tokenizer create(String content) {
         return Monad.Monad(streamFactories())
-                .with(content).reverse()
+                .append(content).reverse()
                 .apply(CompoundTokenizer::new);
     }
 

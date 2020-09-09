@@ -47,7 +47,7 @@ public class None<T> implements Option<T> {
     }
 
     @Override
-    public <R> Option<R> set(Supplier<R> supplier) {
+    public <R> Option<R> supply(Supplier<R> supplier) {
         return Monad(supplier)
                 .map(Supplier::get)
                 .toOption();
@@ -85,6 +85,11 @@ public class None<T> implements Option<T> {
 
     @Override
     public boolean isEmpty() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R> Option<R> supplyValue(R value) {
         throw new UnsupportedOperationException();
     }
 }

@@ -54,7 +54,7 @@ public class Some<T> implements Option<T> {
     }
 
     @Override
-    public <R> Option<R> set(Supplier<R> supplier) {
+    public <R> Option<R> supply(Supplier<R> supplier) {
         throw new UnsupportedOperationException();
     }
 
@@ -91,5 +91,10 @@ public class Some<T> implements Option<T> {
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+    @Override
+    public <R> Option<R> supplyValue(R value) {
+        throw new UnsupportedOperationException();
     }
 }

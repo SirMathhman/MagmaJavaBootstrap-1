@@ -1,7 +1,6 @@
 package com.meti.compile.node;
 
 import com.meti.compile.type.Field;
-import com.meti.compile.type.FieldBuilder;
 import com.meti.util.CollectiveUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ class InlineDependentsTest {
         InlineDependents.ofChild(new ValueToken("test")).streamChildren()
                 .reduceToMonad(new ArrayList<Token>(), CollectiveUtilities::join)
                 .map(list -> list.get(0))
-                .with(new ValueToken("test"))
+                .append(new ValueToken("test"))
                 .accept(Assertions::assertEquals);
     }
 
@@ -97,7 +96,7 @@ class InlineDependentsTest {
         InlineDependents.toFields(create().build()).streamFields()
                 .reduceToMonad(new ArrayList<Field>(), CollectiveUtilities::join)
                 .map(list -> list.get(0))
-                .with(create().build())
+                .append(create().build())
                 .accept(Assertions::assertEquals);
     }
 

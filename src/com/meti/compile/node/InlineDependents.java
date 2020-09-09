@@ -97,9 +97,9 @@ public final class InlineDependents implements Dependents {
     public Dependents append(Token child) {
         return Monad(children)
                 .map(ArrayList::new)
-                .with(child)
+                .append(child)
                 .map(CollectiveUtilities::join)
-                .with(fields)
+                .append(fields)
                 .apply((children1, fields1) -> new InlineDependents(children1, fields1, null));
     }
 
@@ -146,9 +146,9 @@ public final class InlineDependents implements Dependents {
         @Override
         public DependentsBuilder append(Field field) {
             return Monad(fields)
-                    .with(field)
+                    .append(field)
                     .map(CollectiveUtilities::join)
-                    .with(children)
+                    .append(children)
                     .reverse()
                     .with(properties)
                     .apply(InlineBuilder::new);

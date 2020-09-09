@@ -33,7 +33,7 @@ public class FieldToken extends ParentToken {
         return dependents.streamChildren()
                 .findFirst()
                 .applyOrThrow(Monad::Monad)
-                .with(name)
+                .append(name)
                 .apply(FieldToken::new);
     }
 

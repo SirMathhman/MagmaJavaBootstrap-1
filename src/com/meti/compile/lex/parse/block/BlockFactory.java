@@ -35,7 +35,7 @@ public class BlockFactory implements TokenizerFactory {
                     .filterMiddle(IdentityPredicate)
                     .filterEnd(IdentityPredicate)
                     .onlyFirst()
-                    .set(this::extractChildren)
+                    .supply(this::extractChildren)
                     .map(this::parseChildren)
                     .map(BlockToken::new);
         }

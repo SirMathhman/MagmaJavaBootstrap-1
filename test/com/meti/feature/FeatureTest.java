@@ -89,7 +89,7 @@ public abstract class FeatureTest {
     void testContent() {
         Monad(source())
                 .map(compiler::compile)
-                .with(compile())
+                .append(compile())
                 .reverse()
                 .accept(Assertions::assertEquals);
     }

@@ -1,7 +1,5 @@
 package com.meti.util;
 
-import com.meti.compile.node.Token;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -26,7 +24,9 @@ public interface Option<T> {
 
     <R> Option<R> map(Function<T, R> function);
 
-    <R> Option<R> set(Supplier<R> supplier);
+    <R> Option<R> supply(Supplier<R> supplier);
+
+    <R> Option<R> supplyValue(R value);
 
     <R> Monad<R> set(R ifPresent, R ifEmpty);
 

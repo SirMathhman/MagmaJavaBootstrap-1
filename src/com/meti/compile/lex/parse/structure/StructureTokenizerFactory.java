@@ -31,7 +31,7 @@ public class StructureTokenizerFactory extends FilteredTokenizerFactory {
 
     private List<Field> parseFields(String content, Lexer lexer) {
         return extractFields(content)
-                .with(lexer)
+                .append(lexer)
                 .map(this::parseFields)
                 .complete();
     }

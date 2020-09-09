@@ -15,9 +15,9 @@ class MagmaLexerTest {
     @Test
     void parseToOption() {
         Monad(new MagmaLexer())
-                .with("def main() : Int => {return 0;}")
+                .append("def main() : Int => {return 0;}")
                 .map(MagmaLexer::parseToOption)
-                .with(createFunction())
+                .append(createFunction())
                 .flatMapStart(Option::toMonadOrThrow)
                 .accept(Assertions::assertEquals);
     }

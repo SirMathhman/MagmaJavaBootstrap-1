@@ -9,9 +9,9 @@ import static com.meti.util.Monad.Monad;
 
 class StructDeclareFactoryTest {
     @Test
-    void invalid() {
+    void invalidateFunction() {
         Monad(new StructDeclareFactory())
-                .with("def main() : Int => {return 0;}")
+                .append("def main() : Int => {return 0;}")
                 .map(StructDeclareFactory::create)
                 .map(Tokenizer::evaluate)
                 .map(Option::isEmpty)

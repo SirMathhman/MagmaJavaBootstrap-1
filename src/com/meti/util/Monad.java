@@ -33,7 +33,7 @@ public class Monad<T> {
         return value;
     }
 
-    public <B> Duad<T, B> with(B next) {
+    public <B> Duad<T, B> append(B next) {
         return new Duad<>(value, next);
     }
 

@@ -30,7 +30,7 @@ public class FunctionPreprocessor implements Preprocessor {
     @Override
     public Token preprocess(Token token) {
         return Monad(token)
-                .with((Function<Dependents, Dependents>) this::processFunction)
+                .append((Function<Dependents, Dependents>) this::processFunction)
                 .replaceEnd(Token::applyToDependents)
                 .apply(Token::copy);
     }

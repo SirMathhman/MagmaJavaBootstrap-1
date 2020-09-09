@@ -16,7 +16,7 @@ public class Monad<T> {
         return Some(value);
     }
 
-    private Monad(T value) {
+    Monad(T value) {
         this.value = value;
     }
 

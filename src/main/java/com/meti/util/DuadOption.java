@@ -1,6 +1,9 @@
 package com.meti.util;
 
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public interface DuadOption<A, B> {
     <R> Option<R> map(BiFunction<A, B, R> function);
@@ -13,27 +16,13 @@ public interface DuadOption<A, B> {
 
     <R, E extends Throwable> R applyStartOrThrow(Function<A, R> function, Function<Option<B>, E> supplier) throws E;
 
-    default <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function) throws E {
-        return applyAllOrThrow(function);
-    }
+    <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function) throws E;
 
-    <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function, Supplier<E> supplier) throws E;
-
-    default DuadOption<A, B> filterBoth(BiPredicate<A, B> predicate) {
-        throw new UnsupportedOperationException();
-    }
+    DuadOption<A, B> filterBoth(BiPredicate<A, B> predicate);
 
     Option<A> ignoreLast();
 
-    default <R> DuadOption<R, B> mapStart(Function<A, R> function) {
-        throw new UnsupportedOperationException();
-    }
+    <R> DuadOption<R, B> mapStart(Function<A, R> function);
 
-    default DuadOption<B, A> reverse() {
-        throw new UnsupportedOperationException();
-    }
-
-    default <R> DuadOption<A, R> mapEnd(Function<B, R> function) {
-        throw new UnsupportedOperationException();
-    }
+    DuadOption<B, A> reverse();
 }

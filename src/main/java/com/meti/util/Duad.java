@@ -2,6 +2,7 @@ package com.meti.util;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 public class Duad<A, B> {
@@ -41,7 +42,7 @@ public class Duad<A, B> {
         return new Duad<>(function.apply(start), end);
     }
 
-    public <T> Duad<T, B> flatMapStart(Function<A, Monad<T>> function){
+    public <T> Duad<T, B> flatMapStart(Function<A, Monad<T>> function) {
         return function.apply(start).append(end);
     }
 
@@ -51,5 +52,9 @@ public class Duad<A, B> {
 
     public void accept(BiConsumer<A, B> consumer) {
         consumer.accept(start, end);
+    }
+
+    public <R> R split(BiPredicate<A, B> predicate, BiFunction<A, B, R> valid, BiFunction<A, B, R> invalid) {
+        return predicate.test(start, end) ? valid.apply(start, end) : invalid.apply(start, end);
     }
 }

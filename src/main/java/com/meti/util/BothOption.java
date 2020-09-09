@@ -1,9 +1,9 @@
 package com.meti.util;
 
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import static com.meti.util.Some.Some;
 
@@ -23,31 +23,53 @@ public class BothOption<A, B> implements DuadOption<A, B> {
 
     @Override
     public <R> TriadOption<A, B, R> extractStart(Function<A, R> function) {
-        throw new UnsupportedOperationException();
+        return new FullOption<>(start, end, function.apply(start));
     }
 
     @Override
     public <R> TriadOption<A, B, R> with(R value) {
-        throw new UnsupportedOperationException();
+        return new FullOption<>(start, end, value);
     }
 
     @Override
     public DuadOption<A, B> filterEnd(Predicate<B> predicate) {
-        throw new UnsupportedOperationException();
+        if(predicate.test(end)) {
+            return new BothOption<>(start, end);
+        } else {
+            return new NeitherOption<>();
+        }
     }
 
     @Override
     public <R, E extends Throwable> R applyStartOrThrow(Function<A, R> function, Function<Option<B>, E> supplier) throws E {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function, Supplier<E> supplier) throws E {
-        throw new UnsupportedOperationException();
+        return function.apply(start);
     }
 
     @Override
     public Option<A> ignoreLast() {
         return Some(start);
+    }
+
+    @Override
+    public <R, E extends Throwable> R applyAllOrThrow(BiFunction<A, B, R> function) {
+        return function.apply(start, end);
+    }
+
+    @Override
+    public DuadOption<A, B> filterBoth(BiPredicate<A, B> predicate) {
+        return new Duad<>(start, end).<DuadOption<A, B>>split(predicate, BothOption::new, (a, b) -> new NeitherOption<A, B>());
+    }
+
+    @Override
+    public <R> DuadOption<R, B> mapStart(Function<A, R> function) {
+        return new Monad<>(start)
+                .map(function)
+                .append(end)
+                .apply(BothOption::new);
+    }
+
+    @Override
+    public DuadOption<B, A> reverse() {
+        return new BothOption<>(end, start);
     }
 }

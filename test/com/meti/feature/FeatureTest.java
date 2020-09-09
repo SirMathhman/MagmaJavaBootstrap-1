@@ -69,7 +69,7 @@ public abstract class FeatureTest {
 
     private void compileInternal() throws IOException {
         if (!Files.exists(SOURCE_PATH)) Files.createFile(SOURCE_PATH);
-        String actual = compiler.compileImpl(source());
+        String actual = compiler.compile(source());
         Files.writeString(SOURCE_PATH, actual);
     }
 
@@ -88,7 +88,7 @@ public abstract class FeatureTest {
     @Test
     void testContent() {
         Monad(source())
-                .map(compiler::compileImpl)
+                .map(compiler::compile)
                 .with(compile())
                 .reverse()
                 .accept(Assertions::assertEquals);

@@ -20,7 +20,7 @@ public class MagmaCompiler implements Compiler {
     private final ProcessStage fixStage = new FixProcessStage();
 
     @Override
-    public String compileImpl(String value) {
+    public String compile(String value) {
         return "{%s}".formatted(value)
                 .transform(lexer::parseToOption)
                 .applyOrThrow(this::applyPipeline, createInvalidTree(value));
